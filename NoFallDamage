@@ -1,3 +1,6 @@
+if game.PlaceId == 189707 then
+    
 if game.Players.LocalPlayer.Character:FindFirstChild("FallDamageScript") then
 					game.Players.LocalPlayer.Character:FindFirstChild("FallDamageScript"):Destroy()
 			end
+end
