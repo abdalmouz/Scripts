@@ -1,6 +1,6 @@
 if game.PlaceId == 189707 then
+    
 local part = Instance.new("Part")
-
 part.Name = "FakeWater"
 part.Anchored = true
 part.Parent = game.Workspace
@@ -15,7 +15,6 @@ part.Size = Vector3.new(2048, 6, 2048)
 
 
 local Part = Instance.new("Part")
-
 Part.Name = "FakeWater2"
 Part.Anchored = true
 Part.Parent = game.Workspace.FakeWater
@@ -30,7 +29,6 @@ Part.Size = Vector3.new(2048, 6, 2048)
 
 
 local Tart = Instance.new("Part")
-
 Tart.Name = "FakeWater3"
 Tart.Anchored = true
 Tart.Parent = game.Workspace.FakeWater
@@ -45,7 +43,6 @@ Tart.Size = Vector3.new(2048, 6, 2048)
 
 
 local wall1 = Instance.new("Part")
-
 wall1.Name = "Wall1"
 wall1.Anchored = true
 wall1.Parent = game.Workspace.FakeWater
@@ -59,7 +56,6 @@ wall1.Size = Vector3.new(6, 1048, 2048)
 
 
 local wall2 = Instance.new("Part")
-
 wall2.Name = "Wall2"
 wall2.Anchored = true
 wall2.Parent = game.Workspace.FakeWater
@@ -73,7 +69,6 @@ wall2.Size = Vector3.new(2048, 1048, 6)
 
 
 local wall3 = Instance.new("Part")
-
 wall3.Name = "Wall3"
 wall3.Anchored = true
 wall3.Parent = game.Workspace.FakeWater
@@ -87,7 +82,6 @@ wall3.Size = Vector3.new(2048, 1048, 6)
 
 
 local wall4 = Instance.new("Part")
-
 wall4.Name = "Wall4"
 wall4.Anchored = true
 wall4.Parent = game.Workspace.FakeWater
@@ -101,7 +95,8 @@ wall4.Size = Vector3.new(6, 1048, 2048)
 
 
 for _, v in ipairs(game.workspace:GetDescendants()) do
-	if v.Name == 'LowerRocks' then
-		v.CanCollide = true
-	end
+if v.Name == 'LowerRocks' then
+v.CanCollide = true
+end
+end
 end
