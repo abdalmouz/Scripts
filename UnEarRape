@@ -1,0 +1,8 @@
+if game.PlaceId == 189707 then
+for i,v in pairs(game.Workspace.ContentModel.Sounds:GetChildren()) do
+if v:IsA("Sound") then
+v.Playing = false
+v.TimePosition = 0.4
+end
+end
+end
