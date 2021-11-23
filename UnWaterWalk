@@ -1,6 +1,10 @@
+if game.PlaceId == 189707 then
+
 game.Workspace.FakeWater:Destroy()
-			for _, v in ipairs(game.workspace:GetDescendants()) do
-				if v.Name == 'LowerRocks' then
-					v.CanCollide = true
-				end
-				end
+for _, v in ipairs(game.workspace:GetDescendants()) do
+if v.Name == 'LowerRocks' then
+v.CanCollide = true
+
+end
+end
+end
