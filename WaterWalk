@@ -1,0 +1,107 @@
+if game.PlaceId == 189707 then
+local part = Instance.new("Part")
+
+part.Name = "FakeWater"
+part.Anchored = true
+part.Parent = game.Workspace
+part.CFrame = CFrame.new(3.20084, 20.9265995, 4.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+part.Material = Enum.Material.Foil
+part.Position = Vector3.new(3.20084, 17.9266, 4.31)
+part.Reflectance = 0
+part.Shape = Enum.PartType.Block
+part.BrickColor = BrickColor.new("Bright blue")
+part.Transparency = 0
+part.Size = Vector3.new(2048, 6, 2048)
+
+
+local Part = Instance.new("Part")
+
+Part.Name = "FakeWater2"
+Part.Anchored = true
+Part.Parent = game.Workspace.FakeWater
+Part.CFrame = CFrame.new(3.20084, 20.9265995, 4.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Part.Material = Enum.Material.Foil
+Part.Position = Vector3.new(3.20084, 15.9266, 4.31)
+Part.Reflectance = 0
+Part.Shape = Enum.PartType.Block
+Part.BrickColor = BrickColor.new("Bright orange")
+Part.Transparency = 1
+Part.Size = Vector3.new(2048, 6, 2048)
+
+
+local Tart = Instance.new("Part")
+
+Tart.Name = "FakeWater3"
+Tart.Anchored = true
+Tart.Parent = game.Workspace.FakeWater
+Tart.CFrame = CFrame.new(3.20084, 20.9265995, 4.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Tart.Material = Enum.Material.Foil
+Tart.Position = Vector3.new(3.20084, 13.9266, 4.31)
+Tart.Reflectance = 0
+Tart.Shape = Enum.PartType.Block
+Tart.BrickColor = BrickColor.new("Bright orange")
+Tart.Transparency = 1
+Tart.Size = Vector3.new(2048, 6, 2048)
+
+
+local wall1 = Instance.new("Part")
+
+wall1.Name = "Wall1"
+wall1.Anchored = true
+wall1.Parent = game.Workspace.FakeWater
+wall1.CFrame = CFrame.new(1030.20084, 530.9265995, 4.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+wall1.Material = Enum.Material.Foil
+wall1.Reflectance = 0
+wall1.Shape = Enum.PartType.Block
+wall1.BrickColor = BrickColor.new("Bright green")
+wall1.Transparency = 1
+wall1.Size = Vector3.new(6, 1048, 2048)
+
+
+local wall2 = Instance.new("Part")
+
+wall2.Name = "Wall2"
+wall2.Anchored = true
+wall2.Parent = game.Workspace.FakeWater
+wall2.CFrame = CFrame.new(3.20084, 530.9265995, 1030.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+wall2.Material = Enum.Material.Foil
+wall2.Reflectance = 0
+wall2.Shape = Enum.PartType.Block
+wall2.BrickColor = BrickColor.new("Bright green")
+wall2.Transparency = 1
+wall2.Size = Vector3.new(2048, 1048, 6)
+
+
+local wall3 = Instance.new("Part")
+
+wall3.Name = "Wall3"
+wall3.Anchored = true
+wall3.Parent = game.Workspace.FakeWater
+wall3.CFrame = CFrame.new(3.20084, 530.9265995, -1020.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+wall3.Material = Enum.Material.Foil
+wall3.Reflectance = 0
+wall3.Shape = Enum.PartType.Block
+wall3.BrickColor = BrickColor.new("Bright green")
+wall3.Transparency = 1
+wall3.Size = Vector3.new(2048, 1048, 6)
+
+
+local wall4 = Instance.new("Part")
+
+wall4.Name = "Wall4"
+wall4.Anchored = true
+wall4.Parent = game.Workspace.FakeWater
+wall4.CFrame = CFrame.new(-1020.20084, 530.9265995, 4.30999994, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+wall4.Material = Enum.Material.Foil
+wall4.Reflectance = 0
+wall4.Shape = Enum.PartType.Block
+wall4.BrickColor = BrickColor.new("Bright green")
+wall4.Transparency = 1
+wall4.Size = Vector3.new(6, 1048, 2048)
+
+
+for _, v in ipairs(game.workspace:GetDescendants()) do
+	if v.Name == 'LowerRocks' then
+		v.CanCollide = true
+	end
+end
