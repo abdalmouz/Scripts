@@ -1,0 +1,22 @@
+				local localPlayer = game.Players.LocalPlayer
+				local tools = localPlayer.Character:GetChildren()
+
+				for _, v in pairs(tools) do
+					if v:IsA("Tool") then
+						v.Parent = localPlayer.Backpack
+					end
+				end
+				wait()
+				local loon = localPlayer.Backpack:WaitForChild("GreenBalloom")
+				local apple = localPlayer.Backpack:WaitForChild("RedAppel")
+				local cpass = localPlayer.Backpack:WaitForChild("Conpass")
+
+				if loon then
+					loon.Name = "GreenBalloon"
+				end
+				if apple then
+					apple.Name = "RedApple"
+				end
+				if cpass then
+					cpass.Name = "Compass"
+				end
