@@ -1,23 +1,72 @@
-				enabled = false
-				local localPlayer = game.Players.LocalPlayer
-				local tools = localPlayer.Character:GetChildren()
+local enabled = false --thats the thing to turn it on and off
 
-				for _, v in pairs(tools) do
-					if v:IsA("Tool") then
-						v.Parent = localPlayer.Backpack
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local Character = localPlayer.Character
+local humanoid = Character:FindFirstChildOfClass("Humanoid")
+local tools = localPlayer.Character:GetChildren()
+
+for _, v in pairs(tools) do
+	if v:IsA("Tool") then
+		v.Parent = localPlayer.Backpack
+	end
+end
+wait()
+local loon = localPlayer.Backpack:WaitForChild("GreenBalloon")
+local apple = localPlayer.Backpack:WaitForChild("RedApple")
+local cpass = localPlayer.Backpack:WaitForChild("Compass")
+
+if loon then
+	loon.Name = "GreenBalloom"
+end
+if apple then
+	apple.Name = "RedAppel"
+end
+if cpass then
+	cpass.Name = "Conpass"
+end
+
+workspace.ChildAdded:Connect(function(m)
+	if enabled == true then
+		local name = localPlayer.Name
+		if m.Name == name then
+			local loon1 = localPlayer.Backpack:WaitForChild("GreenBalloon")
+			local apple1 = localPlayer.Backpack:WaitForChild("RedApple")
+			local cpass1 = localPlayer.Backpack:WaitForChild("Compass")
+			if loon1 then
+				loon1.Name = "GreenBalloom"
+			end
+			if apple1 then
+				apple1.Name = "RedAppel"
+			end
+			if cpass1 then
+				cpass1.Name = "Conpass"
+			end
+			spawn(function()
+				local Players1 = game:GetService("Players")
+				local localPlayer1 = Players1.LocalPlayer
+				local Character1 = localPlayer1.Character
+				local humanoid1 = Character1:FindFirstChildOfClass("Humanoid")
+				RunService.RenderStepped:Connect(function()
+					if Character1:FindFirstChild("GreenBalloon",0.001) or
+						Character1:FindFirstChild("RedApple",0.001) or
+						Character1:FindFirstChild("Compass",0.001) then			
+						humanoid1:UnequipTools()
 					end
-				end
-				wait()
-				local loon = localPlayer.Backpack:WaitForChild("GreenBalloom")
-				local apple = localPlayer.Backpack:WaitForChild("RedAppel")
-				local cpass = localPlayer.Backpack:WaitForChild("Conpass")
+				end)
+			end)
+		end
+	end
+end)
 
-				if loon then
-					loon.Name = "GreenBalloon"
-				end
-				if apple then
-					apple.Name = "RedApple"
-				end
-				if cpass then
-					cpass.Name = "Compass"
-				end
+RunService.RenderStepped:Connect(function()
+	if enabled == true then
+		if Character:FindFirstChild("GreenBalloon",0.001) or
+			Character:FindFirstChild("RedApple",0.001) or
+			Character:FindFirstChild("Compass",0.001) then			
+			humanoid:UnequipTools()
+		end
+	end
+end)
+end
