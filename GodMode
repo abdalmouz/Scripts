@@ -1,0 +1,30 @@
+local Plr = game:GetService("Players").LocalPlayer;
+repeat wait() until Plr.Character
+local Character = Plr.Character
+local MHumanoid = Character.Humanoid
+local CF = CFrame.new()
+function CB(Humanoid)
+    local PlayerCharacter = Humanoid.Parent
+    Humanoid.BreakJointsOnDeath = false
+    Humanoid.Died:Connect(function()
+        CF = Plr.Character.HumanoidRootPart.CFrame
+        local MH = Humanoid
+        MH.Parent = nil
+        MH.MaxHealth = Humanoid.MaxHealth
+        MH.Health = MH.MaxHealth
+        MH.Parent = PlayerCharacter
+    end)
+end
+CB(MHumanoid)
+workspace.ChildRemoved:Connect(function(m)
+    if m.Name == Plr.Name then
+        CF = m.HumanoidRootPart.CFrame
+    end
+end)
+workspace.ChildAdded:Connect(function(m)
+    if m.Name == Plr.Name then
+        CB(m:WaitForChild("Humanoid"))
+        m.HumanoidRootPart.CFrame = CF
+    end
+end)
+game.Players.LocalPlayer.Character.Humanoid.Health = 0
