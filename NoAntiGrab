@@ -1,3 +1,4 @@
+				enabled = false
 				local localPlayer = game.Players.LocalPlayer
 				local tools = localPlayer.Character:GetChildren()
 
