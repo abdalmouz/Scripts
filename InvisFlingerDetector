@@ -1,0 +1,26 @@
+for i,v in pairs(game.Workspace:GetChildren()) do
+if v:FindFirstChild("Humanoid") == nil then 
+else
+if game.Players[v.Name].Character:FindFirstChild("Humanoid").RigType ~= Enum.HumanoidRigType.R6 then
+if v:FindFirstChild("HumanoidRootPart") == nil then 
+if v:FindFirstChild("Head") == nil then
+end
+else
+if v:FindFirstChild("UpperTorso") == nil then 
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." Is using Invisible fling","All")
+else
+end
+end
+else
+if v:FindFirstChild("HumanoidRootPart") == nil then
+if v:FindFirstChild("Head") == nil then
+end
+else
+if v:FindFirstChild("Torso") == nil then
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." Is using Invisible fling","All")
+else
+end
+end
+end
+end
+end
