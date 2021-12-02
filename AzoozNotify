@@ -1,0 +1,33 @@
+local Players = game:GetService("Players")
+local Gui = game:GetService("StarterGui")
+local userid = {
+	21763271--[[AzoozsMain]],
+	17049167--[[AzoozsAlt]]
+}
+
+for _, player in pairs(Players:GetPlayers()) do
+	for i = 1, #userid do
+		if player.UserId == userid[i] then
+	Gui:SetCore("SendNotification", {
+		Title = "Your playing with azooz ;3";
+		Text = "Daddy is in your server!!";
+		Duration = 5;
+	})
+
+		end
+	end
+end
+
+Players.ChildAdded:Connect(function(p)
+	wait(1)
+	for i = 1, #userid do
+		if p.UserId == userid[i] then
+	Gui:SetCore("SendNotification", {
+		Title = "omg hes in ahh rip the server";
+		Text = "Daddy has joined your server!!";
+		Duration = 5;
+	})
+			
+		end
+	end
+end)
