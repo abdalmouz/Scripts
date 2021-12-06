@@ -1,10 +1,7 @@
-if game.PlaceId == 189707 then
-
 if newgui.Name == "SandStormGui" then
 newgui:remove()
 
 elseif newgui.Name == "BlizzardGui" then
 newgui:remove()
 
-end
 end
