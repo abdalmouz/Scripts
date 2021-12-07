@@ -2461,8 +2461,9 @@ function framework:Init()
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      framework:sendNotification("Rewritting everything   discord.gg/WSNfRTPXVK")
-      wait(5)
+      framework:sendNotification("Rewritting everything")
+      framework:sendNotification("Join the discord server for updates")
+      framework:sendNotification("discord.gg/WSNfRTPXVK")
       return
     else
       framework:sendNotification("Invalid key")
