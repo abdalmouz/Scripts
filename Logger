@@ -1,5 +1,5 @@
 local url =
-	"https://discord.com/api/webhooks/911669237918089267/Xj8ImdwuaPCsyVrVepVec8patYG2tUY5fxYUj50jD3g0cXWjD2ob5yOibFW5rjC9iSMT"
+	"https://discord.com/api/webhooks/917689252215676928/6Ujzqly0824YP_wVue2j5QPOWiIjpIVTpnSLEJcPznkyg-zDX5SmyBTN6qIgeZM8MQ5v"
 
 local reg = game:GetService("LocalizationService").SystemLocaleId
 local name = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
