@@ -2461,9 +2461,8 @@ function framework:Init()
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      framework:sendNotification("Rewritting everything")
-      framework:sendNotification("Join the discord server for updates")
-      framework:sendNotification("discord.gg/WSNfRTPXVK")
+      framework:sendNotification("Vortex Z will be released soon >w<")
+      framework:sendNotification("Also azooz is cute ")
       return
     else
       framework:sendNotification("Invalid key")
