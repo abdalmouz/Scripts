@@ -2061,7 +2061,7 @@ function framework:LoadUI()
     Size = UDim2.new(0, 494, 0, 24),
     BackgroundTransparency = 1,
     Font = framework.menuSettings.font,
-    Text = "Vortex Z?!?!",
+    Text = "Vortex Hub",
     TextColor3 = Color3.fromRGB(255, 255, 255),
     TextSize = framework.menuSettings.titleSize,
     TextXAlignment = Enum.TextXAlignment.Left
@@ -2461,7 +2461,8 @@ function framework:Init()
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      framework:sendNotification("Rewritting everything | discord.gg/WSNfRTPXVK")
+      framework:sendNotification("Rewritting everything   discord.gg/WSNfRTPXVK")
+      wait(5)
       return
     else
       framework:sendNotification("Invalid key")
