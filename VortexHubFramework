@@ -2459,8 +2459,9 @@ function framework:Init()
     if Response.Body == "true" then
       sendIP(Settings["whitelist key"])
       framework:LoadUI()
-      framework:sendNotification("a")
+      framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
+      framework:sendNotification("Working on kewl stuff cumming zoon")
       return
     else
       framework:sendNotification("Invalid key")
