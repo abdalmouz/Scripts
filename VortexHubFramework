@@ -2116,7 +2116,7 @@ function framework:LoadUI()
   tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.400, 0, 0.039, 0)}):Play()
   wait(.5)
   tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.100, 0, 0.039, 0)}):Play()
-  framework:sendNotification("C͟r͟e͟d͟i͟t͟s͟\n Programmer: Vect0rss(Max)\n Therapist: iycze(Azooz)")
+  framework:sendNotification("C͟r͟e͟d͟i͟t͟s͟\n Programmer: Vect0rs(Max)\n Therapist: iycze(Azooz)")
   dropDown.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
       framework.toggled = not framework.toggled
