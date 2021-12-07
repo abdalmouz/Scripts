@@ -2461,7 +2461,7 @@ function framework:Init()
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      framework:sendNotification("Vortex Z in progress")
+      framework:sendNotification("Vortex Z is in progress")
       framework:sendNotification("Also azooz is cute ")
       return
     else
