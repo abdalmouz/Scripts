@@ -9,8 +9,8 @@ for _, player in pairs(Players:GetPlayers()) do
 	for i = 1, #userid do
 		if player.UserId == userid[i] then
 	Gui:SetCore("SendNotification", {
-		Title = "mmm";
-		Text = "Daddy is in your server!!";
+		Title = "Notification";
+		Text = "Azooz is in your server!";
 		Duration = 5;
 	})
 
@@ -23,8 +23,8 @@ Players.ChildAdded:Connect(function(p)
 	for i = 1, #userid do
 		if p.UserId == userid[i] then
 	Gui:SetCore("SendNotification", {
-		Title = "mmm";
-		Text = "Daddy has joined your server!!";
+		Title = "Notification";
+		Text = "Azooz has joined your server!";
 		Duration = 5;
 	})
 			
