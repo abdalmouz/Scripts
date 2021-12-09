@@ -2131,7 +2131,7 @@ function framework:LoadUI()
   end)
   game.Players.PlayerAdded:Connect(function(plr)
   		if framework.admin_accounts.azoozAccounts[plr.UserId] then
-  			framework:sendNotification("Daddy Azooz has joined your server")
+  			framework:sendNotification("Azooz has joined your server")
         createNameTag(plr.Name, "Azooz")
   		elseif framework.admin_accounts.smail_accounts[plr.UserId] then
   			framework:sendNotification("Smail has joined your server")
@@ -2461,7 +2461,6 @@ function framework:Init()
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
       warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      framework:sendNotification("Vortex Z is in progress")
       return
     else
       framework:sendNotification("Invalid key")
