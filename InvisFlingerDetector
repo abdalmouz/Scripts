@@ -7,7 +7,7 @@ if v:FindFirstChild("Head") == nil then
 end
 else
 if v:FindFirstChild("UpperTorso") == nil then 
-game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." Is using Invisible fling","All")
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." is invis","All")
 else
 end
 end
@@ -17,7 +17,7 @@ if v:FindFirstChild("Head") == nil then
 end
 else
 if v:FindFirstChild("Torso") == nil then
-game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." Is using Invisible fling","All")
+game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(v.Name.." is invis","All")
 else
 end
 end
