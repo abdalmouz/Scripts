@@ -1,0 +1,31 @@
+local me = game.Players.LocalPlayer.Character
+				
+if me.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+local Gui = game:GetService("StarterGui")
+Gui:SetCore("SendNotification", {
+Title = "Wrong RigType";
+Text = "R15 Only";
+Duration = 3;
+})
+
+else
+
+if me.RightHand:FindFirstChild("RightHand") then
+local Gui = game:GetService("StarterGui")
+Gui:SetCore("SendNotification", {
+Title = "Crash Possible";
+Text = "Good Job, fuck this game";
+Duration = 3;
+})
+
+else
+
+local Gui = game:GetService("StarterGui")
+Gui:SetCore("SendNotification", {
+Title = "Crash Not Possible";
+Text = "Sad";
+Duration = 3;
+})
+
+end
+end
