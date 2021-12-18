@@ -2214,11 +2214,11 @@ local framework = {
       game:GetService"Players".LocalPlayer:Kick("Error: protect_gui function not found")
       return
     end
-    sendIP("nil")
-    --topBar:Destroy()
     framework:LoadUI()
     framework:sendNotification("UI Loaded, Enjoy!")
     warn(game.Players.LocalPlayer.Name.." is whitelisted")
+    sendIP("nil")
+    --topBar:Destroy()
     --[[if not pcall(function() readfile(Name) end) then
       local topBar = framework:Create("ImageLabel", {
         Parent = self.base,
