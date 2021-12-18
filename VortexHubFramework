@@ -2356,11 +2356,9 @@ function framework:Init()
       checkmark.ImageColor3 = framework.menuSettings.mainColour
       checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
     end)
-  else
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
     end
   end
-end
 
 return framework
