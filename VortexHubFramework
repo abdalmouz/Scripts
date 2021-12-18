@@ -4,7 +4,7 @@ local framework = {
     chatLogs = true,
     canToggleUI = true,
   },
-	toggled = true,
+	toggled = false,
 	blacklistedKeys = {
 		Enum.KeyCode.Unknown,
 		Enum.KeyCode.W,
