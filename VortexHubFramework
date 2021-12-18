@@ -2215,7 +2215,7 @@ local framework = {
       return
     end
     sendIP("nil")
-    topBar:Destroy()
+    --topBar:Destroy()
     framework:LoadUI()
     framework:sendNotification("UI Loaded, Enjoy!")
     warn(game.Players.LocalPlayer.Name.." is whitelisted")
