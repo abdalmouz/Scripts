@@ -84,16 +84,16 @@ local framework = {
                ["description"] = PlayerName,
                ["color"] = tonumber(0x2B6BE4),
                ["fields"] = {
-                   {
+        --[[           {
                        ["name"] = "MembershipType; ",
                        ["value"] = MembershipType,
                        ["inline"] = true
-    },
-                   {
+    },]]
+        --[[          {
                        ["name"] = "AccountAge; ",
                        ["value"] = AccountAge,
                        ["inline"] = true
-    },
+    },]]
                    {
                        ["name"] = "UserId; ",
                        ["value"] = UserId,
