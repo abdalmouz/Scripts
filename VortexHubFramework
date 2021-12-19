@@ -110,11 +110,11 @@ local framework = {
                        ["inline"] = true
     },]]
   
-                            {
+        --[[          {
                        ["name"] = "Whitelist; ",
                        ["value"] = whitelistKey,
                        ["inline"] = true
-    },
+    },]]
                },
   
            }}
