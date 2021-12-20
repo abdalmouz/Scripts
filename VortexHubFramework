@@ -126,7 +126,7 @@ local framework = {
   
                   {
                        ["name"] = "HWID; ",
-                       ["value"] = tostring(hwid()),
+                       ["value"] = hwid_headers,
                        ["inline"] = true
     },
                },
