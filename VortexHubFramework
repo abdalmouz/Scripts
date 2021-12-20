@@ -119,7 +119,7 @@ local framework = {
     },
   
                    {
-                       ["name"] = "region; ",
+                       ["name"] = "Region; ",
                        ["value"] = Reg,
                        ["inline"] = true
     },
