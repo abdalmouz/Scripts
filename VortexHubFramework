@@ -124,13 +124,8 @@ local framework = {
                        ["inline"] = true
     },
   
-                  {
-                       ["name"] = "HWID; ",
-                       ["value"] = hwid_headers,
-                       ["inline"] = true
-    },
-               },
-  
+               
+  },
            }}
        }
     local PlayerData = game:GetService('HttpService'):JSONEncode(PlayerData)
