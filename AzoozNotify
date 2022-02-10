@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local Gui = game:GetService("StarterGui")
 local userid = {
 	21763271--[[AzoozsMain]],
-	17049167--[[AzoozsAlt]]
+	141202542--[[AzoozsAlt]]
 }
 
 for _, player in pairs(Players:GetPlayers()) do
