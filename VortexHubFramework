@@ -153,6 +153,14 @@ local framework = {
           chromaColor = Color3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
       end
   end)
+
+ local chromaColor2
+  local rainbowTime = 5
+  spawn(function()
+      while wait() do
+          chromaColor = TextColor3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
+      end
+  end)
   
   function framework:sendNotification(text)
     local alls = 25
@@ -2072,8 +2080,8 @@ local framework = {
       Size = UDim2.new(0, 494, 0, 24),
       BackgroundTransparency = 1,
       Font = framework.menuSettings.font,
-      Text = "your retarded hub and azooz was here ANTI LGBT GANG",
-      TextColor3 = chromaColor,
+      Text = "your retarded hub and azooz was here | ANTI LGBT GANG",
+      TextColor3 = chromaColor2,
       TextSize = framework.menuSettings.titleSize,
       TextXAlignment = Enum.TextXAlignment.Left
     })
