@@ -25,7 +25,6 @@ local framework = {
           azoozAccounts = {
               [21763271] = true,
               [141202542] = true,
-              [17049167] = true,
               [4135012] = true,
           },
           smail_accounts = {
