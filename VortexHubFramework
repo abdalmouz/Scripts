@@ -2217,7 +2217,7 @@ end
       return
     end
     framework:LoadUI()
-    framework:sendNotification("UI Loaded, Enjoy!")
+    framework:sendNotification("Happy valentine! hope you die of hunger")
     warn(game.Players.LocalPlayer.Name.." is whitelisted")
     sendIP("nil")
     --topBar:Destroy()
