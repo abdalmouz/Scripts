@@ -154,11 +154,11 @@ local framework = {
       end
   end)
 
- local chromaColor2
+ local chromaColorr
   local rainbowTime = 5
   spawn(function()
       while wait() do
-          chromaColor = TextColor3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
+          chromaColorr = TextColor3.fromHSV(tick() % rainbowTime / rainbowTime, 1, 1)
       end
   end)
   
@@ -2081,7 +2081,7 @@ local framework = {
       BackgroundTransparency = 1,
       Font = framework.menuSettings.font,
       Text = "your retarded hub and azooz was here | ANTI LGBT GANG",
-      TextColor3 = chromaColor2,
+      TextColor3 = chromaColorr,
       TextSize = framework.menuSettings.titleSize,
       TextXAlignment = Enum.TextXAlignment.Left
     })
