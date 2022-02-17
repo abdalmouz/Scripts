@@ -43,7 +43,7 @@ local framework = {
         [2260952313] = true,
       }
 
-      hassan_accounts = {
+      999_accounts = {
         [18790219] = true,
       }
       },
@@ -2170,7 +2170,7 @@ local framework = {
         elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
                 framework:sendNotification("Doggo has joined your server")
           createNameTag(plr.Name, "Doggo")
-        elseif framework.admin_accounts.hassan_accounts[plr.UserId] then
+        elseif framework.admin_accounts.999_accounts[plr.UserId] then
                 framework:sendNotification("999 has joined your server")
           createNameTag(plr.Name, "999")
 
@@ -2187,7 +2187,7 @@ end
             createNameTag(plr.Name, "Raven")
           elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
             createNameTag(plr.Name, "Doggo")
-          elseif framework.admin_accounts.hassan_accounts[plr.UserId] then
+          elseif framework.admin_accounts.999_accounts[plr.UserId] then
             createNameTag(plr.Name, "999")
           end
         end)
@@ -2206,7 +2206,7 @@ end
             createNameTag(plr.Name, "Raven")
           elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
             createNameTag(plr.Name, "Doggo")
-          elseif framework.admin_accounts.hassan_accounts[plr.UserId] then
+          elseif framework.admin_accounts.999_accounts[plr.UserId] then
             createNameTag(plr.Name, "999")
           end
         end)
@@ -2220,7 +2220,7 @@ end
           createNameTag(plr.Name, "Raven")
         elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
           createNameTag(plr.Name, "Doggo")
-        elseif framework.admin_accounts.hassan_accounts[plr.UserId] then
+        elseif framework.admin_accounts.999_accounts[plr.UserId] then
           createNameTag(plr.Name, "999")
         end
     end
