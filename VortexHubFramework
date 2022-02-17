@@ -38,14 +38,6 @@ local framework = {
       raven_accounts = {
         [1949027883] = true,
       }
-
-      doggo_accounts = {
-        [2260952313] = true,
-      }
-
-      999_accounts = {
-        [18790219] = true,
-      }
       },
     menuSettings = {
       mainColour = Color3.fromRGB(255, 4, 104),
@@ -358,12 +350,6 @@ local framework = {
               name.TextColor3 = chromaColor
             elseif person == "Smail" then
               name.TextColor3 = Color3.fromRGB(0, 0, 0)
-            elseif person == "Raven" then
-              name.TextColor3 = Color3.fromRGB(229, 173, 200)
-            elseif person == "Doggo" then
-              name.TextColor3 = Color3.fromRGB(107, 50, 124)
-            elseif person == "999" then
-              name.TextColor3 = Color3.fromRGB(196, 40, 28)
             end
           end)
         end
@@ -2086,7 +2072,7 @@ local framework = {
       Size = UDim2.new(0, 494, 0, 24),
       BackgroundTransparency = 1,
       Font = framework.menuSettings.font,
-      Text = "Vortex Z",
+      Text = "Vortex Hub",
       TextColor3 = Color3.fromRGB(255, 255, 255),
       TextSize = framework.menuSettings.titleSize,
       TextXAlignment = Enum.TextXAlignment.Left
@@ -2164,16 +2150,6 @@ local framework = {
         elseif framework.admin_accounts.max_accounts[plr.UserId] then
                 framework:sendNotification("Max has joined your server")
           createNameTag(plr.Name, "Max")
-        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-                framework:sendNotification("Raven has joined your server")
-          createNameTag(plr.Name, "Raven")
-        elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
-                framework:sendNotification("Doggo has joined your server")
-          createNameTag(plr.Name, "Doggo")
-        elseif framework.admin_accounts.999_accounts[plr.UserId] then
-                framework:sendNotification("999 has joined your server")
-          createNameTag(plr.Name, "999")
-
 end
         plr.CharacterAdded:Connect(function(plr)
           print(plr)
@@ -2183,12 +2159,6 @@ end
             createNameTag(plr.Name, "Smail")
           elseif framework.admin_accounts.max_accounts[plr.UserId] then
             createNameTag(plr.Name, "Max")
-          elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-            createNameTag(plr.Name, "Raven")
-          elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
-            createNameTag(plr.Name, "Doggo")
-          elseif framework.admin_accounts.999_accounts[plr.UserId] then
-            createNameTag(plr.Name, "999")
           end
         end)
       end)
@@ -2202,12 +2172,6 @@ end
             createNameTag(plr.Name, "Smail")
           elseif framework.admin_accounts.max_accounts[plr.UserId] then
             createNameTag(plr.Name, "Max")
-          elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-            createNameTag(plr.Name, "Raven")
-          elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
-            createNameTag(plr.Name, "Doggo")
-          elseif framework.admin_accounts.999_accounts[plr.UserId] then
-            createNameTag(plr.Name, "999")
           end
         end)
       if framework.admin_accounts.azoozAccounts[plr.UserId] then
@@ -2216,12 +2180,6 @@ end
           createNameTag(plr.Name, "Smail")
         elseif framework.admin_accounts.max_accounts[plr.UserId] then
           createNameTag(plr.Name, "Max")
-        elseif framework.admin_accounts.raven_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Raven")
-        elseif framework.admin_accounts.doggo_accounts[plr.UserId] then
-          createNameTag(plr.Name, "Doggo")
-        elseif framework.admin_accounts.999_accounts[plr.UserId] then
-          createNameTag(plr.Name, "999")
         end
     end
     game:GetService("RunService").RenderStepped:Connect(function()
