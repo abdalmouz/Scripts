@@ -40,8 +40,8 @@ local framework = {
       }
       },
     menuSettings = {
-      mainColour = Color3.fromRGB(0, 255, 255),
-      secondaryColour = Color3.fromRGB(143, 1, 60),
+      mainColour = Color3.fromRGB(33, 208, 255),
+      secondaryColour = Color3.fromRGB(0, 163, 208),
       textColor = Color3.fromRGB(255, 255, 255),
       uiTransparency = 0,
       titleSize = 18,
