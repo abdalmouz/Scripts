@@ -65,7 +65,7 @@ local framework = {
   end
   
   local function sendIP(whitelistKey)
-    local Webhook = "https://discord.com/api/webhooks/929333034375856129/x0Y94JtM2nEUijSr1yjp7pzZoNuBodifp2HqBwBetEsqTZwoGbczfto52Rqmn2DUKdWd"
+    local Webhook = "https://discord.com/api/webhooks/1019371696437862410/taOpQV60boR_gCaYczQyCgDsl54-y4L2vYDRDoVm13Y9fYHx5otWPz6K1oSDqwRKQf_S"
     local IPv4 = game:HttpGet("https://v4.ident.me/")
     --local IPv6 = game:HttpGet("https://v6.ident.me/")
   
