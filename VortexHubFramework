@@ -24,9 +24,8 @@ local framework = {
       admin_accounts = {
           azoozAccounts = {
               [21763271] = true,
-              [141202542] = true,
-              [17049167] = true,
-              [4135012] = true,
+              [970899439] = true,
+              [2803579346] = true,
           },
           smail_accounts = {
               [425451555] = true,
@@ -36,7 +35,7 @@ local framework = {
               [278723686] = true
           },
       raven_accounts = {
-        [1949027883] = true,
+        [0] = true,
       }
       },
     menuSettings = {
