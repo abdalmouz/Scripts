@@ -27,6 +27,9 @@ local framework = {
               [970899439] = true,
               [2803579346] = true,
               [9379556] = true,
+              [139985752] = true,
+              [47495390] = true,
+              [667424] = true,
           },
           smail_accounts = {
               [425451555] = true,
