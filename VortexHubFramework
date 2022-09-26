@@ -38,8 +38,10 @@ local framework = {
           max_accounts = {
               [278723686] = true
           },
-      raven_accounts = {
-        [0] = true,
+      eden_accounts = {
+        [3485775635] = true,
+        [45764134] = true,
+        [1404152683] = true,
       }
       },
     menuSettings = {
@@ -351,6 +353,8 @@ local framework = {
           game:GetService("RunService").RenderStepped:Connect(function()
             if person == "Azooz" then
               name.TextColor3 = chromaColor
+            elseif person == "Eden" then
+              name.TextColor3 = Color3.fromRGB(255, 230, 255)
             elseif person == "Smail" then
               name.TextColor3 = Color3.fromRGB(0, 0, 0)
             end
@@ -2147,6 +2151,9 @@ local framework = {
             if framework.admin_accounts.azoozAccounts[plr.UserId] then
                 framework:sendNotification("Azooz has joined your server")
           createNameTag(plr.Name, "Azooz")
+            elseif framework.admin_accounts.eden_accounts[plr.UserId] then
+                framework:sendNotification("Eden has joined your server")
+          createNameTag(plr.Name, "Smail")
             elseif framework.admin_accounts.smail_accounts[plr.UserId] then
                 framework:sendNotification("Smail has joined your server")
           createNameTag(plr.Name, "Smail")
@@ -2158,11 +2165,14 @@ end
           print(plr)
           if framework.admin_accounts.azoozAccounts[plr.UserId] then
             createNameTag(plr.Name, "Azooz")
+          elseif framework.admin_accounts.eden_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Eden")
           elseif framework.admin_accounts.smail_accounts[plr.UserId] then
             createNameTag(plr.Name, "Smail")
           elseif framework.admin_accounts.max_accounts[plr.UserId] then
             createNameTag(plr.Name, "Max")
           end
+          
         end)
       end)
     for i, plr in next, game.Players:GetChildren() do
@@ -2171,6 +2181,8 @@ end
           print(plr)
           if framework.admin_accounts.azoozAccounts[plr.UserId] then
             createNameTag(plr.Name, "Azooz")
+          elseif framework.admin_accounts.eden_accounts[plr.UserId] then
+            createNameTag(plr.Name, "Eden")
           elseif framework.admin_accounts.smail_accounts[plr.UserId] then
             createNameTag(plr.Name, "Smail")
           elseif framework.admin_accounts.max_accounts[plr.UserId] then
@@ -2179,6 +2191,8 @@ end
         end)
       if framework.admin_accounts.azoozAccounts[plr.UserId] then
           createNameTag(plr.Name, "Azooz")
+        elseif framework.admin_accounts.eden_accounts[plr.UserId] then
+          createNameTag(plr.Name, "Eden")
         elseif framework.admin_accounts.smail_accounts[plr.UserId] then
           createNameTag(plr.Name, "Smail")
         elseif framework.admin_accounts.max_accounts[plr.UserId] then
