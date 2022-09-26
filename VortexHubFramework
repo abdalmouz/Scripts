@@ -354,7 +354,7 @@ local framework = {
             if person == "Azooz" then
               name.TextColor3 = chromaColor
             elseif person == "Eden" then
-              name.TextColor3 = Color3.fromRGB(255, 230, 255)
+              name.TextColor3 = Color3.fromRGB(255, 112, 246)
             elseif person == "Smail" then
               name.TextColor3 = Color3.fromRGB(0, 0, 0)
             end
