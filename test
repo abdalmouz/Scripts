@@ -1,0 +1,220 @@
+local NCFling = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local TextBox = Instance.new("TextBox")
+local TextButton = Instance.new("TextButton")
+local TextButton_2 = Instance.new("TextButton")
+local ImageButton = Instance.new("ImageButton")
+
+--Properties:
+
+NCFling.Name = math.random()
+NCFling.Parent = game:WaitForChild("CoreGui")
+NCFling.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = NCFling
+Frame.BackgroundColor3 = Color3.fromRGB(143, 143, 143)
+Frame.Position = UDim2.new(0.463812441, 0, 0.477064222, 0)
+Frame.Size = UDim2.new(0, 100, 0, 15)
+
+Frame_2.Parent = Frame
+Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_2.BackgroundTransparency = 1.000
+Frame_2.Position = UDim2.new(0, 0, 1, 0)
+Frame_2.Size = UDim2.new(0, 100, 0, 37)
+
+TextBox.Parent = Frame_2
+TextBox.BackgroundColor3 = Color3.fromRGB(143, 143, 143)
+TextBox.Size = UDim2.new(0, 100, 0, 20)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.PlaceholderText = "Playername"
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox.TextSize = 14.000
+TextBox.TextWrapped = true
+
+TextButton.Parent = Frame_2
+TextButton.BackgroundColor3 = Color3.fromRGB(143, 143, 143)
+TextButton.Position = UDim2.new(0, 0, 0.540540516, 0)
+TextButton.Size = UDim2.new(0, 100, 0, 17)
+TextButton.Font = Enum.Font.SourceSansBold
+TextButton.Text = "Fling"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 16.000
+
+TextButton_2.Parent = Frame
+TextButton_2.BackgroundColor3 = Color3.fromRGB(143, 143, 143)
+TextButton_2.BorderSizePixel = 0
+TextButton_2.Position = UDim2.new(0.850000024, 0, 0, 0)
+TextButton_2.Size = UDim2.new(0, 15, 0, 14)
+TextButton_2.Font = Enum.Font.SourceSans
+TextButton_2.Text = "X"
+TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.TextSize = 14.000
+
+ImageButton.Parent = Frame
+ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageButton.BackgroundTransparency = 1.000
+ImageButton.BorderSizePixel = 0
+ImageButton.Size = UDim2.new(0, 15, 0, 14)
+ImageButton.Image = "rbxassetid://6984263272"
+ImageButton.SliceScale = 2.000
+
+-- Scripts:
+
+local function XYYEXKM_fake_script() -- TextBox.LocalScript 
+	local script = Instance.new('LocalScript', TextBox)
+
+	script.Parent.FocusLost:connect(function()
+		for i,v in pairs(game.Players:GetChildren()) do
+			if (string.sub(string.lower(v.Name),1,string.len(script.Parent.Text))) == string.lower(script.Parent.Text) then
+				script.Parent.Text = v.Name
+			end
+		end
+	end)
+end
+coroutine.wrap(XYYEXKM_fake_script)()
+local function UTAAYQE_fake_script() -- TextButton.LocalScript 
+	local script = Instance.new('LocalScript', TextButton)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		
+		local Target = script.Parent.Parent.TextBox.Text
+	
+		local done = false
+		local Limb = "LeftLowerLeg"
+		local LocalPlayer = game.Players.LocalPlayer
+		local Character = LocalPlayer.Character
+		local Humanoid = Character:WaitForChild("Humanoid")
+		local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+		
+		if game.Players[Target].Character:FindFirstChild("Left Leg") then
+			Limb = "Left Leg"
+		end
+	
+		local BodyPos = Instance.new("BodyPosition")
+		BodyPos.Name = "gay"
+		BodyPos.Parent = HumanoidRootPart
+		BodyPos.maxForce = Vector3.new(1, 1, 1) * math.huge
+		BodyPos.Position = HumanoidRootPart.Position
+		local BodyGyro = Instance.new("BodyGyro")
+		BodyGyro.Name = "gay"
+		BodyGyro.Parent = HumanoidRootPart
+		BodyGyro.maxTorque = Vector3.new(1, 1, 1) * 9e9
+		BodyGyro.CFrame = HumanoidRootPart.CFrame
+		local coin = Instance.new('BodyThrust')
+		coin.Name = "gay"
+		coin.Parent = HumanoidRootPart
+		coin.Force = Vector3.new(500,500,500)
+	
+		spawn(function()
+			wait(5)
+			done = true
+		end)
+	
+		repeat HumanoidRootPart.CFrame = game.Players[Target].Character[Limb].CFrame;coin.Location = game.Players[Target].Character[Limb].Position game:GetService('RunService').Heartbeat:wait()
+		until done == true
+	
+		coin:Destroy()
+		BodyPos:Destroy()
+		BodyGyro:Destroy()
+		
+	end)
+end
+coroutine.wrap(UTAAYQE_fake_script)()
+local function CXBAUL_fake_script() -- TextButton_2.LocalScript 
+	local script = Instance.new('LocalScript', TextButton_2)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Parent:Destroy()
+	end)
+end
+coroutine.wrap(CXBAUL_fake_script)()
+local function ZNQWRUM_fake_script() -- Frame.LocalScript 
+	local script = Instance.new('LocalScript', Frame)
+
+	local UserInputService = game:GetService("UserInputService")
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+	
+	if game.PlaceId == 189707 then
+		workspace.FallenPartsDestroyHeight = 0/0
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/DiIemmaDoggo/Scripts/main/NoFallDamage_NDS"))();
+	end
+	
+end
+coroutine.wrap(ZNQWRUM_fake_script)()
+local function ELHNGBL_fake_script() -- ImageButton.LocalScript 
+	local script = Instance.new('LocalScript', ImageButton)
+
+	script.Parent.MouseButton1Click:Connect(function()
+	
+	
+		local TweenService = game:GetService("TweenService")
+		local Object = script.Parent
+	
+		local tweenInfo = TweenInfo.new(
+			1,
+			Enum.EasingStyle.Linear,
+			Enum.EasingDirection.Out,
+			2,
+			false, -- Reverse?
+			0 -- Delay
+		)
+	
+		local Tween = TweenService:Create(Object, tweenInfo, {Rotation = script.Parent.Rotation + 360}) -- Creates the tween with the TweenInfo and what properties you want to change
+		Tween:Play()
+	
+		local Gui = game:GetService("StarterGui")
+	
+		Gui:SetCore("SendNotification", {
+			Title = "Removing Momentum";
+			Text = "";
+			Duration = 3;
+		})
+		
+		for _, v in pairs(game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart"):GetChildren()) do
+			if v.Name == "gay" then
+				v:Destroy()
+			end
+		end
+	
+	end)
+end
+coroutine.wrap(ELHNGBL_fake_script)()
